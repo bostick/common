@@ -27,6 +27,12 @@
 #define _CRT_SECURE_NO_DEPRECATE // disable warnings about fopen being insecure on MSVC
 
 
+#define TAG "file"
+
+
+//
+// use fopen and friends
+//
 Status
 openFile(
   const char *path,
@@ -62,10 +68,13 @@ openFile(
 }
 
 
+//
+// use fopen and friends
+//
 Status
 saveFile(
   const char *path,
-  const std::vector<uint8_t> buf) {
+  const std::vector<uint8_t> &buf) {
 
   FILE *file = fopen(path, "wb");
 
