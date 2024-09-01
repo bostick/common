@@ -1,12 +1,25 @@
-
 # common
 
-Common utilities used in different projects
+Common utilities used in different projects.
 
-logging.h: macros for logging
+This is a C++ source library and the source files are intended to be used in other projects.
 
-platform.h: platform defines
 
+## Overview
+
+* abort: ABORT macro
+* assert: ASSERT macro
+* check: CHECK macros
+* file: functions for opening and saving files
+* logging: functions for logging
+* platform: platform macros
+* status: Status enum for return types
+
+
+
+## Usage
+
+common requires a C++20 compiler because of features such as `__VA_OPT__`.
 
 
 
