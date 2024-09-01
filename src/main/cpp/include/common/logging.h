@@ -18,43 +18,94 @@
 
 #pragma once
 
+#include "common/assert.h"
 #include "common/platform.h"
 
+
+//
+// greater = more noise
+//
+#define LOGLEVEL_ERROR 0
+#define LOGLEVEL_UNUSUAL 0
+#define LOGLEVEL_WARN 1
+#define LOGLEVEL_INFO 2
+#define LOGLEVEL_DEBUG 3
+#define LOGLEVEL_TRACE 4
+
+//
+// keep all same length, 5 characters, in order to stay aligned
+//
+// #define ERROR_TAG   "ERROR" " "
+// #define UNUSUAL_TAG "!!!!!" " "
+// #define WARN_TAG    " WARN" " "
+// #define INFO_TAG    " INFO" " "
+// #define DEBUG_TAG   "DEBUG" " "
+// #define TRACE_TAG   "TRACE" " "
+
+
+typedef void (*LOG_decl)(const char *tag, const char *fmt, ...);
+
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGE_expanded;
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGU_expanded;
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGW_expanded;
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGI_expanded;
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGD_expanded;
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGT_expanded;
+
+
 #if IS_PLATFORM_ANDROID
-#include <android/log.h>
-#endif // IS_PLATFORM_ANDROID
 
-#include <cstdio> // for fprintf, stderr
+//
+// LOGV (Verbose) is the same as LOGT (Trace), but prefer to use LOGT
+//
 
-#if IS_PLATFORM_ANDROID
-
-#define LOGE(fmt, ...) __android_log_print(ANDROID_LOG_ERROR, TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGW(fmt, ...) __android_log_print(ANDROID_LOG_WARN, TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGI(fmt, ...) __android_log_print(ANDROID_LOG_INFO, TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-
-#ifdef NDEBUG
-#define LOGD(fmt, ...)
-#define LOGV(fmt, ...)
-#else
-#define LOGD(fmt, ...) __android_log_print(ANDROID_LOG_DEBUG, TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGV(fmt, ...) __android_log_print(ANDROID_LOG_VERBOSE, TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#endif
+#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+#define LOGV(fmt, ...) LOGT_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
 
 #else // IS_PLATFORM_ANDROID
 
-#define LOGE(fmt, ...) fprintf(stderr, fmt "\n" __VA_OPT__(,) __VA_ARGS__); fflush(stderr)
-#define LOGW(fmt, ...) fprintf(stderr, fmt "\n" __VA_OPT__(,) __VA_ARGS__); fflush(stderr)
-#define LOGI(fmt, ...) fprintf(stderr, fmt "\n" __VA_OPT__(,) __VA_ARGS__); fflush(stderr)
-
-#ifdef NDEBUG
-#define LOGD(fmt, ...)
-#define LOGV(fmt, ...)
-#else
-#define LOGD(fmt, ...) fprintf(stderr, fmt "\n" __VA_OPT__(,) __VA_ARGS__); fflush(stderr)
-#define LOGV(fmt, ...) fprintf(stderr, fmt "\n" __VA_OPT__(,) __VA_ARGS__); fflush(stderr)
-#endif
+#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define LOGV(fmt, ...) LOGT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 
 #endif // IS_PLATFORM_ANDROID
+
+
+class LogTracer {
+  const char *tag;
+  const char *function;
+  const char *file;
+  int line;
+public:
+  LogTracer(const char *tag, const char *function, const char *file, int line);
+  ~LogTracer();
+};
+
+#define LOG_ENTRY_EXIT_FOR(tag, x, y, z) \
+	LogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x, y, z)
+
+#define LOG_ENTRY_EXIT \
+  LOG_ENTRY_EXIT_FOR(TAG, __FUNCTION__, __FILE__, __LINE__)
+
+void SetLogLevel(int level);
+
+
+
+
+
+
+
+
+
 
 
 
