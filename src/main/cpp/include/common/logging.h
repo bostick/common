@@ -45,12 +45,25 @@
 
 typedef void (*LOG_decl)(const char *tag, const char *fmt, ...);
 
+#if __GNUC__ || __clang__
+
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGE_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGU_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGW_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGI_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGD_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGT_expanded;
+
+#else // __GNUC__ || __clang__
+
+extern LOG_decl LOGE_expanded;
+extern LOG_decl LOGU_expanded;
+extern LOG_decl LOGW_expanded;
+extern LOG_decl LOGI_expanded;
+extern LOG_decl LOGD_expanded;
+extern LOG_decl LOGT_expanded;
+
+#endif // __GNUC__ || __clang__
 
 
 #if IS_PLATFORM_ANDROID
