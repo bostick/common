@@ -23,11 +23,17 @@
 #include <vector>
 #include <cstdint>
 
+//
+// open file and read contents into out buffer
+//
 Status
 openFile(
   const char *path,
   std::vector<uint8_t> &out);
 
+//
+// save buf to file
+//
 Status
 saveFile(
   const char *path,

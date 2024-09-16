@@ -20,6 +20,9 @@
 
 #include "common/status.h"
 
+//
+// if cond is false, then log message and return ERR
+//
 #define CHECK(cond, msg, ...) \
   do { \
     if (!(cond)) { \
@@ -28,6 +31,9 @@
     } \
   } while (0)
 
+//
+// if cond is true, then log message and return ERR
+//
 #define CHECK_NOT(cond, msg, ...) \
   do { \
     if ((cond)) { \

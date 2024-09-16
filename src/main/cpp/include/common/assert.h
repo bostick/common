@@ -26,6 +26,9 @@
 
 #else // NDEBUG
 
+//
+// if cond is false, then abort
+//
 #define ASSERT(cond) \
   do { \
     if (!(cond)) { \

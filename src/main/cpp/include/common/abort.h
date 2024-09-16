@@ -20,6 +20,9 @@
 
 #include "common/logging.h"
 
+//
+// log message and abort
+//
 #define ABORT(msg, ...) \
   do { \
     LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
