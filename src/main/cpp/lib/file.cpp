@@ -50,7 +50,7 @@ openFile(
 
   CHECK_NOT(res < 0, "ftell failed");
 
-  size_t len = static_cast<size_t>(res);
+  auto len = static_cast<size_t>(res);
 
   rewind(file);
 
