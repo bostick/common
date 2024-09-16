@@ -32,3 +32,8 @@ Status
 saveFile(
   const char *path,
   const std::vector<uint8_t> &buf);
+
+//
+// if file exists, then return true
+//
+bool fileExists(const char *path);

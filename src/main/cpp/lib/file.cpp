@@ -92,6 +92,26 @@ saveFile(
 }
 
 
+bool fileExists(const char *path) {
+
+  FILE *file = fopen(path, "r");
+
+  if (file == NULL) {
+    //
+    // file does NOT exist
+    //
+    return false;
+  }
+
+  //
+  // file DOES exist
+  //
+
+  fclose(file);
+
+  return true;
+}
+
 
 
 
