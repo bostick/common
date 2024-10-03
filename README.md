@@ -11,6 +11,8 @@ This is a C++ source library and the source files are intended to be used in oth
 * assert: ASSERT macro
 * check: CHECK macros
 * file: functions for opening and saving files
+* jnicache: cache various classes, methods, and fields for JNI
+* jniutils: utility macros and functions for JNI
 * logging: functions for logging
 * platform: platform macros
 * status: Status enum for return types
