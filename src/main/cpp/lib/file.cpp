@@ -41,29 +41,29 @@ openFile(
   const char *path,
   std::vector<uint8_t> &out) {
   
-  FILE *file = fopen(path, "rb");
+  FILE *file = std::fopen(path, "rb");
 
   CHECK(file, "cannot open %s", path);
 
-  int fres = fseek(file, 0, SEEK_END);
+  int fres = std::fseek(file, 0, SEEK_END);
   
   CHECK_NOT(fres, "fseek failed");
 
-  long res = ftell(file);
+  long res = std::ftell(file);
 
   CHECK_NOT(res < 0, "ftell failed");
 
   auto len = static_cast<size_t>(res);
 
-  rewind(file);
+  std::rewind(file);
 
   out = std::vector<uint8_t>(len);
 
-  size_t r = fread(out.data(), sizeof(uint8_t), len, file);
+  size_t r = std::fread(out.data(), sizeof(uint8_t), len, file);
 
   CHECK(r == len, "fread failed");
 
-  fres = fclose(file);
+  fres = std::fclose(file);
 
   CHECK_NOT(fres, "fclose failed");
 
@@ -79,15 +79,15 @@ saveFile(
   const char *path,
   const std::vector<uint8_t> &buf) {
 
-  FILE *file = fopen(path, "wb");
+  FILE *file = std::fopen(path, "wb");
 
   CHECK(file, "cannot open %s", path);
 
-  auto r = fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
+  auto r = std::fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
 
   CHECK(r == buf.size(), "fwrite failed");
 
-  int fres = fclose(file);
+  int fres = std::fclose(file);
 
   CHECK_NOT(fres, "fclose failed");
 
@@ -97,7 +97,7 @@ saveFile(
 
 bool fileExists(const char *path) {
 
-  FILE *file = fopen(path, "r");
+  FILE *file = std::fopen(path, "r");
 
   if (file == NULL) {
     //
@@ -110,7 +110,7 @@ bool fileExists(const char *path) {
   // file DOES exist
   //
 
-  fclose(file);
+  std::fclose(file);
 
   return true;
 }

@@ -103,7 +103,7 @@ void LogVarArgError(const char *tag, const char *fmt, ...) {
   vfprintf(stderr, fmt, args);
   va_end(args);
 
-  fflush(stderr);
+  std::fflush(stderr);
 }
 
 void LogVarArgUnusual(const char *tag, const char *fmt, ...) {
@@ -115,7 +115,7 @@ void LogVarArgUnusual(const char *tag, const char *fmt, ...) {
   vfprintf(stderr, fmt, args);
   va_end(args);
 
-  fflush(stderr);
+  std::fflush(stderr);
 }
 
 void LogVarArgWarn(const char *tag, const char *fmt, ...) {
@@ -127,7 +127,7 @@ void LogVarArgWarn(const char *tag, const char *fmt, ...) {
   vfprintf(stderr, fmt, args);
   va_end(args);
 
-  fflush(stderr);
+  std::fflush(stderr);
 }
 
 void LogVarArgInfo(const char *tag, const char *fmt, ...) {
@@ -139,7 +139,7 @@ void LogVarArgInfo(const char *tag, const char *fmt, ...) {
   vfprintf(stderr, fmt, args);
   va_end(args);
 
-  fflush(stderr);
+  std::fflush(stderr);
 }
 
 void LogVarArgDebug(const char *tag, const char *fmt, ...) {
@@ -151,7 +151,7 @@ void LogVarArgDebug(const char *tag, const char *fmt, ...) {
   vfprintf(stderr, fmt, args);
   va_end(args);
 
-  fflush(stderr);
+  std::fflush(stderr);
 }
 
 void LogVarArgTrace(const char *tag, const char *fmt, ...) {
@@ -163,7 +163,7 @@ void LogVarArgTrace(const char *tag, const char *fmt, ...) {
   vfprintf(stderr, fmt, args);
   va_end(args);
 
-  fflush(stderr);
+  std::fflush(stderr);
 }
 
 #endif // IS_PLATFORM_ANDROID
@@ -210,7 +210,7 @@ void GrabNow() {
   //
   // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
   //
-  strftime(nowStrBuf, 80, "%F %X", timeinfo);
+  std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
 }
 
 
