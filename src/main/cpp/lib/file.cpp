@@ -20,11 +20,14 @@
 
 #include "common/check.h"
 #include "common/logging.h"
+#include "common/platform.h"
 
 #include <cstdio>
 
 
+#if IS_PLATFORM_WINDOWS
 #define _CRT_SECURE_NO_DEPRECATE // disable warnings about fopen being insecure on MSVC
+#endif // IS_PLATFORM_WINDOWS
 
 
 #define TAG "file"

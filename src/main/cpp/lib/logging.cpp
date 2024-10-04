@@ -32,7 +32,9 @@
 #include <cstring> // for strchr
 
 
+#if IS_PLATFORM_WINDOWS
 #define _CRT_SECURE_NO_WARNINGS // disable warnings about localtime being unsafe on MSVC
+#endif // IS_PLATFORM_WINDOWS
 
 
 #define TAG "logging"
