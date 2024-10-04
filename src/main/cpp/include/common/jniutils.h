@@ -24,6 +24,11 @@
 
 #include <limits> // for numeric_limits
 
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "modernize-use-nullptr"
+
+
 const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 
 
@@ -100,6 +105,8 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
   return arrayObj;
 }
 
+
+#pragma clang diagnostic pop
 
 
 

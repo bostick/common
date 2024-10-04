@@ -23,6 +23,10 @@
 #include "common/status.h"
 
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "modernize-use-nullptr"
+
+
 #define TAG "jniutils"
 
 
@@ -36,6 +40,9 @@ jobject createStatusObject(JNIEnv *env, Status status) {
 
   return resultObject;
 }
+
+
+#pragma clang diagnostic pop
 
 
 

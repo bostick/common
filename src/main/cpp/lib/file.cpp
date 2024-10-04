@@ -30,6 +30,10 @@
 #endif // IS_PLATFORM_WINDOWS
 
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "modernize-use-nullptr"
+
+
 #define TAG "file"
 
 
@@ -114,6 +118,13 @@ bool fileExists(const char *path) {
 
   return true;
 }
+
+
+#pragma clang diagnostic pop
+
+
+
+
 
 
 
