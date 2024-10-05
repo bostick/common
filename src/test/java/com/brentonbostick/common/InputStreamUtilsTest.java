@@ -2,8 +2,6 @@ package com.brentonbostick.common;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import android.annotation.SuppressLint;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
