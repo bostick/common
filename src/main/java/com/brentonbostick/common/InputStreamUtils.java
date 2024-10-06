@@ -25,6 +25,8 @@ public class InputStreamUtils {
 
     /// Read all bytes from is into buf.
     ///
+    /// Stop-gap until is.readAllBytes() can be used everywhere (added in TIRAMISU, API 33, Android 13)
+    ///
     /// @return number of bytes read
     ///
     /// @throws IOException on error
