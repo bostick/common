@@ -19,7 +19,7 @@
 #pragma once
 
 enum Status {
-  OK = 0,
-  ERR = -1,
-  CONTINUE = 1,
+    OK = 0,
+    ERR = -1,
+    CONTINUE = 1,
 };

@@ -28,16 +28,16 @@
 //
 Status
 openFile(
-  const char *path,
-  std::vector<uint8_t> &out);
+    const char *path,
+    std::vector<uint8_t> &out);
 
 //
 // save buf to file
 //
 Status
 saveFile(
-  const char *path,
-  const std::vector<uint8_t> &buf);
+    const char *path,
+    const std::vector<uint8_t> &buf);
 
 //
 // if file exists, then return true

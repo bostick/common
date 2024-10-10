@@ -94,17 +94,18 @@ extern LOG_decl LOGT_expanded;
 
 
 class LogTracer {
-  const char *tag;
-  const char *function;
-  const char *file;
-  int line;
+    const char *tag;
+    const char *function;
+    const char *file;
+    int line;
 public:
-  LogTracer(const char *tag, const char *function, const char *file, int line);
-  ~LogTracer();
+    LogTracer(const char *tag, const char *function, const char *file, int line);
+
+    ~LogTracer();
 };
 
 #define LOG_ENTRY_EXIT_FOR(tag, x, y, z) \
-	LogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x, y, z)
+    LogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x, y, z)
 
 #define LOG_ENTRY_EXIT \
   LOG_ENTRY_EXIT_FOR(TAG, __FUNCTION__, __FILE__, __LINE__)

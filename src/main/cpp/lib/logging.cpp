@@ -25,7 +25,9 @@
 #include "common/logging.h"
 
 #if IS_PLATFORM_ANDROID
+
 #include <android/log.h>
+
 #endif // IS_PLATFORM_ANDROID
 
 #include <string>
@@ -43,52 +45,52 @@ void GrabNow();
 
 
 time_t timer;
-struct tm* timeinfo;
+struct tm *timeinfo;
 char nowStrBuf[80];
 
 
 #if IS_PLATFORM_ANDROID
 
 void LogVarArgError(const char *tag, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-  va_end(args);
+    va_list args;
+    va_start(args, fmt);
+    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
+    va_end(args);
 }
 
 void LogVarArgUnusual(const char *tag, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-  va_end(args);
+    va_list args;
+    va_start(args, fmt);
+    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
+    va_end(args);
 }
 
-void LogVarArgWarn(const char *tag, const char *fmt, ...)  {
-  va_list args;
-  va_start(args, fmt);
-  __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
-  va_end(args);
+void LogVarArgWarn(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
+    va_end(args);
 }
 
-void LogVarArgInfo(const char *tag, const char *fmt, ...)  {
-  va_list args;
-  va_start(args, fmt);
-  __android_log_vprint(ANDROID_LOG_INFO, tag, fmt, args);
-  va_end(args);
+void LogVarArgInfo(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    __android_log_vprint(ANDROID_LOG_INFO, tag, fmt, args);
+    va_end(args);
 }
 
-void LogVarArgDebug(const char *tag, const char *fmt, ...)  {
-  va_list args;
-  va_start(args, fmt);
-  __android_log_vprint(ANDROID_LOG_DEBUG, tag, fmt, args);
-  va_end(args);
+void LogVarArgDebug(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    __android_log_vprint(ANDROID_LOG_DEBUG, tag, fmt, args);
+    va_end(args);
 }
 
 void LogVarArgTrace(const char *tag, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-  __android_log_vprint(ANDROID_LOG_VERBOSE, tag, fmt, args);
-  va_end(args);
+    va_list args;
+    va_start(args, fmt);
+    __android_log_vprint(ANDROID_LOG_VERBOSE, tag, fmt, args);
+    va_end(args);
 }
 
 #else // IS_PLATFORM_ANDROID
@@ -168,8 +170,8 @@ void LogVarArgTrace(const char *tag, const char *fmt, ...) {
 #endif // IS_PLATFORM_ANDROID
 
 void LogVarArgNull(const char *tag, const char *fmt, ...) {
-  (void)tag;
-  (void)fmt;
+    (void) tag;
+    (void) fmt;
 }
 
 
@@ -184,19 +186,18 @@ LOG_decl LOGD_expanded = LogVarArgDebug;
 LOG_decl LOGT_expanded = LogVarArgNull;
 
 
-
-LogTracer::LogTracer(const char *tag, const char* function, const char* file, int line) :
-  tag(tag),
-  function(function),
-  file(file),
-  line(line) {
+LogTracer::LogTracer(const char *tag, const char *function, const char *file, int line) :
+    tag(tag),
+    function(function),
+    file(file),
+    line(line) {
     GrabNow();
     LOGT_expanded(tag, "%s: enter %s %s:%d\n", nowStrBuf, function, file, line);
-  }
+}
 
 LogTracer::~LogTracer() {
-  GrabNow();
-  LOGT_expanded(tag, "%s: exit %s %s:%d\n", nowStrBuf, function, file, line);
+    GrabNow();
+    LOGT_expanded(tag, "%s: exit %s %s:%d\n", nowStrBuf, function, file, line);
 }
 
 
@@ -204,67 +205,67 @@ LogTracer::~LogTracer() {
 // compute the current time and store in nowStrBuf
 //
 void GrabNow() {
-  time(&timer);
-  timeinfo = localtime(&timer);
-  //
-  // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
-  //
-  std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
+    time(&timer);
+    timeinfo = localtime(&timer);
+    //
+    // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
+    //
+    std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
 }
 
 
 void SetLogLevel(int level) {
 
-  switch (level) {
-  case LOGLEVEL_ERROR: {
-    LOGE_expanded = LogVarArgError;
-    LOGU_expanded = LogVarArgUnusual;
-    LOGW_expanded = LogVarArgNull;
-    LOGI_expanded = LogVarArgNull;
-    LOGD_expanded = LogVarArgNull;
-    LOGT_expanded = LogVarArgNull;
-    break;
-  }
-  case LOGLEVEL_WARN: {
-    LOGE_expanded = LogVarArgError;
-    LOGU_expanded = LogVarArgUnusual;
-    LOGW_expanded = LogVarArgWarn;
-    LOGI_expanded = LogVarArgNull;
-    LOGD_expanded = LogVarArgNull;
-    LOGT_expanded = LogVarArgNull;
-    break;
-  }
-  case LOGLEVEL_INFO: {
-    LOGE_expanded = LogVarArgError;
-    LOGU_expanded = LogVarArgUnusual;
-    LOGW_expanded = LogVarArgWarn;
-    LOGI_expanded = LogVarArgInfo;
-    LOGD_expanded = LogVarArgNull;
-    LOGT_expanded = LogVarArgNull;
-    break;
-  }
-  case LOGLEVEL_DEBUG: {
-    LOGE_expanded = LogVarArgError;
-    LOGU_expanded = LogVarArgUnusual;
-    LOGW_expanded = LogVarArgWarn;
-    LOGI_expanded = LogVarArgInfo;
-    LOGD_expanded = LogVarArgDebug;
-    LOGT_expanded = LogVarArgNull;
-    break;
-  }
-  case LOGLEVEL_TRACE: {
-    LOGE_expanded = LogVarArgError;
-    LOGU_expanded = LogVarArgUnusual;
-    LOGW_expanded = LogVarArgWarn;
-    LOGI_expanded = LogVarArgInfo;
-    LOGD_expanded = LogVarArgDebug;
-    LOGT_expanded = LogVarArgTrace;
-    break;
-  }
-  default: {
-    ASSERT(false);
-  }
-  }
+    switch (level) {
+    case LOGLEVEL_ERROR: {
+        LOGE_expanded = LogVarArgError;
+        LOGU_expanded = LogVarArgUnusual;
+        LOGW_expanded = LogVarArgNull;
+        LOGI_expanded = LogVarArgNull;
+        LOGD_expanded = LogVarArgNull;
+        LOGT_expanded = LogVarArgNull;
+        break;
+    }
+    case LOGLEVEL_WARN: {
+        LOGE_expanded = LogVarArgError;
+        LOGU_expanded = LogVarArgUnusual;
+        LOGW_expanded = LogVarArgWarn;
+        LOGI_expanded = LogVarArgNull;
+        LOGD_expanded = LogVarArgNull;
+        LOGT_expanded = LogVarArgNull;
+        break;
+    }
+    case LOGLEVEL_INFO: {
+        LOGE_expanded = LogVarArgError;
+        LOGU_expanded = LogVarArgUnusual;
+        LOGW_expanded = LogVarArgWarn;
+        LOGI_expanded = LogVarArgInfo;
+        LOGD_expanded = LogVarArgNull;
+        LOGT_expanded = LogVarArgNull;
+        break;
+    }
+    case LOGLEVEL_DEBUG: {
+        LOGE_expanded = LogVarArgError;
+        LOGU_expanded = LogVarArgUnusual;
+        LOGW_expanded = LogVarArgWarn;
+        LOGI_expanded = LogVarArgInfo;
+        LOGD_expanded = LogVarArgDebug;
+        LOGT_expanded = LogVarArgNull;
+        break;
+    }
+    case LOGLEVEL_TRACE: {
+        LOGE_expanded = LogVarArgError;
+        LOGU_expanded = LogVarArgUnusual;
+        LOGW_expanded = LogVarArgWarn;
+        LOGI_expanded = LogVarArgInfo;
+        LOGD_expanded = LogVarArgDebug;
+        LOGT_expanded = LogVarArgTrace;
+        break;
+    }
+    default: {
+        ASSERT(false);
+    }
+    }
 }
 
 
