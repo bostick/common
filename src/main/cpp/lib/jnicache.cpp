@@ -31,6 +31,7 @@
 // Classes
 //
 
+jclass File_class;
 jclass Status_class;
 #if IS_PLATFORM_ANDROID
 jclass Build_class;
@@ -50,6 +51,7 @@ jfieldID Build_MODEL_field;
 //
 // Instance methods
 //
+jmethodID File_getAbsolutePath_method;
 
 //
 // Static methods
@@ -73,6 +75,7 @@ void setupJNICache(JavaVM *vm) {
   // Classes
   //
 
+  SETCLASS(File_class, "java/io/File");
   SETCLASS(Status_class, "com/brentonbostick/common/Status");
 #if IS_PLATFORM_ANDROID
   SETCLASS(Build_class, "android/os/Build");
@@ -92,6 +95,7 @@ void setupJNICache(JavaVM *vm) {
   //
   // Instance methods
   //
+  EXCEPTIONANDNULLCHECK(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
 
   //
   // Static methods
@@ -113,6 +117,7 @@ void teardownJNICache(JavaVM *vm) {
   JNIEnv *env;
   GETENV(env, vm);
 
+  env->DeleteGlobalRef(File_class);
   env->DeleteGlobalRef(Status_class);
 
 #if IS_PLATFORM_ANDROID
