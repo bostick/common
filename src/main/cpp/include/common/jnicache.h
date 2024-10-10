@@ -65,6 +65,7 @@ extern jclass Status_class;
 
 #if IS_PLATFORM_ANDROID
 extern jclass Build_class;
+extern jclass JSONObject_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -82,6 +83,8 @@ extern jfieldID Build_MODEL_field;
 // Instance methods
 //
 extern jmethodID File_getAbsolutePath_method;
+extern jmethodID JSONObject_has_method;
+extern jmethodID JSONObject_getJSONArray_method;
 
 //
 // Static methods
