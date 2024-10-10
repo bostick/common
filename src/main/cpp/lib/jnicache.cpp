@@ -71,7 +71,7 @@ jmethodID Status_fromInt_method;
 std::map<Status, jobject> statusEnumMap;
 
 
-void setupJNICache(JavaVM *vm) {
+void setupJniCache(JavaVM *vm) {
 
   JNIEnv *env;
   GETENV(env, vm);
@@ -122,7 +122,7 @@ void setupJNICache(JavaVM *vm) {
   INSERTINTOMAP(statusEnumMap, Status::CONTINUE, createStatusObject(env, Status::CONTINUE));
 }
 
-void teardownJNICache(JavaVM *vm) {
+void teardownJniCache(JavaVM *vm) {
 
   JNIEnv *env;
   GETENV(env, vm);

@@ -100,8 +100,8 @@ extern jmethodID Status_fromInt_method;
 
 extern std::map<Status, jobject> statusEnumMap;
 
-void setupJNICache(JavaVM *vm);
-void teardownJNICache(JavaVM *vm);
+void setupJniCache(JavaVM *vm);
+void teardownJniCache(JavaVM *vm);
 
 
 
