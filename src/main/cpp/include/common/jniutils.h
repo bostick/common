@@ -65,6 +65,7 @@ jobject createStatusObject(JNIEnv *env, Status status);
 // log functions only for newArrayObject below
 //
 void newArrayObject_logCount(size_t count);
+
 void newArrayObject_log(const char *msg);
 
 //
@@ -73,36 +74,36 @@ void newArrayObject_log(const char *msg);
 template <typename T, jobject (*F)(JNIEnv *, const T &)>
 jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass clazz) {
 
-  if (count > JSIZE_MAX) {
-    newArrayObject_logCount(count);
-    return NULL;
-  }
-
-  auto jCount = static_cast<jsize>(count);
-
-  jobjectArray arrayObj = env->NewObjectArray(jCount, clazz, NULL);
-  if (env->ExceptionCheck() || arrayObj == NULL) {
-    newArrayObject_log("Error creating array object");
-    return NULL;
-  }
-
-  for (jsize i = 0; i < jCount; i++) {
-
-    jobject obj = F(env, buffer[i]);
-    if (env->ExceptionCheck() || obj == NULL) {
-      return NULL;
+    if (count > JSIZE_MAX) {
+        newArrayObject_logCount(count);
+        return NULL;
     }
 
-    env->SetObjectArrayElement(arrayObj, i, obj);
-    if (env->ExceptionCheck()) {
-      newArrayObject_log("Error assigning object to array");
-      return NULL;
+    auto jCount = static_cast<jsize>(count);
+
+    jobjectArray arrayObj = env->NewObjectArray(jCount, clazz, NULL);
+    if (env->ExceptionCheck() || arrayObj == NULL) {
+        newArrayObject_log("Error creating array object");
+        return NULL;
     }
 
-    env->DeleteLocalRef(obj);
-  }
+    for (jsize i = 0; i < jCount; i++) {
 
-  return arrayObj;
+        jobject obj = F(env, buffer[i]);
+        if (env->ExceptionCheck() || obj == NULL) {
+            return NULL;
+        }
+
+        env->SetObjectArrayElement(arrayObj, i, obj);
+        if (env->ExceptionCheck()) {
+            newArrayObject_log("Error assigning object to array");
+            return NULL;
+        }
+
+        env->DeleteLocalRef(obj);
+    }
+
+    return arrayObj;
 }
 
 
