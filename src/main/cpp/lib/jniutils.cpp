@@ -31,14 +31,14 @@
 
 
 jobject createStatusObject(JNIEnv *env, Status status) {
-	
-  jobject resultObject = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, static_cast<jint>(status));
-  if (env->ExceptionCheck() || resultObject == NULL) {
-    LOGE("Status_fromInt_method failed");
-    return NULL;
-  }
 
-  return resultObject;
+    jobject resultObject = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, static_cast<jint>(status));
+    if (env->ExceptionCheck() || resultObject == NULL) {
+        LOGE("Status_fromInt_method failed");
+        return NULL;
+    }
+
+    return resultObject;
 }
 
 

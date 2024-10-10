@@ -73,65 +73,65 @@ std::map<Status, jobject> statusEnumMap;
 
 void setupJniCache(JavaVM *vm) {
 
-  JNIEnv *env;
-  GETENV(env, vm);
+    JNIEnv *env;
+    GETENV(env, vm);
 
-  //
-  // Classes
-  //
+    //
+    // Classes
+    //
 
-  SETCLASS(File_class, "java/io/File");
-  SETCLASS(Status_class, "com/brentonbostick/common/Status");
+    SETCLASS(File_class, "java/io/File");
+    SETCLASS(Status_class, "com/brentonbostick/common/Status");
 #if IS_PLATFORM_ANDROID
-  SETCLASS(Build_class, "android/os/Build");
-  SETCLASS(JSONObject_class, "org/json/JSONObject");
+    SETCLASS(Build_class, "android/os/Build");
+    SETCLASS(JSONObject_class, "org/json/JSONObject");
 #endif // IS_PLATFORM_ANDROID
 
-  //
-  // Instance fields
-  //
+    //
+    // Instance fields
+    //
 
-  //
-  // Static fields
-  //
+    //
+    // Static fields
+    //
 #if IS_PLATFORM_ANDROID
-  EXCEPTIONANDNULLCHECK(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
+    EXCEPTIONANDNULLCHECK(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
 #endif // IS_PLATFORM_ANDROID
 
-  //
-  // Instance methods
-  //
-  EXCEPTIONANDNULLCHECK(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
+    //
+    // Instance methods
+    //
+    EXCEPTIONANDNULLCHECK(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
 #if IS_PLATFORM_ANDROID
-  EXCEPTIONANDNULLCHECK(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
-  EXCEPTIONANDNULLCHECK(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
+    EXCEPTIONANDNULLCHECK(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
+    EXCEPTIONANDNULLCHECK(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
 #endif // IS_PLATFORM_ANDROID
 
-  //
-  // Static methods
-  //
+    //
+    // Static methods
+    //
 
-  EXCEPTIONANDNULLCHECK(Status_fromInt_method = env->GetStaticMethodID(Status_class, "fromInt", "(I)Lcom/brentonbostick/common/Status;"));
+    EXCEPTIONANDNULLCHECK(Status_fromInt_method = env->GetStaticMethodID(Status_class, "fromInt", "(I)Lcom/brentonbostick/common/Status;"));
 
-  //
-  // Enums
-  //
+    //
+    // Enums
+    //
 
-  INSERTINTOMAP(statusEnumMap, Status::OK, createStatusObject(env, Status::OK));
-  INSERTINTOMAP(statusEnumMap, Status::ERR, createStatusObject(env, Status::ERR));
-  INSERTINTOMAP(statusEnumMap, Status::CONTINUE, createStatusObject(env, Status::CONTINUE));
+    INSERTINTOMAP(statusEnumMap, Status::OK, createStatusObject(env, Status::OK));
+    INSERTINTOMAP(statusEnumMap, Status::ERR, createStatusObject(env, Status::ERR));
+    INSERTINTOMAP(statusEnumMap, Status::CONTINUE, createStatusObject(env, Status::CONTINUE));
 }
 
 void teardownJniCache(JavaVM *vm) {
 
-  JNIEnv *env;
-  GETENV(env, vm);
+    JNIEnv *env;
+    GETENV(env, vm);
 
-  env->DeleteGlobalRef(File_class);
-  env->DeleteGlobalRef(Status_class);
+    env->DeleteGlobalRef(File_class);
+    env->DeleteGlobalRef(Status_class);
 #if IS_PLATFORM_ANDROID
-  env->DeleteGlobalRef(Build_class);
-  env->DeleteGlobalRef(JSONObject_class);
+    env->DeleteGlobalRef(Build_class);
+    env->DeleteGlobalRef(JSONObject_class);
 #endif // IS_PLATFORM_ANDROID
 }
 
