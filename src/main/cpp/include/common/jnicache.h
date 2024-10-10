@@ -45,15 +45,6 @@
     env->DeleteLocalRef(classVar ## _local); \
   } while (false)
 
-#define SETOBJECT(objectVar, code) \
-  do { \
-    jobject objectVar ## _local = code; \
-    EXCEPTIONANDNULLCHECK(objectVar ## _local); \
-    objectVar = env->NewGlobalRef(objectVar ## _local); \
-    EXCEPTIONANDNULLCHECK(objectVar); \
-    env->DeleteLocalRef(objectVar ## _local); \
-  } while (false)
-
 #define INSERTINTOMAP(map, e, code) \
   do { \
     jobject local = code; \
@@ -72,19 +63,12 @@
 extern jclass Status_class;
 
 #if IS_PLATFORM_ANDROID
-extern jclass DisplayMetrics_class;
 extern jclass Build_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
 // Instance fields
 //
-#if IS_PLATFORM_ANDROID
-extern jfieldID DisplayMetrics_widthPixels_field;
-extern jfieldID DisplayMetrics_heightPixels_field;
-extern jfieldID DisplayMetrics_xdpi_field;
-extern jfieldID DisplayMetrics_ydpi_field;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Static fields
