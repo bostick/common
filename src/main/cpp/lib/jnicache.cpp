@@ -35,6 +35,7 @@ jclass File_class;
 jclass Status_class;
 #if IS_PLATFORM_ANDROID
 jclass Build_class;
+jclass JSONObject_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -52,6 +53,10 @@ jfieldID Build_MODEL_field;
 // Instance methods
 //
 jmethodID File_getAbsolutePath_method;
+#if IS_PLATFORM_ANDROID
+jmethodID JSONObject_getJSONArray_method;
+jmethodID JSONObject_has_method;
+#endif // IS_PLATFORM_ANDROID
 
 //
 // Static methods
@@ -79,6 +84,7 @@ void setupJNICache(JavaVM *vm) {
   SETCLASS(Status_class, "com/brentonbostick/common/Status");
 #if IS_PLATFORM_ANDROID
   SETCLASS(Build_class, "android/os/Build");
+  SETCLASS(JSONObject_class, "org/json/JSONObject");
 #endif // IS_PLATFORM_ANDROID
 
   //
@@ -96,6 +102,10 @@ void setupJNICache(JavaVM *vm) {
   // Instance methods
   //
   EXCEPTIONANDNULLCHECK(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
+#if IS_PLATFORM_ANDROID
+  EXCEPTIONANDNULLCHECK(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
+  EXCEPTIONANDNULLCHECK(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
+#endif // IS_PLATFORM_ANDROID
 
   //
   // Static methods
@@ -119,9 +129,9 @@ void teardownJNICache(JavaVM *vm) {
 
   env->DeleteGlobalRef(File_class);
   env->DeleteGlobalRef(Status_class);
-
 #if IS_PLATFORM_ANDROID
   env->DeleteGlobalRef(Build_class);
+  env->DeleteGlobalRef(JSONObject_class);
 #endif // IS_PLATFORM_ANDROID
 }
 
