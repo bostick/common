@@ -62,9 +62,9 @@
 
 extern jclass File_class;
 extern jclass Status_class;
-
 #if IS_PLATFORM_ANDROID
 extern jclass Build_class;
+extern jclass JSONArray_class;
 extern jclass JSONObject_class;
 #endif // IS_PLATFORM_ANDROID
 
@@ -84,6 +84,9 @@ extern jfieldID Build_MODEL_field;
 //
 extern jmethodID File_getAbsolutePath_method;
 #if IS_PLATFORM_ANDROID
+extern jmethodID JSONArray_getDouble_method;
+extern jmethodID JSONArray_getJSONArray_method;
+extern jmethodID JSONArray_length_method;
 extern jmethodID JSONObject_has_method;
 extern jmethodID JSONObject_getJSONArray_method;
 #endif // IS_PLATFORM_ANDROID
