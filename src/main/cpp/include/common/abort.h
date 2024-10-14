@@ -16,11 +16,15 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+//
+// keep compilable with C and C++
+//
+
 #pragma once
 
 #include "common/logging.h"
 
-#include <cstdlib> // for abort
+#include <stdlib.h> // for abort
 
 
 //
@@ -29,5 +33,5 @@
 #define ABORT(msg, ...) \
   do { \
     LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-    std::abort(); \
+    abort(); \
   } while (0)
