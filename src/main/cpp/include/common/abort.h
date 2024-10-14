@@ -20,11 +20,14 @@
 
 #include "common/logging.h"
 
+#include <cstdlib> // for abort
+
+
 //
 // log message and abort
 //
 #define ABORT(msg, ...) \
   do { \
     LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-    *((volatile char*)0) = 'a'; \
+    std::abort(); \
   } while (0)
