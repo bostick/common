@@ -93,6 +93,8 @@ extern LOG_decl LOGT_expanded;
 #endif // IS_PLATFORM_ANDROID
 
 
+#ifdef __cplusplus
+
 class LogTracer {
     const char *tag;
     const char *function;
@@ -109,6 +111,12 @@ public:
 
 #define LOG_ENTRY_EXIT \
   LOG_ENTRY_EXIT_FOR(TAG, __FUNCTION__, __FILE__, __LINE__)
+
+#else
+
+#define LOG_ENTRY_EXIT
+
+#endif // __cplusplus
 
 void SetLogLevel(int level);
 
