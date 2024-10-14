@@ -10,6 +10,7 @@ This is a C++ source library and the source files are intended to be used in oth
 * abort: ABORT macro
 * assert: ASSERT macro
 * check: CHECK macros
+* clock: clock functions
 * file: functions for opening and saving files
 * jnicache: cache various classes, methods, and fields for JNI
 * jniutils: utility macros and functions for JNI
