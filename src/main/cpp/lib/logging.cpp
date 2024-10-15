@@ -182,7 +182,7 @@ LOG_decl LOGE_expanded = LogVarArgError;
 LOG_decl LOGU_expanded = LogVarArgUnusual;
 LOG_decl LOGW_expanded = LogVarArgWarn;
 LOG_decl LOGI_expanded = LogVarArgInfo;
-LOG_decl LOGD_expanded = LogVarArgDebug;
+LOG_decl LOGD_expanded = LogVarArgNull;
 LOG_decl LOGT_expanded = LogVarArgNull;
 
 
