@@ -54,6 +54,14 @@ target_include_directories(common-lib
         src/main/cpp/include
 )
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
+
+target_link_libraries(common-lib
+   log
+)
+
+endif()
+
 #
 # Setup warnings
 #
