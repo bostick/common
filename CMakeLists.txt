@@ -63,6 +63,23 @@ target_link_libraries(common-lib
 endif()
 
 #
+# compile with -fPIC to fix symbol relocation errors
+#
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+target_compile_options(common-lib PRIVATE
+    -fPIC
+)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+target_compile_options(common-lib PRIVATE
+    -fPIC
+)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+target_compile_options(common-lib PRIVATE
+    -fPIC
+)
+endif()
+
+#
 # Setup warnings
 #
 # https://www.foonathan.net/2018/10/cmake-warnings/
