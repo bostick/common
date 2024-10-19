@@ -19,7 +19,7 @@
 cmake_minimum_required(VERSION 3.22.1)
 
 project(common
-    LANGUAGES C CXX
+    LANGUAGES CXX
 )
 
 set(SOURCES_LIB
