@@ -147,6 +147,31 @@ void teardownJniCache(JavaVM *vm) {
 
 
 
+JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM *vm, void *reserved) {
+
+    (void)reserved;
+
+    setupJniCache(vm);
+
+    return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNICALL
+JNI_OnUnload(JavaVM *vm, void *reserved) {
+
+    (void)reserved;
+
+    teardownJniCache(vm);
+}
+
+
+
+
+
+
+
+
 
 
 
