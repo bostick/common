@@ -22,6 +22,16 @@ project(common
     LANGUAGES CXX
 )
 
+if("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
+# ok
+elseif("${COMMON_LIBRARY_TYPE}" STREQUAL "STATIC")
+# ok
+elseif("${COMMON_LIBRARY_TYPE}" STREQUAL "MODULE")
+# ok
+else("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
+message(FATAL_ERROR "Invalid value for COMMON_LIBRARY_TYPE: ${COMMON_LIBRARY_TYPE}")
+endif("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
+
 set(SOURCES_LIB
     src/main/cpp/lib/clock.cpp
     src/main/cpp/lib/file.cpp
@@ -45,7 +55,7 @@ list(APPEND SOURCES_LIB
 
 endif()
 
-add_library(common-lib STATIC
+add_library(common-lib ${COMMON_LIBRARY_TYPE}
     ${SOURCES_LIB}
 )
 
