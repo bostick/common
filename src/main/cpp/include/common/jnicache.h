@@ -85,6 +85,7 @@ extern jfieldID Build_MODEL_field;
 extern jmethodID File_getAbsolutePath_method;
 #if IS_PLATFORM_ANDROID
 extern jmethodID JSONArray_getDouble_method;
+extern jmethodID JSONArray_getInt_method;
 extern jmethodID JSONArray_getJSONArray_method;
 extern jmethodID JSONArray_length_method;
 extern jmethodID JSONObject_has_method;
