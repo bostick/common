@@ -29,6 +29,12 @@
 
 #if IS_PLATFORM_WINDOWS
 
+//
+// based on example here:
+//
+// https://learn.microsoft.com/en-us/cpp/preprocessor/pragma-directives-and-the-pragma-keyword?view=msvc-170
+//
+
 #define ASSERT(cond) \
     do { \
         _Pragma("warning(suppress: 4127)") /* C4127 conditional expression is constant */ \
