@@ -121,9 +121,10 @@ endif()
 
 set_target_properties(common-lib
     PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS NO
+        OUTPUT_NAME common
+        CXX_STANDARD 20
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS NO
 )
 
 
