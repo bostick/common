@@ -49,6 +49,10 @@
 
 typedef void (*LOG_decl)(const char *tag, const char *fmt, ...);
 
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 #if __GNUC__ || __clang__
 
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGE_expanded;
@@ -68,6 +72,10 @@ extern LOG_decl LOGD_expanded;
 extern LOG_decl LOGT_expanded;
 
 #endif // __GNUC__ || __clang__
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 
 #if IS_PLATFORM_ANDROID
