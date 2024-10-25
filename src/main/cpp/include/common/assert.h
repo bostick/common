@@ -23,21 +23,70 @@
 #pragma once
 
 #include "common/abort.h"
+#include "common/platform.h"
 
 #ifdef NDEBUG
 
-#define ASSERT(cond) ((void)0)
+#if IS_PLATFORM_WINDOWS
+
+#define ASSERT(cond) \
+    do { \
+        _Pragma("warning(suppress: 4127)") /* C4127 conditional expression is constant */ \
+        ((void)0); \
+    } while (0)
+
+#else
+
+#define ASSERT(cond) \
+    do { \
+        ((void)0); \
+    } while (0)
+
+#endif // IS_PLATFORM_WINDOWS
 
 #else // NDEBUG
+
+#if IS_PLATFORM_WINDOWS
 
 //
 // if cond is false, then abort
 //
 #define ASSERT(cond) \
-  do { \
-    if (!(cond)) { \
-      ABORT("ASSERTION FAILED: %s %s:%d", #cond, __FILE__, __LINE__); \
-    } \
-  } while (0)
+    do { \
+        _Pragma("warning(suppress: 4127)") /* C4127 conditional expression is constant */ \
+        if (!(cond)) { \
+            ABORT("ASSERTION FAILED: %s %s:%d", #cond, __FILE__, __LINE__); \
+        } \
+    } while (0)
+
+#else
+
+//
+// if cond is false, then abort
+//
+#define ASSERT(cond) \
+    do { \
+        if (!(cond)) { \
+            ABORT("ASSERTION FAILED: %s %s:%d", #cond, __FILE__, __LINE__); \
+        } \
+    } while (0)
+
+#endif // IS_PLATFORM_WINDOWS
 
 #endif // NDEBUG
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
