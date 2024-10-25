@@ -34,7 +34,7 @@
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
-int64_t uptimeMillis() {
+int64_t uptimeMillis(void) {
 
     timespec now; // NOLINT(*-pro-type-member-init)
 
@@ -56,7 +56,7 @@ int64_t uptimeMillis() {
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 
-int64_t wallClockSeconds() {
+int64_t wallClockSeconds(void) {
 
   auto now = std::chrono::system_clock::now();
 

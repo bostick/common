@@ -16,14 +16,39 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+//
+// keep compilable with C and C++
+//
+
 #pragma once
 
-#include <cstdint>
+#include <stdint.h> // int64_t NOLINT(*-deprecated-headers)
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+int64_t uptimeMillis(void);
+
+int64_t wallClockSeconds(void);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 
-int64_t uptimeMillis();
 
-int64_t wallClockSeconds();
+
+
+
+
+
+
+
+
+
+
+
 
 
 

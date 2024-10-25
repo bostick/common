@@ -30,7 +30,7 @@
 
 #if IS_PLATFORM_IOS
 
-int64_t uptimeMillis() {
+int64_t uptimeMillis(void) {
 
     NSTimeInterval systemUptime = [[NSProcessInfo processInfo] systemUptime];
     
@@ -39,7 +39,7 @@ int64_t uptimeMillis() {
 
 #elif IS_PLATFORM_MACOS
 
-int64_t uptimeMillis() {
+int64_t uptimeMillis(void) {
 
    auto t = mach_absolute_time();
 
