@@ -62,7 +62,8 @@ target_include_directories(common-lib
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
 
 target_link_libraries(common-lib
-   log
+    PRIVATE
+        log
 )
 
 endif()
