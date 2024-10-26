@@ -67,22 +67,6 @@ target_link_libraries(common-lib
 
 endif()
 
-#
-# compile with -fPIC to fix symbol relocation errors
-#
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-target_compile_options(common-lib PRIVATE
-    -fPIC
-)
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-target_compile_options(common-lib PRIVATE
-    -fPIC
-)
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-target_compile_options(common-lib PRIVATE
-    -fPIC
-)
-endif()
 
 #
 # Setup warnings
@@ -120,6 +104,7 @@ set_target_properties(common-lib
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS NO
+        POSITION_INDEPENDENT_CODE ON
 )
 
 
