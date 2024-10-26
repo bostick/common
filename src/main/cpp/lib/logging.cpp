@@ -206,7 +206,7 @@ LogTracer::~LogTracer() {
 //
 void GrabNow() {
     time(&timer);
-    timeinfo = localtime(&timer);
+    timeinfo = std::localtime(&timer);
     //
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
     //
