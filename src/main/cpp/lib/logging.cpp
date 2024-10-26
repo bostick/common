@@ -170,8 +170,8 @@ void LogVarArgTrace(const char *tag, const char *fmt, ...) {
 #endif // IS_PLATFORM_ANDROID
 
 void LogVarArgNull(const char *tag, const char *fmt, ...) {
-    (void) tag;
-    (void) fmt;
+    (void)tag;
+    (void)fmt;
 }
 
 
