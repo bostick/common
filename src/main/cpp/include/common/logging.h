@@ -84,15 +84,41 @@ extern LOG_decl LOGT_expanded;
 // LOGV (Verbose) is the same as LOGT (Trace), but prefer to use LOGT
 //
 
-#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
-#define LOGV(fmt, ...) LOGT_expanded(TAG, fmt __VA_OPT__(,) __VA_ARGS__)
+//
+// doing:
+// LOGI()
+//
+// is completely fine.
+// LOGI() expands into LOGI_expanded(TAG, "")
+//
+// the old definition of:
+// LOGI_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+//
+// meant that LOGI() expanded into LOGI_expanded(TAG, )
+//
+// and there is no easy way to get rid of the trailing comma.
+//
+// References such as:
+// https://gcc.gnu.org/onlinedocs/cpp/Macro-Arguments.html
+//
+// explain "You can leave macro arguments empty"
+//
+
+#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define LOGV(fmt, ...) LOGT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
 
 #else // IS_PLATFORM_ANDROID
+
+//
+// the "\n" in the below definitions serves 2 purposes:
+// 1. allowing LOGI() to be expanded properly (the same purpose as "" above)
+// 2. adding the trailing "\n" that is needed on non-Android platforms
+//
 
 #define LOGE(fmt, ...) LOGE_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 #define LOGU(fmt, ...) LOGU_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
