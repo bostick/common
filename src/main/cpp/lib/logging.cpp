@@ -218,8 +218,6 @@ void SetLogLevel(int level) {
 
     switch (level) {
     case LOGLEVEL_ERROR: {
-        LOGE_expanded = LogVarArgError;
-        LOGU_expanded = LogVarArgUnusual;
         LOGW_expanded = LogVarArgNull;
         LOGI_expanded = LogVarArgNull;
         LOGD_expanded = LogVarArgNull;
@@ -227,8 +225,6 @@ void SetLogLevel(int level) {
         break;
     }
     case LOGLEVEL_WARN: {
-        LOGE_expanded = LogVarArgError;
-        LOGU_expanded = LogVarArgUnusual;
         LOGW_expanded = LogVarArgWarn;
         LOGI_expanded = LogVarArgNull;
         LOGD_expanded = LogVarArgNull;
@@ -236,8 +232,6 @@ void SetLogLevel(int level) {
         break;
     }
     case LOGLEVEL_INFO: {
-        LOGE_expanded = LogVarArgError;
-        LOGU_expanded = LogVarArgUnusual;
         LOGW_expanded = LogVarArgWarn;
         LOGI_expanded = LogVarArgInfo;
         LOGD_expanded = LogVarArgNull;
@@ -245,8 +239,6 @@ void SetLogLevel(int level) {
         break;
     }
     case LOGLEVEL_DEBUG: {
-        LOGE_expanded = LogVarArgError;
-        LOGU_expanded = LogVarArgUnusual;
         LOGW_expanded = LogVarArgWarn;
         LOGI_expanded = LogVarArgInfo;
         LOGD_expanded = LogVarArgDebug;
@@ -254,8 +246,6 @@ void SetLogLevel(int level) {
         break;
     }
     case LOGLEVEL_TRACE: {
-        LOGE_expanded = LogVarArgError;
-        LOGU_expanded = LogVarArgUnusual;
         LOGW_expanded = LogVarArgWarn;
         LOGI_expanded = LogVarArgInfo;
         LOGD_expanded = LogVarArgDebug;
