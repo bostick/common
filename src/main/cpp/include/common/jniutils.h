@@ -20,9 +20,13 @@
 
 #include "common/status.h"
 
+#include "common/abort.h"
+#include "common/assert.h"
+
 #include <jni.h>
 
 #include <limits> // for numeric_limits
+#include <cstddef> // for size_t
 
 
 #pragma clang diagnostic push
@@ -40,8 +44,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         jint getEnvRet; \
         ASSERT(vm); \
         if ((getEnvRet = vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
-            LOGE("Error calling GetEnv: %d", getEnvRet); \
-            ASSERT(false && "Error calling GetEnv"); \
+            ABORT("Error calling GetEnv: %d", getEnvRet); \
         } \
     } while (false)
 
@@ -51,9 +54,9 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETJAVAVM(env, vm) \
     do { \
         jint getJavaVMRet; \
+        ASSERT(env); \
         if ((getJavaVMRet = env->GetJavaVM(&vm)) != 0) { \
-            LOGE("Error calling GetJavaVM: %d", getJavaVMRet); \
-            ASSERT(false && "Error calling GetJavaVM"); \
+            ABORT("Error calling GetJavaVM: %d", getJavaVMRet); \
         } \
     } while (false)
 

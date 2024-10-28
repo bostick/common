@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include "common/assert.h"
 #include "common/platform.h"
 #include "common/status.h"
 
@@ -28,12 +29,8 @@
 
 #define EXCEPTIONANDNULLCHECK(var) \
     do { \
-        if (env->ExceptionCheck()) { \
-            ASSERT(false && "Exception"); \
-        } \
-        if ((var) == NULL) { \
-            ASSERT(false && #var " is NULL"); \
-        } \
+        ASSERT(!env->ExceptionCheck()); \
+        ASSERT((var) && #var " is NULL"); \
     } while (false)
 
 #define SETCLASS(classVar, classNameString) \
