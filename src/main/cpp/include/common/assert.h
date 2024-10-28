@@ -25,8 +25,6 @@
 #include "common/abort.h"
 #include "common/platform.h"
 
-#ifdef NDEBUG
-
 #if IS_PLATFORM_WINDOWS
 
 //
@@ -35,25 +33,6 @@
 // https://learn.microsoft.com/en-us/cpp/preprocessor/pragma-directives-and-the-pragma-keyword?view=msvc-170
 //
 
-#define ASSERT(cond) \
-    do { \
-        _Pragma("warning(suppress: 4127)") /* C4127 conditional expression is constant */ \
-        ((void)0); \
-    } while (0)
-
-#else
-
-#define ASSERT(cond) \
-    do { \
-        ((void)0); \
-    } while (0)
-
-#endif // IS_PLATFORM_WINDOWS
-
-#else // NDEBUG
-
-#if IS_PLATFORM_WINDOWS
-
 //
 // if cond is false, then abort
 //
@@ -78,8 +57,6 @@
     } while (0)
 
 #endif // IS_PLATFORM_WINDOWS
-
-#endif // NDEBUG
 
 
 
