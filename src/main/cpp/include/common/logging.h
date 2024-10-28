@@ -22,8 +22,9 @@
 
 #pragma once
 
-#include "common/assert.h"
 #include "common/platform.h"
+
+#include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
 
 
 //
@@ -36,25 +37,28 @@
 #define LOGLEVEL_DEBUG 3
 #define LOGLEVEL_TRACE 4
 
-//
-// keep all same length, 5 characters, in order to stay aligned
-//
-// #define ERROR_TAG   "ERROR" " "
-// #define UNUSUAL_TAG "!!!!!" " "
-// #define WARN_TAG    " WARN" " "
-// #define INFO_TAG    " INFO" " "
-// #define DEBUG_TAG   "DEBUG" " "
-// #define TRACE_TAG   "TRACE" " "
-
-
+// var arg
 typedef void (*LOG_decl)(const char *tag, const char *fmt, ...);
+
+// va_list
+typedef void (*LOG_declV)(const char *tag, const char *fmt, va_list args);
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
+// var arg
+
 #if __GNUC__ || __clang__
 
+//
+// declare that LOGE_expanded et al take printf-style arguments
+//
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
+//
+
+extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGF_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGE_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGU_expanded;
 extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGW_expanded;
@@ -64,6 +68,7 @@ extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGT_expanded;
 
 #else // __GNUC__ || __clang__
 
+extern LOG_decl LOGF_expanded;
 extern LOG_decl LOGE_expanded;
 extern LOG_decl LOGU_expanded;
 extern LOG_decl LOGW_expanded;
@@ -72,6 +77,21 @@ extern LOG_decl LOGD_expanded;
 extern LOG_decl LOGT_expanded;
 
 #endif // __GNUC__ || __clang__
+
+
+// va_list
+
+//
+// the va_list functions LOGE_expandedV et al can be called by code that already has a va_list
+//
+
+extern LOG_declV LOGF_expandedV;
+extern LOG_declV LOGE_expandedV;
+extern LOG_declV LOGU_expandedV;
+extern LOG_declV LOGW_expandedV;
+extern LOG_declV LOGI_expandedV;
+extern LOG_declV LOGD_expandedV;
+extern LOG_declV LOGT_expandedV;
 
 #ifdef __cplusplus
 }
@@ -156,8 +176,16 @@ public:
 
 #endif // __cplusplus
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 void SetLogLevel(int level);
 
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 
 

@@ -28,6 +28,7 @@ message(FATAL_ERROR "Invalid value for COMMON_LIBRARY_TYPE: ${COMMON_LIBRARY_TYP
 endif()
 
 set(SOURCES_LIB
+    abort.cpp
     clock.cpp
     file.cpp
     logging.cpp

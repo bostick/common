@@ -16,29 +16,44 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#pragma once
+#include "common/abort.h"
 
 #include "common/logging.h"
-#include "common/status.h"
 
-//
-// if cond is false, then log message and return ERR
-//
-#define CHECK(cond, msg, ...) \
-  do { \
-    if (!(cond)) { \
-      LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-      return ERR; \
-    } \
-  } while (0)
+#include <cstdlib> // for abort
 
-//
-// if cond is true, then log message and return ERR
-//
-#define CHECK_NOT(cond, msg, ...) \
-  do { \
-    if ((cond)) { \
-      LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-      return ERR; \
-    } \
-  } while (0)
+
+#define TAG "abort"
+
+
+void ABORT_expanded(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    ABORT_expandedV(tag, fmt, args);
+    //
+    // unreachable
+    //
+    // va_end(args);
+}
+
+
+void ABORT_expandedV(const char *tag, const char *fmt, va_list args) {
+    LOGF_expandedV(tag, fmt, args);
+    std::abort();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

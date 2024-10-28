@@ -22,16 +22,109 @@
 
 #pragma once
 
-#include "common/logging.h"
+#include "common/platform.h"
 
-#include <stdlib.h> // for abort
+#include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
 
+
+#ifdef __cplusplus
+extern "C" {
+
+// var arg
+
+#if __GNUC__ || __clang__
 
 //
-// log message and abort
+// declare that ABORT_expanded takes printf-style arguments
 //
-#define ABORT(msg, ...) \
-  do { \
-    LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-    abort(); \
-  } while (0)
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
+//
+
+//
+// [[noreturn]] since C++11
+//
+
+__attribute__ ((format (printf, 2, 3))) void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
+
+#else // __GNUC__ || __clang__
+
+void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
+
+#endif // __GNUC__ || __clang__
+
+
+// va_list
+
+//
+// the va_list function ABORT_expandedV can be called by code that already has a va_list
+//
+
+void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list args);
+
+}
+
+#else
+
+//
+// C, not C++
+//
+
+// var arg
+
+#if __GNUC__ || __clang__
+
+//
+// declare that ABORT_expanded takes printf-style arguments
+//
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
+//
+
+//
+// [[noreturn]] since C23 and C23 is not yet generally available
+//
+
+__attribute__ ((format (printf, 2, 3))) void ABORT_expanded /*[[noreturn]]*/ (const char *tag, const char *fmt, ...);
+
+#else // __GNUC__ || __clang__
+
+void ABORT_expanded /*[[noreturn]]*/ (const char *tag, const char *fmt, ...);
+
+#endif // __GNUC__ || __clang__
+
+
+// va_list
+
+//
+// the va_list function ABORT_expandedV can be called by code that already has a va_list
+//
+
+void ABORT_expandedV /*[[noreturn]]*/ (const char *tag, const char *fmt, va_list args);
+
+#endif // __cplusplus
+
+
+#if IS_PLATFORM_ANDROID
+
+#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+
+#else // IS_PLATFORM_ANDROID
+
+#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+
+#endif // IS_PLATFORM_ANDROID
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

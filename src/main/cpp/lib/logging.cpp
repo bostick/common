@@ -24,6 +24,8 @@
 
 #include "common/logging.h"
 
+#include "common/assert.h"
+
 #if IS_PLATFORM_ANDROID
 
 #include <android/log.h>
@@ -49,141 +51,171 @@ struct tm *timeinfo;
 char nowStrBuf[80];
 
 
+void LogFatalV(const char *tag, const char *fmt, va_list args);
+void LogErrorV(const char *tag, const char *fmt, va_list args);
+void LogUnusualV(const char *tag, const char *fmt, va_list args);
+void LogWarnV(const char *tag, const char *fmt, va_list args);
+void LogInfoV(const char *tag, const char *fmt, va_list args);
+void LogDebugV(const char *tag, const char *fmt, va_list args);
+void LogTraceV(const char *tag, const char *fmt, va_list args);
+
+
+void LogFatal(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogFatalV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogError(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogErrorV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogUnusual(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogUnusualV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogWarn(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogWarnV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogInfo(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogInfoV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogDebug(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogDebugV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogTrace(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogTraceV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogNull(const char *tag, const char *fmt, ...) {
+    (void)tag;
+    (void)fmt;
+}
+
+
 #if IS_PLATFORM_ANDROID
 
-void LogVarArgError(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-    va_end(args);
+void LogFatalV(const char *tag, const char *fmt, va_list args) {
+    __android_log_vprint(ANDROID_LOG_FATAL, tag, fmt, args);
 }
 
-void LogVarArgUnusual(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
+void LogErrorV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-    va_end(args);
 }
 
-void LogVarArgWarn(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
+void LogUnusualV(const char *tag, const char *fmt, va_list args) {
+    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
+}
+
+void LogWarnV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
-    va_end(args);
 }
 
-void LogVarArgInfo(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
+void LogInfoV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_INFO, tag, fmt, args);
-    va_end(args);
 }
 
-void LogVarArgDebug(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
+void LogDebugV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_DEBUG, tag, fmt, args);
-    va_end(args);
 }
 
-void LogVarArgTrace(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
+void LogTraceV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_VERBOSE, tag, fmt, args);
-    va_end(args);
 }
 
 #else // IS_PLATFORM_ANDROID
 
-void LogVarArgError(const char *tag, const char *fmt, ...) {
-
-  (void)tag;
-
-  va_list args;
-  va_start(args, fmt);
-  vfprintf(stderr, fmt, args);
-  va_end(args);
-
-  std::fflush(stderr);
+void LogFatalV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
 }
 
-void LogVarArgUnusual(const char *tag, const char *fmt, ...) {
-
-  (void)tag;
-
-  va_list args;
-  va_start(args, fmt);
-  vfprintf(stderr, fmt, args);
-  va_end(args);
-
-  std::fflush(stderr);
+void LogErrorV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
 }
 
-void LogVarArgWarn(const char *tag, const char *fmt, ...) {
-
-  (void)tag;
-
-  va_list args;
-  va_start(args, fmt);
-  vfprintf(stderr, fmt, args);
-  va_end(args);
-
-  std::fflush(stderr);
+void LogUnusualV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
 }
 
-void LogVarArgInfo(const char *tag, const char *fmt, ...) {
-
-  (void)tag;
-
-  va_list args;
-  va_start(args, fmt);
-  vfprintf(stderr, fmt, args);
-  va_end(args);
-
-  std::fflush(stderr);
+void LogWarnV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
 }
 
-void LogVarArgDebug(const char *tag, const char *fmt, ...) {
-
-  (void)tag;
-
-  va_list args;
-  va_start(args, fmt);
-  vfprintf(stderr, fmt, args);
-  va_end(args);
-
-  std::fflush(stderr);
+void LogInfoV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
 }
 
-void LogVarArgTrace(const char *tag, const char *fmt, ...) {
+void LogDebugV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
+}
 
-  (void)tag;
-
-  va_list args;
-  va_start(args, fmt);
-  vfprintf(stderr, fmt, args);
-  va_end(args);
-
-  std::fflush(stderr);
+void LogTraceV(const char *tag, const char *fmt, va_list args) {
+    (void)tag;
+    std::vfprintf(stderr, fmt, args);
+    std::fflush(stderr);
 }
 
 #endif // IS_PLATFORM_ANDROID
 
-void LogVarArgNull(const char *tag, const char *fmt, ...) {
+void LogNullV(const char *tag, const char *fmt, va_list args) {
     (void)tag;
     (void)fmt;
+    (void)args;
 }
 
 
 //
 // default log level is INFO
 //
-LOG_decl LOGE_expanded = LogVarArgError;
-LOG_decl LOGU_expanded = LogVarArgUnusual;
-LOG_decl LOGW_expanded = LogVarArgWarn;
-LOG_decl LOGI_expanded = LogVarArgInfo;
-LOG_decl LOGD_expanded = LogVarArgNull;
-LOG_decl LOGT_expanded = LogVarArgNull;
+LOG_decl LOGF_expanded = LogFatal;
+LOG_decl LOGE_expanded = LogError;
+LOG_decl LOGU_expanded = LogUnusual;
+LOG_decl LOGW_expanded = LogWarn;
+LOG_decl LOGI_expanded = LogInfo;
+LOG_decl LOGD_expanded = LogNull;
+LOG_decl LOGT_expanded = LogNull;
+
+LOG_declV LOGF_expandedV = LogFatalV;
+LOG_declV LOGE_expandedV = LogErrorV;
+LOG_declV LOGU_expandedV = LogUnusualV;
+LOG_declV LOGW_expandedV = LogWarnV;
+LOG_declV LOGI_expandedV = LogInfoV;
+LOG_declV LOGD_expandedV = LogNullV;
+LOG_declV LOGT_expandedV = LogNullV;
 
 
 LogTracer::LogTracer(const char *tag, const char *function, const char *file, int line) :
@@ -210,50 +242,81 @@ void GrabNow() {
     //
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
     //
-    std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
+    size_t res;
+    res = std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
+    ASSERT(res != 0);
 }
 
 
 void SetLogLevel(int level) {
 
+    //
+    // LOGE_expanded and LOGU_expanded never change, so no need to set
+    //
+
     switch (level) {
     case LOGLEVEL_ERROR: {
-        LOGW_expanded = LogVarArgNull;
-        LOGI_expanded = LogVarArgNull;
-        LOGD_expanded = LogVarArgNull;
-        LOGT_expanded = LogVarArgNull;
+        LOGW_expanded = LogNull;
+        LOGI_expanded = LogNull;
+        LOGD_expanded = LogNull;
+        LOGT_expanded = LogNull;
+
+        LOGW_expandedV = LogNullV;
+        LOGI_expandedV = LogNullV;
+        LOGD_expandedV = LogNullV;
+        LOGT_expandedV = LogNullV;
         break;
     }
     case LOGLEVEL_WARN: {
-        LOGW_expanded = LogVarArgWarn;
-        LOGI_expanded = LogVarArgNull;
-        LOGD_expanded = LogVarArgNull;
-        LOGT_expanded = LogVarArgNull;
+        LOGW_expanded = LogWarn;
+        LOGI_expanded = LogNull;
+        LOGD_expanded = LogNull;
+        LOGT_expanded = LogNull;
+
+        LOGW_expandedV = LogWarnV;
+        LOGI_expandedV = LogNullV;
+        LOGD_expandedV = LogNullV;
+        LOGT_expandedV = LogNullV;
         break;
     }
     case LOGLEVEL_INFO: {
-        LOGW_expanded = LogVarArgWarn;
-        LOGI_expanded = LogVarArgInfo;
-        LOGD_expanded = LogVarArgNull;
-        LOGT_expanded = LogVarArgNull;
+        LOGW_expanded = LogWarn;
+        LOGI_expanded = LogInfo;
+        LOGD_expanded = LogNull;
+        LOGT_expanded = LogNull;
+
+        LOGW_expandedV = LogWarnV;
+        LOGI_expandedV = LogInfoV;
+        LOGD_expandedV = LogNullV;
+        LOGT_expandedV = LogNullV;
         break;
     }
     case LOGLEVEL_DEBUG: {
-        LOGW_expanded = LogVarArgWarn;
-        LOGI_expanded = LogVarArgInfo;
-        LOGD_expanded = LogVarArgDebug;
-        LOGT_expanded = LogVarArgNull;
+        LOGW_expanded = LogWarn;
+        LOGI_expanded = LogInfo;
+        LOGD_expanded = LogDebug;
+        LOGT_expanded = LogNull;
+
+        LOGW_expandedV = LogWarnV;
+        LOGI_expandedV = LogInfoV;
+        LOGD_expandedV = LogDebugV;
+        LOGT_expandedV = LogNullV;
         break;
     }
     case LOGLEVEL_TRACE: {
-        LOGW_expanded = LogVarArgWarn;
-        LOGI_expanded = LogVarArgInfo;
-        LOGD_expanded = LogVarArgDebug;
-        LOGT_expanded = LogVarArgTrace;
+        LOGW_expanded = LogWarn;
+        LOGI_expanded = LogInfo;
+        LOGD_expanded = LogDebug;
+        LOGT_expanded = LogTrace;
+
+        LOGW_expandedV = LogWarnV;
+        LOGI_expandedV = LogInfoV;
+        LOGD_expandedV = LogDebugV;
+        LOGT_expandedV = LogTraceV;
         break;
     }
     default: {
-        ASSERT(false);
+        ABORT("invalid log level: %d", level);
     }
     }
 }
