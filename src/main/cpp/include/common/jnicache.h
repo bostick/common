@@ -27,33 +27,33 @@
 
 
 #define EXCEPTIONANDNULLCHECK(var) \
-  do { \
-    if (env->ExceptionCheck()) { \
-      ASSERT(false && "Exception"); \
-    } \
-    if ((var) == NULL) { \
-      ASSERT(false && #var " is NULL"); \
-    } \
-  } while (false)
+    do { \
+        if (env->ExceptionCheck()) { \
+            ASSERT(false && "Exception"); \
+        } \
+        if ((var) == NULL) { \
+            ASSERT(false && #var " is NULL"); \
+        } \
+    } while (false)
 
 #define SETCLASS(classVar, classNameString) \
-  do { \
-    jclass classVar ## _local = env->FindClass(classNameString); \
-    EXCEPTIONANDNULLCHECK(classVar ## _local); \
-    classVar = reinterpret_cast<jclass>(env->NewGlobalRef(classVar ## _local)); \
-    EXCEPTIONANDNULLCHECK(classVar); \
-    env->DeleteLocalRef(classVar ## _local); \
-  } while (false)
+    do { \
+        jclass classVar ## _local = env->FindClass(classNameString); \
+        EXCEPTIONANDNULLCHECK(classVar ## _local); \
+        classVar = reinterpret_cast<jclass>(env->NewGlobalRef(classVar ## _local)); \
+        EXCEPTIONANDNULLCHECK(classVar); \
+        env->DeleteLocalRef(classVar ## _local); \
+    } while (false)
 
 #define INSERTINTOMAP(map, e, code) \
-  do { \
-    jobject local = code; \
-    EXCEPTIONANDNULLCHECK(local); \
-    jobject objectVar = env->NewGlobalRef(local); \
-    EXCEPTIONANDNULLCHECK(objectVar); \
-    map[e] = objectVar; \
-    env->DeleteLocalRef(local); \
-  } while (false)
+    do { \
+        jobject local = code; \
+        EXCEPTIONANDNULLCHECK(local); \
+        jobject objectVar = env->NewGlobalRef(local); \
+        EXCEPTIONANDNULLCHECK(objectVar); \
+        map[e] = objectVar; \
+        env->DeleteLocalRef(local); \
+    } while (false)
 
 
 //

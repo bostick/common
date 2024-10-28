@@ -36,26 +36,26 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 // Call GetEnv and assert if there is an error
 //
 #define GETENV(env, vm) \
-  do { \
-    jint getEnvRet; \
-    ASSERT(vm); \
-    if ((getEnvRet = vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
-      LOGE("Error calling GetEnv: %d", getEnvRet); \
-      ASSERT(false && "Error calling GetEnv"); \
-    } \
-  } while (false)
+    do { \
+        jint getEnvRet; \
+        ASSERT(vm); \
+        if ((getEnvRet = vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
+            LOGE("Error calling GetEnv: %d", getEnvRet); \
+            ASSERT(false && "Error calling GetEnv"); \
+        } \
+    } while (false)
 
 //
 // Call GetJavaVM and assert if there is an error
 //
 #define GETJAVAVM(env, vm) \
-  do { \
-    jint getJavaVMRet; \
-    if ((getJavaVMRet = env->GetJavaVM(&vm)) != 0) { \
-      LOGE("Error calling GetJavaVM: %d", getJavaVMRet); \
-      ASSERT(false && "Error calling GetJavaVM"); \
-    } \
-  } while (false)
+    do { \
+        jint getJavaVMRet; \
+        if ((getJavaVMRet = env->GetJavaVM(&vm)) != 0) { \
+            LOGE("Error calling GetJavaVM: %d", getJavaVMRet); \
+            ASSERT(false && "Error calling GetJavaVM"); \
+        } \
+    } while (false)
 
 
 jobject createStatusObject(JNIEnv *env, Status status);

@@ -25,7 +25,7 @@ elseif("${COMMON_LIBRARY_TYPE}" STREQUAL "MODULE")
 # ok
 else("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
 message(FATAL_ERROR "Invalid value for COMMON_LIBRARY_TYPE: ${COMMON_LIBRARY_TYPE}")
-endif("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
+endif()
 
 set(SOURCES_LIB
     clock.cpp
@@ -70,23 +70,23 @@ endif()
 
 
 #
-# Setup warnings
+# Set up warnings
 #
 # https://www.foonathan.net/2018/10/cmake-warnings/
 #
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 target_compile_options(common-lib PRIVATE
     -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion -Wno-unknown-pragmas -Wno-unused-const-variable
 )
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
 target_compile_options(common-lib PRIVATE
     -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion -Wno-unknown-pragmas -Wno-unused-const-variable
 )
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 target_compile_options(common-lib PRIVATE
     -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion -Wno-unknown-pragmas -Wno-unused-const-variable
 )
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 target_compile_options(common-lib PRIVATE
     #
     # /Zc:preprocessor is needed for handling __VA_OPT__(,)
@@ -95,7 +95,7 @@ target_compile_options(common-lib PRIVATE
     #
     /Zc:preprocessor /WX /W4 /wd4068
 )
-else ()
+else()
 message(FATAL_ERROR "Unrecognized compiler: ${CMAKE_CXX_COMPILER_ID}")
 endif()
 
