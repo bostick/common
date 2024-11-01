@@ -235,6 +235,7 @@ void SetLogLevel(int level) {
     //
 
     switch (level) {
+    case LOGLEVEL_FATAL:
     case LOGLEVEL_ERROR: {
         LOGW_expanded = LogNull;
         LOGI_expanded = LogNull;
