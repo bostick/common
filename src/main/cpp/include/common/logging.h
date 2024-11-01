@@ -44,12 +44,6 @@ typedef void (*LOG_decl)(const char *tag, const char *fmt, ...);
 typedef void (*LOG_declV)(const char *tag, const char *fmt, va_list args);
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-// var arg
-
 #if __GNUC__ || __clang__
 
 //
@@ -58,26 +52,28 @@ extern "C" {
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
 //
 
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGF_expanded;
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGE_expanded;
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGU_expanded;
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGW_expanded;
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGI_expanded;
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGD_expanded;
-extern __attribute__ ((format (printf, 2, 3))) LOG_decl LOGT_expanded;
+#define PRINTF_ATTRIBUTE __attribute__ ((format (printf, 2, 3)))
 
-#else // __GNUC__ || __clang__
+#else
 
-extern LOG_decl LOGF_expanded;
-extern LOG_decl LOGE_expanded;
-extern LOG_decl LOGU_expanded;
-extern LOG_decl LOGW_expanded;
-extern LOG_decl LOGI_expanded;
-extern LOG_decl LOGD_expanded;
-extern LOG_decl LOGT_expanded;
+#define PRINTF_ATTRIBUTE
 
 #endif // __GNUC__ || __clang__
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+// var arg
+
+extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGE_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGU_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGW_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGI_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGD_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGT_expanded;
 
 // va_list
 
@@ -98,13 +94,12 @@ extern LOG_declV LOGT_expandedV;
 #endif // __cplusplus
 
 
+#undef PRINTF_ATTRIBUTE
+
+
 #if IS_PLATFORM_ANDROID
 
 //
-// doing:
-// LOGI()
-//
-// is completely fine.
 // LOGI() expands into LOGI_expanded(TAG, "")
 //
 // the old definition of:
@@ -119,15 +114,12 @@ extern LOG_declV LOGT_expandedV;
 //
 // explain "You can leave macro arguments empty"
 //
+// LOGI("%s", "foo") expands into LOGI_expanded(TAG, "%s" "" , "foo") -> LOGI_expanded(TAG, "%s", "foo")
+//
 
-#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
-#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
-#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
-#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
-#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
-#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+#define COMMON_LOGGING_C ""
 
-#else // IS_PLATFORM_ANDROID
+#else
 
 //
 // the "\n" in the below definitions serves 2 purposes:
@@ -135,14 +127,20 @@ extern LOG_declV LOGT_expandedV;
 // 2. adding the trailing "\n" that is needed on non-Android platforms
 //
 
-#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
-#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
-#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
-#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
-#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
-#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define COMMON_LOGGING_C "\n"
 
 #endif // IS_PLATFORM_ANDROID
+
+//
+// do not call LOGF from top-level
+//
+// #define LOGF(fmt, ...) LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGE(fmt, ...) LOGE_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGW(fmt, ...) LOGW_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGI(fmt, ...) LOGI_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGD(fmt, ...) LOGD_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGT(fmt, ...) LOGT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 
 #ifdef __cplusplus
@@ -158,11 +156,16 @@ public:
     ~LogTracer();
 };
 
-#define LOG_ENTRY_EXIT_FOR(tag, x, y, z) \
+#define COMMON_LOGGING_LOG_ENTRY_EXIT_FOR(tag, x, y, z) \
     LogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x, y, z)
 
+//
+// Place LOG_ENTRY_EXIT at start of function definition and log entry and exit.
+//
+// LOG_ENTRY_EXIT uses RAII and is C++-only
+//
 #define LOG_ENTRY_EXIT \
-  LOG_ENTRY_EXIT_FOR(TAG, __FUNCTION__, __FILE__, __LINE__)
+    COMMON_LOGGING_LOG_ENTRY_EXIT_FOR(TAG, __FUNCTION__, __FILE__, __LINE__)
 
 #else
 

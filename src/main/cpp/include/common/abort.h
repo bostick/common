@@ -27,11 +27,6 @@
 #include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
 
 
-#ifdef __cplusplus
-extern "C" {
-
-// var arg
-
 #if __GNUC__ || __clang__
 
 //
@@ -39,58 +34,41 @@ extern "C" {
 //
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
 //
+
+#define PRINTF_ATTRIBUTE __attribute__ ((format (printf, 2, 3)))
+
+#else
+
+#define PRINTF_ATTRIBUTE
+
+#endif // __GNUC__ || __clang__
+
+#ifdef __cplusplus
 
 //
 // [[noreturn]] since C++11
 //
 
-__attribute__ ((format (printf, 2, 3))) void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
-
-#else // __GNUC__ || __clang__
-
-void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
-
-#endif // __GNUC__ || __clang__
-
-
-// va_list
-
-//
-// the va_list function ABORT_expandedV can be called by code that already has a va_list
-//
-
-void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list args);
-
-}
+#define NORETURN_ATTRIBUTE [[noreturn]]
 
 #else
-
-//
-// C, not C++
-//
-
-// var arg
-
-#if __GNUC__ || __clang__
-
-//
-// declare that ABORT_expanded takes printf-style arguments
-//
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
-//
 
 //
 // [[noreturn]] since C23 and C23 is not yet generally available
 //
 
-__attribute__ ((format (printf, 2, 3))) void ABORT_expanded /*[[noreturn]]*/ (const char *tag, const char *fmt, ...);
+#define NORETURN_ATTRIBUTE /*[[noreturn]]*/
 
-#else // __GNUC__ || __clang__
+#endif // __cplusplus
 
-void ABORT_expanded /*[[noreturn]]*/ (const char *tag, const char *fmt, ...);
 
-#endif // __GNUC__ || __clang__
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
+// var arg
+
+PRINTF_ATTRIBUTE void ABORT_expanded NORETURN_ATTRIBUTE (const char *tag, const char *fmt, ...);
 
 // va_list
 
@@ -98,24 +76,32 @@ void ABORT_expanded /*[[noreturn]]*/ (const char *tag, const char *fmt, ...);
 // the va_list function ABORT_expandedV can be called by code that already has a va_list
 //
 
-void ABORT_expandedV /*[[noreturn]]*/ (const char *tag, const char *fmt, va_list args);
+void ABORT_expandedV NORETURN_ATTRIBUTE (const char *tag, const char *fmt, va_list args);
 
+#ifdef __cplusplus
+}
 #endif // __cplusplus
+
+
+#undef PRINTF_ATTRIBUTE
+#undef NORETURN_ATTRIBUTE
 
 
 #if IS_PLATFORM_ANDROID
 
-#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
+//
+// see logging.h for what is happening here
+//
 
-#else // IS_PLATFORM_ANDROID
+#define COMMON_LOGGING_C ""
 
-#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#else
+
+#define COMMON_LOGGING_C "\n"
 
 #endif // IS_PLATFORM_ANDROID
 
-
-
-
+#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 
 
