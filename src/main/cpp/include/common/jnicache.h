@@ -29,7 +29,10 @@
 
 #define EXCEPTIONANDNULLCHECK(var) \
     do { \
-        ASSERT(!env->ExceptionCheck()); \
+        if (env->ExceptionCheck()) { \
+            env->ExceptionDescribe(); \
+            ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
+        } \
         ASSERT((var) && #var " is NULL"); \
     } while (false)
 

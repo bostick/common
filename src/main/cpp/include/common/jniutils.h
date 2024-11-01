@@ -85,7 +85,11 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
     auto jCount = static_cast<jsize>(count);
 
     jobjectArray arrayObj = env->NewObjectArray(jCount, clazz, NULL);
-    if (env->ExceptionCheck() || arrayObj == NULL) {
+    if (env->ExceptionCheck()) {
+        env->ExceptionDescribe();
+        return NULL;
+    }
+    if (arrayObj == NULL) {
         newArrayObject_log("Error creating array object");
         return NULL;
     }
@@ -93,13 +97,18 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
     for (jsize i = 0; i < jCount; i++) {
 
         jobject obj = F(env, buffer[i]);
-        if (env->ExceptionCheck() || obj == NULL) {
+        if (env->ExceptionCheck()) {
+            env->ExceptionDescribe();
+            return NULL;
+        }
+        if (obj == NULL) {
+            newArrayObject_log("Error assigning object to array");
             return NULL;
         }
 
         env->SetObjectArrayElement(arrayObj, i, obj);
         if (env->ExceptionCheck()) {
-            newArrayObject_log("Error assigning object to array");
+            env->ExceptionDescribe();
             return NULL;
         }
 
