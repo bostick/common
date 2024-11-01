@@ -74,6 +74,11 @@ void newArrayObject_log(const char *msg);
 //
 // function template for creating array objects
 //
+// Example:
+// const sockaddr_storage *addresses;
+// size_t count;
+// newArrayObject<sockaddr_storage, newInetSocketAddress>(env, addresses, count, InetSocketAddress_class)
+//
 template <typename T, jobject (*F)(JNIEnv *, const T &)>
 jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass clazz) {
 
