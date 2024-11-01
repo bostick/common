@@ -47,7 +47,7 @@
 
 #define INSERTINTOMAP(map, e, code) \
     do { \
-        jobject local = code; \
+        jobject local = (code); \
         EXCEPTIONANDNULLCHECK(local); \
         jobject objectVar = env->NewGlobalRef(local); \
         EXCEPTIONANDNULLCHECK(objectVar); \
