@@ -101,10 +101,6 @@ extern LOG_declV LOGT_expandedV;
 #if IS_PLATFORM_ANDROID
 
 //
-// LOGV (Verbose) is the same as LOGT (Trace), but prefer to use LOGT
-//
-
-//
 // doing:
 // LOGI()
 //
@@ -130,7 +126,6 @@ extern LOG_declV LOGT_expandedV;
 #define LOGI(fmt, ...) LOGI_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
 #define LOGD(fmt, ...) LOGD_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
 #define LOGT(fmt, ...) LOGT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
-#define LOGV(fmt, ...) LOGT_expanded(TAG, fmt "" __VA_OPT__(,) __VA_ARGS__)
 
 #else // IS_PLATFORM_ANDROID
 
@@ -146,7 +141,6 @@ extern LOG_declV LOGT_expandedV;
 #define LOGI(fmt, ...) LOGI_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 #define LOGD(fmt, ...) LOGD_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 #define LOGT(fmt, ...) LOGT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
-#define LOGV(fmt, ...) LOGT_expanded(TAG, fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 
 #endif // IS_PLATFORM_ANDROID
 
