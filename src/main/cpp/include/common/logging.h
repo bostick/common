@@ -31,7 +31,6 @@
 // greater = more noise
 //
 #define LOGLEVEL_ERROR 0
-#define LOGLEVEL_UNUSUAL 0
 #define LOGLEVEL_WARN 1
 #define LOGLEVEL_INFO 2
 #define LOGLEVEL_DEBUG 3
@@ -69,7 +68,6 @@ extern "C" {
 
 extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_expanded;
-extern PRINTF_ATTRIBUTE LOG_decl LOGU_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGW_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGI_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGD_expanded;
@@ -83,7 +81,6 @@ extern PRINTF_ATTRIBUTE LOG_decl LOGT_expanded;
 
 extern LOG_declV LOGF_expandedV;
 extern LOG_declV LOGE_expandedV;
-extern LOG_declV LOGU_expandedV;
 extern LOG_declV LOGW_expandedV;
 extern LOG_declV LOGI_expandedV;
 extern LOG_declV LOGD_expandedV;
@@ -136,7 +133,6 @@ extern LOG_declV LOGT_expandedV;
 //
 // #define LOGF(fmt, ...) LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 #define LOGE(fmt, ...) LOGE_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
-#define LOGU(fmt, ...) LOGU_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 #define LOGW(fmt, ...) LOGW_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 #define LOGI(fmt, ...) LOGI_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 #define LOGD(fmt, ...) LOGD_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)

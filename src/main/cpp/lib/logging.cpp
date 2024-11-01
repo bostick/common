@@ -53,7 +53,6 @@ char nowStrBuf[80];
 
 void LogFatalV(const char *tag, const char *fmt, va_list args);
 void LogErrorV(const char *tag, const char *fmt, va_list args);
-void LogUnusualV(const char *tag, const char *fmt, va_list args);
 void LogWarnV(const char *tag, const char *fmt, va_list args);
 void LogInfoV(const char *tag, const char *fmt, va_list args);
 void LogDebugV(const char *tag, const char *fmt, va_list args);
@@ -71,13 +70,6 @@ void LogError(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogErrorV(tag, fmt, args);
-    va_end(args);
-}
-
-void LogUnusual(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    LogUnusualV(tag, fmt, args);
     va_end(args);
 }
 
@@ -125,10 +117,6 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 }
 
-void LogUnusualV(const char *tag, const char *fmt, va_list args) {
-    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-}
-
 void LogWarnV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
 }
@@ -154,12 +142,6 @@ void LogFatalV(const char *tag, const char *fmt, va_list args) {
 }
 
 void LogErrorV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogUnusualV(const char *tag, const char *fmt, va_list args) {
     (void)tag;
     std::vfprintf(stderr, fmt, args);
     std::fflush(stderr);
@@ -203,7 +185,6 @@ void LogNullV(const char *tag, const char *fmt, va_list args) {
 //
 LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
-LOG_decl LOGU_expanded = LogUnusual;
 LOG_decl LOGW_expanded = LogWarn;
 LOG_decl LOGI_expanded = LogInfo;
 LOG_decl LOGD_expanded = LogNull;
@@ -211,7 +192,6 @@ LOG_decl LOGT_expanded = LogNull;
 
 LOG_declV LOGF_expandedV = LogFatalV;
 LOG_declV LOGE_expandedV = LogErrorV;
-LOG_declV LOGU_expandedV = LogUnusualV;
 LOG_declV LOGW_expandedV = LogWarnV;
 LOG_declV LOGI_expandedV = LogInfoV;
 LOG_declV LOGD_expandedV = LogNullV;
