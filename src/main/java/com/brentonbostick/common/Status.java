@@ -18,6 +18,9 @@
 
 package com.brentonbostick.common;
 
+import androidx.annotation.Keep;
+
+@Keep
 public enum Status {
     OK(0),
     ERR(-1),
