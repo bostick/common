@@ -62,6 +62,7 @@ jobs:
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCOMMON_LIBRARY_TYPE=${{ matrix.common_library_type }}
+        -DCOMMON_BUILD_TESTS=ON
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}

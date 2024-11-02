@@ -58,11 +58,11 @@ int64_t uptimeMillis(void) {
 
 int64_t wallClockSeconds(void) {
 
-  auto now = std::chrono::system_clock::now();
+    auto now = std::chrono::system_clock::now();
 
-  auto epoch = now.time_since_epoch();
+    auto epoch = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
 
-  return epoch.count();
+    return epoch.count();
 }
 
 

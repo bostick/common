@@ -23,9 +23,21 @@ project(common
 )
 
 
+set(COMMON_BUILD_TESTS OFF CACHE BOOL "Build tests")
+
+message(STATUS "COMMON_BUILD_TESTS: ${COMMON_BUILD_TESTS}")
+
+
 add_subdirectory(src/main/cpp/lib)
 
 
+if(COMMON_BUILD_TESTS)
+
+enable_testing()
+
+add_subdirectory(src/test/cpp)
+
+endif()
 
 
 
