@@ -22,9 +22,9 @@
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 #include <ctime> // for clock_gettime
 #elif IS_PLATFORM_MACOS
-
 #elif IS_PLATFORM_WINDOWS
-
+#include <windows.h>
+#include <sysinfoapi.h> // for GetTickCount64
 #else
 #error
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
@@ -45,11 +45,16 @@ int64_t uptimeMillis(void) {
 
 #elif IS_PLATFORM_MACOS
 
-// CURRENTLY UNIMPLEMENTED
+//
+// see clock.mm
+//
 
 #elif IS_PLATFORM_WINDOWS
 
-// CURRENTLY UNIMPLEMENTED
+int64_t uptimeMillis(void) {
+
+    return GetTickCount64();
+}
 
 #else
 #error
