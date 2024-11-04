@@ -43,3 +43,24 @@ saveFile(
 // if file exists, then return true
 //
 bool fileExists(const char *path);
+
+//
+//
+//
+Status
+createDirectory(const char *path);
+
+//
+//
+//
+bool directoryExists(const char *path);
+
+
+
+
+
+
+
+
+
+

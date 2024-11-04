@@ -27,6 +27,7 @@
 #include "common/check.h"
 #include "common/logging.h"
 
+#include <filesystem>
 #include <cstdio>
 
 
@@ -42,36 +43,36 @@
 //
 Status
 openFile(
-  const char *path,
-  std::vector<uint8_t> &out) {
-  
-  FILE *file = std::fopen(path, "rb");
+    const char *path,
+    std::vector<uint8_t> &out) {
 
-  CHECK(file, "cannot open %s", path);
+    FILE *file = std::fopen(path, "rb");
 
-  int fres = std::fseek(file, 0, SEEK_END);
-  
-  CHECK_NOT(fres, "fseek failed");
+    CHECK(file, "cannot open %s", path);
 
-  long res = std::ftell(file);
+    int fres = std::fseek(file, 0, SEEK_END);
 
-  CHECK_NOT(res < 0, "ftell failed");
+    CHECK_NOT(fres, "fseek failed");
 
-  auto len = static_cast<size_t>(res);
+    long res = std::ftell(file);
 
-  std::rewind(file);
+    CHECK_NOT(res < 0, "ftell failed");
 
-  out = std::vector<uint8_t>(len);
+    auto len = static_cast<size_t>(res);
 
-  size_t r = std::fread(out.data(), sizeof(uint8_t), len, file);
+    std::rewind(file);
 
-  CHECK(r == len, "fread failed");
+    out = std::vector<uint8_t>(len);
 
-  fres = std::fclose(file);
+    size_t r = std::fread(out.data(), sizeof(uint8_t), len, file);
 
-  CHECK_NOT(fres, "fclose failed");
+    CHECK(r == len, "fread failed");
 
-  return OK;
+    fres = std::fclose(file);
+
+    CHECK_NOT(fres, "fclose failed");
+
+    return OK;
 }
 
 
@@ -80,43 +81,66 @@ openFile(
 //
 Status
 saveFile(
-  const char *path,
-  const std::vector<uint8_t> &buf) {
+    const char *path,
+    const std::vector<uint8_t> &buf) {
 
-  FILE *file = std::fopen(path, "wb");
+    FILE *file = std::fopen(path, "wb");
 
-  CHECK(file, "cannot open %s", path);
+    CHECK(file, "cannot open %s", path);
 
-  auto r = std::fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
+    auto r = std::fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
 
-  CHECK(r == buf.size(), "fwrite failed");
+    CHECK(r == buf.size(), "fwrite failed");
 
-  int fres = std::fclose(file);
+    int fres = std::fclose(file);
 
-  CHECK_NOT(fres, "fclose failed");
+    CHECK_NOT(fres, "fclose failed");
 
-  return OK;
+    return OK;
 }
 
 
 bool fileExists(const char *path) {
 
-  FILE *file = std::fopen(path, "r");
+    FILE *file = std::fopen(path, "r");
 
-  if (file == NULL) {
+    if (file == NULL) {
+        //
+        // file does NOT exist
+        //
+        return false;
+    }
+
     //
-    // file does NOT exist
+    // file DOES exist
     //
-    return false;
-  }
 
-  //
-  // file DOES exist
-  //
+    std::fclose(file);
 
-  std::fclose(file);
+    return true;
+}
 
-  return true;
+
+Status createDirectory(const char *path) {
+
+    if (directoryExists(path)) {
+        return OK;
+    }
+
+    std::error_code ec;
+
+    if (std::filesystem::create_directories(path, ec)) {
+        return OK;
+    }
+
+    LOGE("error creating directory %s: %s", path, ec.message().c_str());
+
+    return ERR;
+}
+
+
+bool directoryExists(const char *path) {
+    return std::filesystem::is_directory(path);
 }
 
 
