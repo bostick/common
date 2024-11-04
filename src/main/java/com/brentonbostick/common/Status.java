@@ -23,8 +23,7 @@ import androidx.annotation.Keep;
 @Keep
 public enum Status {
     OK(0),
-    ERR(-1),
-    CONTINUE(1);
+    ERR(-1);
 
     private final int id;
 
@@ -38,8 +37,6 @@ public enum Status {
                 return OK;
             case -1:
                 return ERR;
-            case 1:
-                return CONTINUE;
             default:
                 throw new RuntimeException("Unhandled value: " + id);
         }

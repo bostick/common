@@ -129,7 +129,6 @@ void setupJniCache(JavaVM *vm) {
 
     INSERTINTOMAP(statusEnumMap, Status::OK, createStatusObject(env, Status::OK));
     INSERTINTOMAP(statusEnumMap, Status::ERR, createStatusObject(env, Status::ERR));
-    INSERTINTOMAP(statusEnumMap, Status::CONTINUE, createStatusObject(env, Status::CONTINUE));
 }
 
 void teardownJniCache(JavaVM *vm) {
