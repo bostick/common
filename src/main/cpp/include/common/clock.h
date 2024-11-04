@@ -32,6 +32,10 @@ int64_t uptimeMillis(void);
 
 int64_t wallClockSeconds(void);
 
+extern char nowStrBuf[80];
+
+void GrabNow(void);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

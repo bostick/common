@@ -16,8 +16,15 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "common/clock.h"
 #include "common/platform.h"
+
+#if IS_PLATFORM_WINDOWS
+#define _CRT_SECURE_NO_WARNINGS // disable warnings about localtime being unsafe on MSVC
+#endif // IS_PLATFORM_WINDOWS
+
+#include "common/clock.h"
+
+#include "common/assert.h"
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 #include <ctime> // for clock_gettime
@@ -30,6 +37,14 @@
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 #include <chrono>
+
+
+#define TAG "clock"
+
+
+time_t timer;
+struct tm *timeinfo;
+char nowStrBuf[80];
 
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
@@ -69,6 +84,23 @@ int64_t wallClockSeconds(void) {
 
     return epoch.count();
 }
+
+
+//
+// compute the current time and store in nowStrBuf
+//
+void GrabNow(void) {
+    time(&timer);
+    timeinfo = std::localtime(&timer);
+    //
+    // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
+    //
+    size_t res;
+    res = std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
+    ASSERT(res != 0);
+}
+
+
 
 
 

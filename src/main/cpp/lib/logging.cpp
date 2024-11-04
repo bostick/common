@@ -16,39 +16,25 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "common/platform.h"
-
-#if IS_PLATFORM_WINDOWS
-#define _CRT_SECURE_NO_WARNINGS // disable warnings about localtime being unsafe on MSVC
-#endif // IS_PLATFORM_WINDOWS
-
 #include "common/logging.h"
 
 #include "common/assert.h"
+#include "common/clock.h"
+#include "common/platform.h"
 
 #if IS_PLATFORM_ANDROID
-
 #include <android/log.h>
-
 #endif // IS_PLATFORM_ANDROID
 
 #include <string>
 #include <chrono>
 #include <cstdio> // for fprintf, stderr
-#include <ctime>
+#include <ctime> // for localtime, strftime
 #include <cstdarg> // for va_list, va_start, va_arg, va_end
 #include <cstring> // for strchr
 
 
 #define TAG "logging"
-
-
-void GrabNow();
-
-
-time_t timer;
-struct tm *timeinfo;
-char nowStrBuf[80];
 
 
 void LogFatalV(const char *tag, const char *fmt, va_list args);
@@ -210,21 +196,6 @@ LogTracer::LogTracer(const char *tag, const char *function, const char *file, in
 LogTracer::~LogTracer() {
     GrabNow();
     LOGT_expanded(tag, "%s: exit %s %s:%d\n", nowStrBuf, function, file, line);
-}
-
-
-//
-// compute the current time and store in nowStrBuf
-//
-void GrabNow() {
-    time(&timer);
-    timeinfo = std::localtime(&timer);
-    //
-    // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
-    //
-    size_t res;
-    res = std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
-    ASSERT(res != 0);
 }
 
 
