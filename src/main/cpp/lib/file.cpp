@@ -26,6 +26,7 @@
 
 #include "common/check.h"
 #include "common/logging.h"
+#include "common/status.h"
 
 #include <filesystem>
 #include <cstdio>
@@ -144,7 +145,39 @@ bool directoryExists(const char *path) {
 }
 
 
+Status
+deleteFile(const char *path) {
+
+    std::error_code ec;
+
+    if (std::filesystem::remove(path, ec)) {
+        return OK;
+    }
+
+    LOGE("error deleting file %s: %s", path, ec.message().c_str());
+
+    return ERR;
+}
+
+
+Status
+deleteEmptyDirectory(const char *path) {
+
+    std::error_code ec;
+
+    if (std::filesystem::remove(path, ec)) {
+        return OK;
+    }
+
+    LOGE("error deleting empty directory %s: %s", path, ec.message().c_str());
+
+    return ERR;
+}
+
+
 #pragma clang diagnostic pop
+
+
 
 
 

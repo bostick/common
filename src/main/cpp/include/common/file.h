@@ -56,7 +56,18 @@ createDirectory(const char *path);
 bool directoryExists(const char *path);
 
 
+//
+//
+//
+Status
+deleteFile(const char *path);
 
+
+//
+//
+//
+Status
+deleteEmptyDirectory(const char *path);
 
 
 
