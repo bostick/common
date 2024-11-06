@@ -119,7 +119,7 @@ void LogTraceV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_VERBOSE, tag, fmt, args);
 }
 
-#else // IS_PLATFORM_ANDROID
+#else
 
 void LogFatalV(const char *tag, const char *fmt, va_list args) {
     (void)tag;

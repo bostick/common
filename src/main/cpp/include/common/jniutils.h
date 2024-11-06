@@ -37,25 +37,25 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 
 
 //
-// Call GetEnv and assert if there is an error
+// Given jvm, call GetEnv and assert if there is an error
 //
-#define GETENV(env, vm) \
+#define GETENV(env, jvm) \
     do { \
         jint getEnvRet; \
-        ASSERT(vm); \
-        if ((getEnvRet = vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
+        ASSERT(jvm); \
+        if ((getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
             ABORT("Error calling GetEnv: %d", getEnvRet); \
         } \
     } while (false)
 
 //
-// Call GetJavaVM and assert if there is an error
+// Given env, call GetJavaVM and assert if there is an error
 //
-#define GETJAVAVM(env, vm) \
+#define GETJAVAVM(env, jvm) \
     do { \
         jint getJavaVMRet; \
         ASSERT(env); \
-        if ((getJavaVMRet = env->GetJavaVM(&vm)) != 0) { \
+        if ((getJavaVMRet = env->GetJavaVM(&jvm)) != 0) { \
             ABORT("Error calling GetJavaVM: %d", getJavaVMRet); \
         } \
     } while (false)
