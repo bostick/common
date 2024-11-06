@@ -54,6 +54,7 @@ jfieldID Build_MODEL_field;
 // Instance methods
 //
 jmethodID File_getAbsolutePath_method;
+jmethodID Status_toInt_method;
 #if IS_PLATFORM_ANDROID
 jmethodID JSONArray_getDouble_method;
 jmethodID JSONArray_getInt_method;
@@ -108,6 +109,7 @@ void setupJniCache(JavaVM *vm) {
     // Instance methods
     //
     EXCEPTIONANDNULLCHECK(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
+    EXCEPTIONANDNULLCHECK(Status_toInt_method = env->GetMethodID(Status_class, "toInt", "()I"));
 #if IS_PLATFORM_ANDROID
     EXCEPTIONANDNULLCHECK(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
     EXCEPTIONANDNULLCHECK(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));

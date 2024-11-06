@@ -83,6 +83,7 @@ extern jfieldID Build_MODEL_field;
 // Instance methods
 //
 extern jmethodID File_getAbsolutePath_method;
+extern jmethodID Status_toInt_method;
 #if IS_PLATFORM_ANDROID
 extern jmethodID JSONArray_getDouble_method;
 extern jmethodID JSONArray_getInt_method;
