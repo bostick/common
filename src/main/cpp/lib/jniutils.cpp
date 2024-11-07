@@ -46,6 +46,27 @@ jobject createStatusObject(JNIEnv *env, Status status) {
 }
 
 
+ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
+    env(env),
+    jstr(jstr) {
+
+    str = env->GetStringUTFChars(jstr, NULL);
+}
+
+ScopedJniString::~ScopedJniString() {
+
+    if (str == NULL) {
+        return;
+    }
+
+    env->ReleaseStringUTFChars(jstr, str);
+}
+
+const char *ScopedJniString::get() {
+    return str;
+}
+
+
 #pragma clang diagnostic pop
 
 

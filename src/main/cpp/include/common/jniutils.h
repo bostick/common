@@ -124,6 +124,20 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
 }
 
 
+class ScopedJniString {
+private:
+    JNIEnv *env;
+    jstring jstr;
+    const char *str;
+public:
+    ScopedJniString(JNIEnv *env, jstring jstr);
+
+    ~ScopedJniString();
+
+    const char *get();
+};
+
+
 #pragma clang diagnostic pop
 
 
