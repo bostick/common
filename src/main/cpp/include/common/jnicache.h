@@ -60,6 +60,7 @@
 // Classes
 //
 
+extern jclass AtomicBoolean_class;
 extern jclass File_class;
 extern jclass Status_class;
 #if IS_PLATFORM_ANDROID
@@ -82,6 +83,7 @@ extern jfieldID Build_MODEL_field;
 //
 // Instance methods
 //
+extern jmethodID AtomicBoolean_set_method;
 extern jmethodID File_getAbsolutePath_method;
 extern jmethodID Status_toInt_method;
 #if IS_PLATFORM_ANDROID
