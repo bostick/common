@@ -138,6 +138,20 @@ public:
 };
 
 
+class ScopedJniEnv {
+private:
+    JavaVM *jvm;
+    JNIEnv *env;
+    bool attached;
+public:
+    ScopedJniEnv(JavaVM *jvm);
+
+    ~ScopedJniEnv();
+
+    JNIEnv *get();
+};
+
+
 #pragma clang diagnostic pop
 
 

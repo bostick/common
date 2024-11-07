@@ -67,6 +67,39 @@ const char *ScopedJniString::get() {
 }
 
 
+ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
+    jvm(jvm),
+    env(),
+    attached(false) {
+
+    jint res;
+    if ((res = jvm->AttachCurrentThread(&env, NULL)) != JNI_OK) {
+        LOGE("Error calling AttachCurrentThread: %d", res);
+        return;
+    }
+
+    attached = true;
+}
+
+ScopedJniEnv::~ScopedJniEnv() {
+
+    if (!attached) {
+        return;
+    }
+
+    jint res;
+    if ((res = jvm->DetachCurrentThread()) != JNI_OK) {
+        LOGE("Error calling DetachCurrentThread: %d", res);
+        return;
+    }
+}
+
+JNIEnv *ScopedJniEnv::get() {
+    return env;
+}
+
+
+
 #pragma clang diagnostic pop
 
 
