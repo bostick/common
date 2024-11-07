@@ -26,6 +26,10 @@
 
 #include "common/assert.h"
 
+#if IS_PLATFORM_ANDROID
+#include <jni.h>
+#endif // IS_PLATFORM_ANDROID
+
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 #include <ctime> // for clock_gettime
 #elif IS_PLATFORM_MACOS
@@ -76,11 +80,20 @@ int64_t uptimeMillis(void) {
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 
-int64_t wallClockSeconds(void) {
+int64_t timeSinceEpochSeconds(void) {
 
     auto now = std::chrono::system_clock::now();
 
     auto epoch = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+
+    return epoch.count();
+}
+
+int64_t timeSinceEpochMillis(void) {
+
+    auto now = std::chrono::system_clock::now();
+
+    auto epoch = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch());
 
     return epoch.count();
 }
@@ -102,7 +115,19 @@ void GrabNow(void) {
 
 
 
+#if IS_PLATFORM_ANDROID
 
+extern "C"
+JNIEXPORT jlong JNICALL
+Java_com_brentonbostick_common_Clock_timeSinceEpochMillis(JNIEnv *env, jclass clazz) {
+
+    (void)env;
+    (void)clazz;
+
+    return timeSinceEpochMillis();
+}
+
+#endif // IS_PLATFORM_ANDROID
 
 
 

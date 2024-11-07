@@ -16,40 +16,12 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//
-// keep compilable with C and C++
-//
+package com.brentonbostick.common;
 
-#pragma once
+public class Clock {
 
-#include <stdint.h> // int64_t NOLINT(*-deprecated-headers)
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-int64_t uptimeMillis(void);
-
-int64_t timeSinceEpochSeconds(void);
-
-//
-// This may TECHNICALLY be the same clock as System.currentTime() on Java, but just use
-// timeSinceEpochMillis() everywhere to be consistent, even on Java.
-//
-int64_t timeSinceEpochMillis(void);
-
-extern char nowStrBuf[80];
-
-void GrabNow(void);
-
-#ifdef __cplusplus
+	public static native long timeSinceEpochMillis();
 }
-#endif // __cplusplus
-
-
-
-
-
 
 
 

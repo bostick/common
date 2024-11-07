@@ -48,13 +48,13 @@ TEST_F(ClockTest, uptimeMillis) {
     EXPECT_LT(diff, 1000);
 }
 
-TEST_F(ClockTest, wallClockSeconds) {
+TEST_F(ClockTest, timeSinceEpoch) {
 
-    int64_t start = wallClockSeconds();
+    int64_t start = timeSinceEpochSeconds();
 
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
-    int64_t end = wallClockSeconds();
+    int64_t end = timeSinceEpochSeconds();
 
     int64_t diff = end - start;
 
