@@ -190,12 +190,20 @@ LogTracer::LogTracer(const char *tag, const char *function, const char *file, in
     file(file),
     line(line) {
     GrabNow();
+#if IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "%s: enter %s %s:%d", nowStrBuf, function, file, line);
+#else
     LOGT_expanded(tag, "%s: enter %s %s:%d\n", nowStrBuf, function, file, line);
+#endif // IS_PLATFORM_ANDROID
 }
 
 LogTracer::~LogTracer() {
     GrabNow();
+#if IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "%s: exit %s %s:%d", nowStrBuf, function, file, line);
+#else
     LOGT_expanded(tag, "%s: exit %s %s:%d\n", nowStrBuf, function, file, line);
+#endif // IS_PLATFORM_ANDROID
 }
 
 
