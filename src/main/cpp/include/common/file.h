@@ -22,6 +22,8 @@
 
 #include <vector>
 #include <cstdint>
+#include <cstdio> // for FILE
+
 
 //
 // open file and read contents into out buffer
@@ -68,6 +70,28 @@ deleteFile(const char *path);
 //
 Status
 deleteEmptyDirectory(const char *path);
+
+
+
+class ScopedFile {
+private:
+    FILE *file;
+public:
+    ScopedFile(const char *path, const char *mode);
+
+    ~ScopedFile();
+
+    FILE *get();
+};
+
+
+
+
+
+
+
+
+
 
 
 

@@ -29,7 +29,6 @@
 #include "common/status.h"
 
 #include <filesystem>
-#include <cstdio>
 
 
 #pragma clang diagnostic push
@@ -47,7 +46,9 @@ openFile(
     const char *path,
     std::vector<uint8_t> &out) {
 
-    FILE *file = std::fopen(path, "rb");
+    ScopedFile x{path, "rb"};
+
+    FILE *file = x.get();
 
     CHECK(file, "cannot open %s", path);
 
@@ -69,10 +70,6 @@ openFile(
 
     CHECK(r == len, "fread failed");
 
-    fres = std::fclose(file);
-
-    CHECK_NOT(fres, "fclose failed");
-
     return OK;
 }
 
@@ -85,7 +82,9 @@ saveFile(
     const char *path,
     const std::vector<uint8_t> &buf) {
 
-    FILE *file = std::fopen(path, "wb");
+    ScopedFile x{path, "wb"};
+
+    FILE *file = x.get();
 
     CHECK(file, "cannot open %s", path);
 
@@ -93,32 +92,17 @@ saveFile(
 
     CHECK(r == buf.size(), "fwrite failed");
 
-    int fres = std::fclose(file);
-
-    CHECK_NOT(fres, "fclose failed");
-
     return OK;
 }
 
 
 bool fileExists(const char *path) {
 
-    FILE *file = std::fopen(path, "r");
+    ScopedFile x{path, "r"};
 
-    if (file == NULL) {
-        //
-        // file does NOT exist
-        //
-        return false;
-    }
+    FILE *file = x.get();
 
-    //
-    // file DOES exist
-    //
-
-    std::fclose(file);
-
-    return true;
+    return (file != NULL);
 }
 
 
@@ -172,6 +156,34 @@ deleteEmptyDirectory(const char *path) {
     LOGE("error deleting empty directory %s: %s", path, ec.message().c_str());
 
     return ERR;
+}
+
+
+
+ScopedFile::ScopedFile(const char *path, const char *mode) :
+    file() {
+
+    file = std::fopen(path, mode);
+
+    if (file == NULL) {
+        LOGE("cannot open %s", path);
+        return;
+    }
+}
+
+ScopedFile::~ScopedFile() {
+
+    if (file == NULL) {
+        return;
+    }
+
+    if (std::fclose(file) != 0) {
+        LOGE("fclose failed");
+    }
+}
+
+FILE *ScopedFile::get() {
+    return file;
 }
 
 
