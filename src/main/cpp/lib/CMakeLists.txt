@@ -22,6 +22,7 @@ set(SOURCES_LIB
     clock.cpp
     file.cpp
     logging.cpp
+    string_utils.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
