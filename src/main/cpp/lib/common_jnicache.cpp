@@ -105,29 +105,29 @@ void setupCommonJniCache(JavaVM *vm) {
     // Static fields
     //
 #if IS_PLATFORM_ANDROID
-    EXCEPTIONANDNULLCHECK(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
+    CHECKEXCEPTIONANDNULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
 #endif // IS_PLATFORM_ANDROID
 
     //
     // Instance methods
     //
     // EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
-    EXCEPTIONANDNULLCHECK(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
-    EXCEPTIONANDNULLCHECK(Status_toInt_method = env->GetMethodID(Status_class, "toInt", "()I"));
+    CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
+    CHECKEXCEPTIONANDNULL(Status_toInt_method = env->GetMethodID(Status_class, "toInt", "()I"));
 #if IS_PLATFORM_ANDROID
-    EXCEPTIONANDNULLCHECK(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
-    EXCEPTIONANDNULLCHECK(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));
-    EXCEPTIONANDNULLCHECK(JSONArray_getJSONArray_method = env->GetMethodID(JSONArray_class, "getJSONArray", "(I)Lorg/json/JSONArray;"));
-    EXCEPTIONANDNULLCHECK(JSONArray_length_method = env->GetMethodID(JSONArray_class, "length", "()I"));
-    EXCEPTIONANDNULLCHECK(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
-    EXCEPTIONANDNULLCHECK(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
+    CHECKEXCEPTIONANDNULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
+    CHECKEXCEPTIONANDNULL(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));
+    CHECKEXCEPTIONANDNULL(JSONArray_getJSONArray_method = env->GetMethodID(JSONArray_class, "getJSONArray", "(I)Lorg/json/JSONArray;"));
+    CHECKEXCEPTIONANDNULL(JSONArray_length_method = env->GetMethodID(JSONArray_class, "length", "()I"));
+    CHECKEXCEPTIONANDNULL(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
+    CHECKEXCEPTIONANDNULL(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
 #endif // IS_PLATFORM_ANDROID
 
     //
     // Static methods
     //
 
-    EXCEPTIONANDNULLCHECK(Status_fromInt_method = env->GetStaticMethodID(Status_class, "fromInt", "(I)Lcom/brentonbostick/common/Status;"));
+    CHECKEXCEPTIONANDNULL(Status_fromInt_method = env->GetStaticMethodID(Status_class, "fromInt", "(I)Lcom/brentonbostick/common/Status;"));
 
     //
     // Enums

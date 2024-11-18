@@ -19,41 +19,13 @@
 #pragma once
 
 #include "common/assert.h"
+#include "common_jniutils.h"
 #include "common/platform.h"
 #include "common/status.h"
 
 #include <jni.h>
 
 #include <map>
-
-
-#define EXCEPTIONANDNULLCHECK(var) \
-    do { \
-        if (env->ExceptionCheck()) { \
-            env->ExceptionDescribe(); \
-            ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
-        } \
-        ASSERT((var) && #var " is NULL"); \
-    } while (false)
-
-#define SETCLASS(classVar, classNameString) \
-    do { \
-        jclass classVar ## _local = env->FindClass(classNameString); \
-        EXCEPTIONANDNULLCHECK(classVar ## _local); \
-        classVar = reinterpret_cast<jclass>(env->NewGlobalRef(classVar ## _local)); \
-        EXCEPTIONANDNULLCHECK(classVar); \
-        env->DeleteLocalRef(classVar ## _local); \
-    } while (false)
-
-#define INSERTINTOMAP(map, e, code) \
-    do { \
-        jobject local = (code); \
-        EXCEPTIONANDNULLCHECK(local); \
-        jobject objectVar = env->NewGlobalRef(local); \
-        EXCEPTIONANDNULLCHECK(objectVar); \
-        map[e] = objectVar; \
-        env->DeleteLocalRef(local); \
-    } while (false)
 
 
 //
@@ -106,7 +78,6 @@ extern jmethodID Status_fromInt_method;
 //
 
 extern std::map<Status, jobject> statusEnumMap;
-
 
 
 void setupCommonJniCache(JavaVM *vm);

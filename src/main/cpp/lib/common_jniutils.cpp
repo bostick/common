@@ -32,15 +32,8 @@
 
 jobject createStatusObject(JNIEnv *env, Status status) {
 
-    jobject resultObject = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, static_cast<jint>(status));
-    if (env->ExceptionCheck()) {
-        env->ExceptionDescribe();
-        return NULL;
-    }
-    if (resultObject == NULL) {
-        LOGE("Status_fromInt_method failed");
-        return NULL;
-    }
+    jobject resultObject;
+    CHECKEXCEPTIONANDNULL(resultObject = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, static_cast<jint>(status)));
 
     return resultObject;
 }
@@ -50,7 +43,7 @@ ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
     env(env),
     jstr(jstr) {
 
-    str = env->GetStringUTFChars(jstr, NULL);
+    CHECKNULL(str = env->GetStringUTFChars(jstr, NULL));
 }
 
 ScopedJniString::~ScopedJniString() {

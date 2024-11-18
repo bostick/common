@@ -42,7 +42,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETENV(env, jvm) \
     do { \
         jint getEnvRet; \
-        ASSERT(jvm); \
+        ASSERT(jvm != NULL); \
         if ((getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
             ABORT("Error calling GetEnv: %d", getEnvRet); \
         } \
@@ -54,10 +54,52 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETJAVAVM(env, jvm) \
     do { \
         jint getJavaVMRet; \
-        ASSERT(env); \
+        ASSERT(env != NULL); \
         if ((getJavaVMRet = env->GetJavaVM(&jvm)) != 0) { \
             ABORT("Error calling GetJavaVM: %d", getJavaVMRet); \
         } \
+    } while (false)
+
+
+#define CHECKNULL(code) \
+    do { \
+        const void *checkNullLocal = (code); \
+        ASSERT(checkNullLocal != NULL); \
+    } while (false)
+
+#define CHECKEXCEPTION(code) \
+    do { \
+        ASSERT(env != NULL); \
+        (code); \
+        ASSERT(!env->ExceptionCheck() || (env->ExceptionDescribe(), "Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception.")); \
+    } while (false)
+
+#define CHECKEXCEPTIONANDNULL(code) \
+    do { \
+        ASSERT(env != NULL); \
+        void *checkExceptionAndNullLocal = (code); \
+        ASSERT(!env->ExceptionCheck() || (env->ExceptionDescribe(), "Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception.")); \
+        ASSERT(checkExceptionAndNullLocal != NULL); \
+    } while (false)
+
+
+#define SETCLASS(classVar, classNameString) \
+    do { \
+        jclass setClassLocal = env->FindClass(classNameString); \
+        CHECKEXCEPTIONANDNULL(setClassLocal); \
+        classVar = reinterpret_cast<jclass>(env->NewGlobalRef(setClassLocal)); \
+        CHECKEXCEPTIONANDNULL(classVar); \
+        env->DeleteLocalRef(setClassLocal); \
+    } while (false)
+
+#define INSERTINTOMAP(map, e, code) \
+    do { \
+        jobject insertIntoMapLocal = (code); \
+        CHECKEXCEPTIONANDNULL(insertIntoMapLocal); \
+        jobject objectVar = env->NewGlobalRef(insertIntoMapLocal); \
+        CHECKEXCEPTIONANDNULL(objectVar); \
+        map[e] = objectVar; \
+        env->DeleteLocalRef(insertIntoMapLocal); \
     } while (false)
 
 
@@ -144,7 +186,7 @@ private:
     JNIEnv *env;
     jint getEnvRet;
 public:
-    ScopedJniEnv(JavaVM *jvm);
+    explicit ScopedJniEnv(JavaVM *jvm);
 
     ~ScopedJniEnv();
 
