@@ -20,7 +20,7 @@ package com.brentonbostick.common;
 
 public class Clock {
 
-	public static native long timeSinceEpochMillis();
+	public static native long timeSinceEpochMillisNative();
 }
 
 

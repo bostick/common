@@ -23,10 +23,6 @@
 #include "common/status.h"
 
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "modernize-use-nullptr"
-
-
 #define TAG "common_jniutils"
 
 
@@ -97,7 +93,11 @@ JNIEnv *ScopedJniEnv::get() {
 
 
 
-#pragma clang diagnostic pop
+
+
+
+
+
 
 
 

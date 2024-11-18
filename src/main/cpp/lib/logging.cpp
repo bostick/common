@@ -18,6 +18,7 @@
 
 #include "common/logging.h"
 
+#include "common/abort.h"
 #include "common/assert.h"
 #include "common/clock.h"
 #include "common/platform.h"

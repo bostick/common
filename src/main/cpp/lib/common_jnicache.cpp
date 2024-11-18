@@ -142,6 +142,10 @@ void teardownCommonJniCache(JavaVM *vm) {
     JNIEnv *env;
     GETENV(env, vm);
 
+    env->DeleteGlobalRef(statusEnumMap[OK]);
+    env->DeleteGlobalRef(statusEnumMap[ERR]);
+    statusEnumMap.clear();
+
     // env->DeleteGlobalRef(AtomicBoolean_class);
     env->DeleteGlobalRef(File_class);
     env->DeleteGlobalRef(Status_class);

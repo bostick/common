@@ -31,10 +31,6 @@
 #include <filesystem>
 
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "modernize-use-nullptr"
-
-
 #define TAG "file"
 
 
@@ -187,7 +183,8 @@ FILE *ScopedFile::get() {
 }
 
 
-#pragma clang diagnostic pop
+
+
 
 
 

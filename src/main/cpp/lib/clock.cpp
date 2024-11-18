@@ -119,7 +119,7 @@ void GrabNow(void) {
 
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_com_brentonbostick_common_Clock_timeSinceEpochMillis(JNIEnv *env, jclass clazz) {
+Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative(JNIEnv *env, jclass clazz) {
 
     (void)env;
     (void)clazz;
