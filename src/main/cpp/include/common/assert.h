@@ -22,41 +22,27 @@
 
 #pragma once
 
-#include "common/abort.h"
-#include "common/platform.h"
+//
+// undefine NDEBUG before including assert.h and ensure that assert is always turned on
+//
+#ifdef NDEBUG
 
-#if IS_PLATFORM_WINDOWS
+#undef NDEBUG
 
-//
-// based on example here:
-//
-// https://learn.microsoft.com/en-us/cpp/preprocessor/pragma-directives-and-the-pragma-keyword?view=msvc-170
-//
+#include <assert.h>
 
-//
-// if cond is false, then abort
-//
-#define ASSERT(cond) \
-    do { \
-        _Pragma("warning(suppress: 4127)") /* C4127 conditional expression is constant */ \
-        if (!(cond)) { \
-            ABORT("ASSERTION FAILED: %s %s:%d", #cond, __FILE__, __LINE__); \
-        } \
-    } while (0)
+#define NDEBUG
 
 #else
 
-//
-// if cond is false, then abort
-//
-#define ASSERT(cond) \
-    do { \
-        if (!(cond)) { \
-            ABORT("ASSERTION FAILED: %s %s:%d", #cond, __FILE__, __LINE__); \
-        } \
-    } while (0)
+#include <assert.h>
 
-#endif // IS_PLATFORM_WINDOWS
+#endif // NDEBUG
+
+
+#define ASSERT(...) \
+    assert(__VA_ARGS__)
+
 
 
 
