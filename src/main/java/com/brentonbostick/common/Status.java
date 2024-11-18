@@ -31,17 +31,19 @@ public enum Status {
         this.id = id;
     }
 
+    /** @noinspection unused*/
     public static Status fromInt(int id) {
         switch (id) {
-            case 0:
-                return OK;
-            case -1:
-                return ERR;
-            default:
-                throw new RuntimeException("Unhandled value: " + id);
+        case 0:
+            return OK;
+        case -1:
+            return ERR;
+        default:
+            throw new RuntimeException("Unhandled value: " + id);
         }
     }
 
+    /** @noinspection unused*/
     public int toInt() {
         return id;
     }

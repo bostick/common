@@ -30,7 +30,6 @@
 //
 // Classes
 //
-
 // jclass AtomicBoolean_class;
 jclass File_class;
 jclass Status_class;
@@ -87,7 +86,6 @@ void setupCommonJniCache(JavaVM *vm) {
     //
     // Classes
     //
-
     // SETCLASS(AtomicBoolean_class, "java/util/concurrent/atomic/AtomicBoolean");
     SETCLASS(File_class, "java/io/File");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
@@ -141,6 +139,10 @@ void teardownCommonJniCache(JavaVM *vm) {
 
     JNIEnv *env;
     GETENV(env, vm);
+
+    env->DeleteGlobalRef(statusEnumMap[OK]);
+    env->DeleteGlobalRef(statusEnumMap[ERR]);
+    statusEnumMap.clear();
 
     // env->DeleteGlobalRef(AtomicBoolean_class);
     env->DeleteGlobalRef(File_class);
