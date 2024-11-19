@@ -40,13 +40,11 @@ public class InputStreamUtilsTest {
 
         InputStream is = new ByteArrayInputStream("123".getBytes(StandardCharsets.UTF_8));
 
-        byte[] buf = new byte[3];
-
         try {
 
-            int read = InputStreamUtils.readInputStreamIntoBuffer(is, buf);
+            byte[] buf = InputStreamUtils.readInputStream(is);
 
-            assertThat(read).isEqualTo(3);
+            assertThat(buf.length).isEqualTo(3);
 
             assertThat(buf).isEqualTo(new byte[]{ '1', '2', '3' });
 

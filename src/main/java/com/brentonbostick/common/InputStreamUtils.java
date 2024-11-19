@@ -18,45 +18,63 @@
 
 package com.brentonbostick.common;
 
+import android.os.Build;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 public class InputStreamUtils {
 
-    /// Read all bytes from is into buf.
+    /// Read all bytes from is into a new array of bytes.
     ///
     /// Stop-gap until is.readAllBytes() can be used everywhere (added in TIRAMISU, API 33, Android 13)
     ///
-    /// @return number of bytes read
+    /// @return array of all bytes from is
     ///
     /// @throws IOException on error
     ///
-    public static int readInputStreamIntoBuffer(InputStream is, byte[] buf) throws IOException {
+    public static byte[] readInputStream(InputStream is) throws IOException {
 
-        int read;
-        int offset = 0;
+        //
+        // read all bytes from is
+        //
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // TIRAMISU, API 33, Android 13
 
-        int len = buf.length;
+            return is.readAllBytes();
 
-        while (true) {
+        } else {
 
-            read = is.read(buf, offset, len - offset);
+            byte[] buf = new byte[5000];
 
-            if (read == -1) {
-                //
-                // reached end of stream
-                //
-                break;
+            int read;
+            int offset = 0;
+
+            int len = buf.length;
+
+            while (true) {
+
+                read = is.read(buf, offset, len - offset);
+
+                if (read == -1) {
+                    //
+                    // reached end of stream
+                    //
+                    break;
+                }
+
+                offset += read;
+
+                if (offset > len) {
+                    throw new IOException("offset > len");
+                }
             }
 
-            offset += read;
+            byte[] buf2 = new byte[offset];
 
-            if (offset > len) {
-                throw new IOException("offset > len");
-            }
+            System.arraycopy(buf, 0, buf2, 0, offset);
+
+            return buf2;
         }
-
-        return offset;
     }
 }
 
