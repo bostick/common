@@ -17,16 +17,6 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-if("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
-# ok
-elseif("${COMMON_LIBRARY_TYPE}" STREQUAL "STATIC")
-# ok
-elseif("${COMMON_LIBRARY_TYPE}" STREQUAL "MODULE")
-# ok
-else("${COMMON_LIBRARY_TYPE}" STREQUAL "SHARED")
-message(FATAL_ERROR "Invalid value for COMMON_LIBRARY_TYPE: ${COMMON_LIBRARY_TYPE}")
-endif()
-
 set(SOURCES_LIB
     abort.cpp
     clock.cpp
@@ -51,7 +41,7 @@ list(APPEND SOURCES_LIB
 
 endif()
 
-add_library(common-lib ${COMMON_LIBRARY_TYPE}
+add_library(common-lib STATIC
     ${SOURCES_LIB}
 )
 

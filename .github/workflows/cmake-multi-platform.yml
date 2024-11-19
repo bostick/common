@@ -25,7 +25,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Debug, Release]
-        common_library_type: [STATIC]
         c_compiler: [gcc, clang, cl]
         include:
           - os: windows-latest
@@ -61,7 +60,6 @@ jobs:
       if: runner.os == 'Windows'
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
-        -DCOMMON_LIBRARY_TYPE=${{ matrix.common_library_type }}
         -DCOMMON_BUILD_TESTS=ON
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
@@ -72,7 +70,6 @@ jobs:
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
-        -DCOMMON_LIBRARY_TYPE=${{ matrix.common_library_type }}
         -DCOMMON_BUILD_TESTS=ON
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
