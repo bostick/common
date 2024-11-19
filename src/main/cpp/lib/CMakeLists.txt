@@ -27,8 +27,8 @@ set(SOURCES_LIB
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
 
 list(APPEND SOURCES_LIB
-    jnicache.cpp
-    jniutils.cpp
+    common_jnicache.cpp
+    common_jniutils.cpp
 )
 
 endif()

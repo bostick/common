@@ -16,15 +16,15 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "common/jnicache.h"
+#include "common/common_jnicache.h"
 
 #include "common/assert.h"
-#include "common/jniutils.h"
+#include "common/common_jniutils.h"
 #include "common/platform.h"
 #include "common/status.h"
 
 
-#define TAG "jnicache"
+#define TAG "common_jnicache"
 
 
 //
@@ -79,7 +79,7 @@ jmethodID Status_fromInt_method;
 std::map<Status, jobject> statusEnumMap;
 
 
-void setupJniCache(JavaVM *vm) {
+void setupCommonJniCache(JavaVM *vm) {
 
     JNIEnv *env;
     GETENV(env, vm);
@@ -137,7 +137,7 @@ void setupJniCache(JavaVM *vm) {
     INSERTINTOMAP(statusEnumMap, ERR, createStatusObject(env, ERR));
 }
 
-void teardownJniCache(JavaVM *vm) {
+void teardownCommonJniCache(JavaVM *vm) {
 
     JNIEnv *env;
     GETENV(env, vm);
@@ -150,29 +150,6 @@ void teardownJniCache(JavaVM *vm) {
     env->DeleteGlobalRef(JSONArray_class);
     env->DeleteGlobalRef(JSONObject_class);
 #endif // IS_PLATFORM_ANDROID
-}
-
-
-
-
-extern "C"
-JNIEXPORT jint JNICALL
-JNI_OnLoad(JavaVM *vm, void *reserved) {
-
-    (void)reserved;
-
-    setupJniCache(vm);
-
-    return JNI_VERSION_1_6;
-}
-
-extern "C"
-JNIEXPORT void JNICALL
-JNI_OnUnload(JavaVM *vm, void *reserved) {
-
-    (void)reserved;
-
-    teardownJniCache(vm);
 }
 
 

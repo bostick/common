@@ -109,7 +109,8 @@ extern std::map<Status, jobject> statusEnumMap;
 
 
 
-
+void setupCommonJniCache(JavaVM *vm);
+void teardownCommonJniCache(JavaVM *vm);
 
 
 

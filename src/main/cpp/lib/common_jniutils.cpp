@@ -16,9 +16,9 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "common/jniutils.h"
+#include "common/common_jniutils.h"
 
-#include "common/jnicache.h"
+#include "common/common_jnicache.h"
 #include "common/logging.h"
 #include "common/status.h"
 
@@ -27,7 +27,7 @@
 #pragma ide diagnostic ignored "modernize-use-nullptr"
 
 
-#define TAG "jniutils"
+#define TAG "common_jniutils"
 
 
 jobject createStatusObject(JNIEnv *env, Status status) {
