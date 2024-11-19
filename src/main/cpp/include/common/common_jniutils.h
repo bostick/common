@@ -142,7 +142,7 @@ class ScopedJniEnv {
 private:
     JavaVM *jvm;
     JNIEnv *env;
-    bool attached;
+    jint getEnvRet;
 public:
     ScopedJniEnv(JavaVM *jvm);
 

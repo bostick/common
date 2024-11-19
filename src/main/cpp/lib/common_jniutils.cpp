@@ -70,20 +70,24 @@ const char *ScopedJniString::get() {
 ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
     jvm(jvm),
     env(),
-    attached(false) {
+    getEnvRet() {
+
+    getEnvRet = jvm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6);
+
+    if (getEnvRet != JNI_EDETACHED) {
+        return;
+    }
 
     jint res;
     if ((res = jvm->AttachCurrentThread(&env, NULL)) != JNI_OK) {
         LOGE("Error calling AttachCurrentThread: %d", res);
         return;
     }
-
-    attached = true;
 }
 
 ScopedJniEnv::~ScopedJniEnv() {
 
-    if (!attached) {
+    if (getEnvRet != JNI_EDETACHED) {
         return;
     }
 
