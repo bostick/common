@@ -36,6 +36,7 @@
 extern jclass File_class;
 extern jclass Status_class;
 #if IS_PLATFORM_ANDROID
+extern jclass Activity_class;
 extern jclass Build_class;
 extern jclass JSONArray_class;
 extern jclass JSONObject_class;
@@ -59,6 +60,7 @@ extern jfieldID Build_MODEL_field;
 extern jmethodID File_getAbsolutePath_method;
 extern jmethodID Status_toInt_method;
 #if IS_PLATFORM_ANDROID
+extern jmethodID Activity_getPackageName_method;
 extern jmethodID JSONArray_getDouble_method;
 extern jmethodID JSONArray_getInt_method;
 extern jmethodID JSONArray_getJSONArray_method;
