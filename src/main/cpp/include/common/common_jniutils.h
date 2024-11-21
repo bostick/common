@@ -29,10 +29,6 @@
 #include <cstddef> // for size_t
 
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "modernize-use-nullptr"
-
-
 const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 
 
@@ -193,8 +189,6 @@ public:
     JNIEnv *get();
 };
 
-
-#pragma clang diagnostic pop
 
 
 
