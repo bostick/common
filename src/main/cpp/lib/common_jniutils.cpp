@@ -92,6 +92,22 @@ JNIEnv *ScopedJniEnv::get() {
 }
 
 
+ScopedJniPrimitiveArrayCritical::ScopedJniPrimitiveArrayCritical(JNIEnv *env, jarray jarr) :
+    env(env),
+    jarr(jarr) {
+
+    CHECKNULL(data = env->GetPrimitiveArrayCritical(jarr, NULL));
+}
+
+ScopedJniPrimitiveArrayCritical::~ScopedJniPrimitiveArrayCritical() {
+    env->ReleasePrimitiveArrayCritical(jarr, data, 0);
+}
+
+void *ScopedJniPrimitiveArrayCritical::get() {
+    return data;
+}
+
+
 
 
 

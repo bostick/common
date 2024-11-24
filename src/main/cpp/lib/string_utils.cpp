@@ -18,6 +18,8 @@
 
 #include "common/string_utils.h"
 
+#include "common/assert.h"
+
 #include <sstream>
 
 
@@ -48,11 +50,13 @@ std::string escape(std::string s) {
 }
 
 int parseInt(const std::string &str) {
+    ASSERT(!str.empty());
     return std::stoi(str);
 }
 
 
 int64_t parseInt64(const std::string &str) {
+    ASSERT(!str.empty());
     return std::stoll(str);
 }
 
