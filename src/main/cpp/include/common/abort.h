@@ -101,14 +101,8 @@ void ABORT_expandedV NORETURN_ATTRIBUTE (const char *tag, const char *fmt, va_li
 
 #endif // IS_PLATFORM_ANDROID
 
-#ifdef __cplusplus
-
-#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
-
-#else
-
 //
-// disallow variadic arguments for ABORT in C
+// disallow variadic arguments for ABORT
 //
 // until C23, calling ABORT("!") would give this error:
 // error: must specify at least one argument for '...' parameter of variadic macro
@@ -120,7 +114,10 @@ void ABORT_expandedV NORETURN_ATTRIBUTE (const char *tag, const char *fmt, va_li
 
 #define ABORT(fmt) ABORT_expanded(TAG, fmt)
 
-#endif // __cplusplus
+
+
+
+
 
 
 

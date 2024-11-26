@@ -94,6 +94,10 @@ void LogNull(const char *tag, const char *fmt, ...) {
 }
 
 
+//
+// define the various LogXXXV
+//
+
 #if IS_PLATFORM_ANDROID
 
 void LogFatalV(const char *tag, const char *fmt, va_list args) {
@@ -277,7 +281,8 @@ void SetLogLevel(int level) {
         break;
     }
     default: {
-        ABORT("invalid log level: %d", level);
+        LOGE("invalid log level: %d", level);
+        ABORT("invalid log level");
     }
     }
 }

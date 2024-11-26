@@ -20,6 +20,11 @@ package com.brentonbostick.common;
 
 public class Clock {
 
+
+	//
+    // JNI methods
+    //
+    
 	public static native long timeSinceEpochMillisNative();
 }
 
