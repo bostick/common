@@ -34,6 +34,7 @@
 jclass File_class;
 jclass Status_class;
 #if IS_PLATFORM_ANDROID
+jclass Activity_class;
 jclass Build_class;
 jclass JSONArray_class;
 jclass JSONObject_class;
@@ -57,6 +58,7 @@ jfieldID Build_MODEL_field;
 jmethodID File_getAbsolutePath_method;
 jmethodID Status_toInt_method;
 #if IS_PLATFORM_ANDROID
+jmethodID Activity_getPackageName_method;
 jmethodID JSONArray_getDouble_method;
 jmethodID JSONArray_getInt_method;
 jmethodID JSONArray_getJSONArray_method;
@@ -90,6 +92,7 @@ void setupCommonJniCache(JavaVM *vm) {
     SETCLASS(File_class, "java/io/File");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
 #if IS_PLATFORM_ANDROID
+    SETCLASS(Activity_class, "android/app/Activity");
     SETCLASS(Build_class, "android/os/Build");
     SETCLASS(JSONArray_class, "org/json/JSONArray");
     SETCLASS(JSONObject_class, "org/json/JSONObject");
@@ -113,6 +116,7 @@ void setupCommonJniCache(JavaVM *vm) {
     CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
     CHECKEXCEPTIONANDNULL(Status_toInt_method = env->GetMethodID(Status_class, "toInt", "()I"));
 #if IS_PLATFORM_ANDROID
+    CHECKEXCEPTIONANDNULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
     CHECKEXCEPTIONANDNULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
     CHECKEXCEPTIONANDNULL(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));
     CHECKEXCEPTIONANDNULL(JSONArray_getJSONArray_method = env->GetMethodID(JSONArray_class, "getJSONArray", "(I)Lorg/json/JSONArray;"));
@@ -148,6 +152,7 @@ void teardownCommonJniCache(JavaVM *vm) {
     env->DeleteGlobalRef(File_class);
     env->DeleteGlobalRef(Status_class);
 #if IS_PLATFORM_ANDROID
+    env->DeleteGlobalRef(Activity_class);
     env->DeleteGlobalRef(Build_class);
     env->DeleteGlobalRef(JSONArray_class);
     env->DeleteGlobalRef(JSONObject_class);
