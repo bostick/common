@@ -25,10 +25,12 @@
 #include "common/file.h"
 
 #include "common/check.h"
+#include "common/error.h"
 #include "common/logging.h"
 #include "common/status.h"
 
 #include <filesystem>
+#include <cstring> // for strerror
 
 
 #define TAG "file"
@@ -50,11 +52,11 @@ openFile(
 
     int fres = std::fseek(file, 0, SEEK_END);
 
-    CHECK_NOT(fres, "fseek failed");
+    CHECK_NOT(fres, "fseek failed: %s %s", ErrorName(errno), std::strerror(errno));
 
     long res = std::ftell(file);
 
-    CHECK_NOT(res < 0, "ftell failed");
+    CHECK_NOT(res < 0, "ftell failed: %s %s", ErrorName(errno), std::strerror(errno));
 
     auto len = static_cast<size_t>(res);
 
@@ -64,7 +66,20 @@ openFile(
 
     size_t r = std::fread(out.data(), sizeof(uint8_t), len, file);
 
-    CHECK(r == len, "fread failed");
+    //
+    // fread does not distinguish between end-of-file and error, and callers must use feof and ferror to determine which occurred.
+    //
+
+    if (r != len) {
+
+        if (std::feof(file)) {
+            LOGE("fread failed: unexpected end of file");
+        } else if (std::ferror(file)) {
+            LOGE("fread failed: error reading file");
+        }
+
+        return ERR;
+    }
 
     return OK;
 }
@@ -86,7 +101,7 @@ saveFile(
 
     auto r = std::fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
 
-    CHECK(r == buf.size(), "fwrite failed");
+    CHECK(r == buf.size(), "fwrite failed: %s %s", ErrorName(errno), std::strerror(errno));
 
     return OK;
 }
@@ -162,7 +177,7 @@ ScopedFile::ScopedFile(const char *path, const char *mode) :
     file = std::fopen(path, mode);
 
     if (file == NULL) {
-        LOGE("cannot open %s", path);
+        LOGE("cannot open %s: %s %s", path, ErrorName(errno), std::strerror(errno));
         return;
     }
 }
