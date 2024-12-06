@@ -192,6 +192,20 @@ public:
 };
 
 
+class ScopedJniPrimitiveArrayCritical {
+private:
+    JNIEnv *env;
+    jarray jarr;
+    void *data;
+public:
+    ScopedJniPrimitiveArrayCritical(JNIEnv *env, jarray jarr);
+
+    ~ScopedJniPrimitiveArrayCritical();
+
+    void *get();
+};
+
+
 
 
 
