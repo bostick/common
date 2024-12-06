@@ -18,7 +18,6 @@
 
 #include "common/logging.h"
 
-#include "common/abort.h"
 #include "common/assert.h"
 #include "common/clock.h"
 #include "common/platform.h"
@@ -281,7 +280,8 @@ void SetLogLevel(int level) {
         break;
     }
     default: {
-        ABORT("invalid log level: %d", level);
+        LOGE("invalid log level: %d", level);
+        ASSERT(false && "invalid log level");
     }
     }
 }

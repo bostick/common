@@ -20,8 +20,8 @@
 
 #include "common/status.h"
 
-#include "common/abort.h"
 #include "common/assert.h"
+#include "common/logging.h"
 
 #include <jni.h>
 
@@ -40,7 +40,8 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         jint getEnvRet; \
         ASSERT(jvm != NULL); \
         if ((getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
-            ABORT("Error calling GetEnv: %d", getEnvRet); \
+            LOGE("Error calling GetEnv: %d", getEnvRet); \
+            ASSERT(false && "Error calling GetEnv"); \
         } \
     } while (false)
 
@@ -52,7 +53,8 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         jint getJavaVMRet; \
         ASSERT(env != NULL); \
         if ((getJavaVMRet = env->GetJavaVM(&jvm)) != 0) { \
-            ABORT("Error calling GetJavaVM: %d", getJavaVMRet); \
+            LOGE("Error calling GetJavaVM: %d", getJavaVMRet); \
+            ASSERT(false && "Error calling GetJavaVM"); \
         } \
     } while (false)
 
