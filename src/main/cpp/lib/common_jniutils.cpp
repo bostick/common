@@ -18,6 +18,9 @@
 
 #include "common/common_jniutils.h"
 
+#undef NDEBUG
+
+#include "common/assert.h"
 #include "common/common_jnicache.h"
 #include "common/logging.h"
 #include "common/status.h"

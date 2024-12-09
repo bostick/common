@@ -22,22 +22,12 @@
 
 #pragma once
 
-//
-// undefine NDEBUG before including assert.h and ensure that assert is always turned on
-//
 #ifdef NDEBUG
-
-#undef NDEBUG
-
-#include <assert.h>
-
-#define NDEBUG
-
-#else
-
-#include <assert.h>
-
+#error Undefine NDEBUG before including common/assert.h
 #endif // NDEBUG
+
+
+#include <assert.h>
 
 
 #define ASSERT(...) \

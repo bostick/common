@@ -18,6 +18,16 @@
 
 #pragma once
 
+
+//
+// there is an outside chance these macros are already defined
+//
+#if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS) || defined(PLATFORM_MACOS) || defined(PLATFORM_WINDOWS) || defined(PLATFORM_LINUX)
+#error Platform macros already defined (PLATFORM_ANDROID, PLATFORM_IOS, PLATFORM_MACOS, PLATFORM_WINDOWS, \
+    PLATFORM_LINUX).
+#endif // defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS) || defined(PLATFORM_MACOS) || defined(PLATFORM_WINDOWS) || defined(PLATFORM_LINUX)
+
+
 // keep 0 undefined
 #define PLATFORM_ANDROID 1
 #define PLATFORM_IOS 2

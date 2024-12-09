@@ -18,6 +18,8 @@
 
 #include "common/string_utils.h"
 
+#undef NDEBUG
+
 #include "common/assert.h"
 
 #include <sstream>

@@ -24,6 +24,8 @@
 
 #include "common/clock.h"
 
+#undef NDEBUG
+
 #include "common/assert.h"
 
 #if IS_PLATFORM_ANDROID

@@ -18,6 +18,8 @@
 
 #include "common/logging.h"
 
+#undef NDEBUG
+
 #include "common/assert.h"
 #include "common/clock.h"
 #include "common/platform.h"

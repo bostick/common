@@ -28,12 +28,13 @@
 
 
 //
-// there is an outside chance these macros are already defined with the same values
+// there is an outside chance these macros are already defined
 //
 #if defined(LOGLEVEL_FATAL) || defined(LOGLEVEL_ERROR) || defined(LOGLEVEL_WARN) || defined(LOGLEVEL_INFO) || defined(LOGLEVEL_DEBUG) || defined(LOGLEVEL_TRACE)
-#error Log levels already defined (LOGLEVEL_FATAL, LOGLEVEL_ERROR, LOGLEVEL_WARN, LOGLEVEL_INFO, \
+#error Log level macros already defined (LOGLEVEL_FATAL, LOGLEVEL_ERROR, LOGLEVEL_WARN, LOGLEVEL_INFO, \
     LOGLEVEL_DEBUG, LOGLEVEL_TRACE), most likely from another logging framework. Remove previous logging framework.
 #endif // defined(LOGLEVEL_FATAL) || defined(LOGLEVEL_ERROR) || defined(LOGLEVEL_WARN) || defined(LOGLEVEL_INFO) || defined(LOGLEVEL_DEBUG) || defined(LOGLEVEL_TRACE)
+
 
 //
 // arguments for SetLogLevel

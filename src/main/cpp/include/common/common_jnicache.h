@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include "common/assert.h"
-#include "common_jniutils.h"
 #include "common/platform.h"
 #include "common/status.h"
 

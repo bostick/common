@@ -20,9 +20,6 @@
 
 #include "common/status.h"
 
-#include "common/assert.h"
-#include "common/logging.h"
-
 #include <jni.h>
 
 #include <limits> // for numeric_limits
