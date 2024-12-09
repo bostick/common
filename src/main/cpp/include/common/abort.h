@@ -57,7 +57,8 @@
 // [[noreturn]] since C23 and C23 is not yet generally available
 //
 
-#define NORETURN_ATTRIBUTE /*[[noreturn]]*/
+//#define NORETURN_ATTRIBUTE /*[[noreturn]]*/
+#define NORETURN_ATTRIBUTE [[noreturn]]
 
 #endif // __cplusplus
 

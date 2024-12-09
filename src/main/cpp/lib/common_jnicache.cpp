@@ -20,6 +20,7 @@
 
 #undef NDEBUG
 
+#include "common/abort.h"
 #include "common/assert.h"
 #include "common/common_jniutils.h"
 #include "common/logging.h"

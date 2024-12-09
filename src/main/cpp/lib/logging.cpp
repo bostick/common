@@ -18,9 +18,7 @@
 
 #include "common/logging.h"
 
-#undef NDEBUG
-
-#include "common/assert.h"
+#include "common/abort.h"
 #include "common/clock.h"
 #include "common/platform.h"
 
@@ -281,10 +279,8 @@ void SetLogLevel(int level) {
         LOGT_expandedV = LogTraceV;
         break;
     }
-    default: {
-        LOGE("invalid log level: %d", level);
-        ASSERT(false && "invalid log level");
-    }
+    default:
+        ABORT_expanded(TAG, "invalid log level: %d", level);
     }
 }
 
