@@ -59,9 +59,20 @@ int parseInt(const std::string &str) {
 
 int64_t parseInt64(const std::string &str) {
     
+    static_assert(sizeof(long long) == sizeof(int64_t));
+    
     ASSERT(!str.empty());
     
     return std::stoll(str);
+}
+
+int64_t parseInt64(const char *str) {
+    
+    static_assert(sizeof(long long) == sizeof(int64_t));
+    
+    ASSERT(*str != '\0');
+    
+    return std::atoll(str);
 }
 
 

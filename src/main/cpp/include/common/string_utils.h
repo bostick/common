@@ -30,6 +30,8 @@ int parseInt(const std::string &str);
 
 int64_t parseInt64(const std::string &str);
 
+int64_t parseInt64(const char *str);
+
 
 
 
