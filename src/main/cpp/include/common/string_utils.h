@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "common/status.h"
+
 #include <string>
 #include <vector>
 
@@ -26,11 +28,11 @@ std::vector<std::string> split(const std::string &s, char delim);
 
 std::string escape(std::string s);
 
-int parseInt(const std::string &str);
+Status parseInt(const std::string &str, int *out);
 
-int64_t parseInt64(const std::string &str);
+Status parseInt64(const std::string &str, int64_t *out);
 
-int64_t parseInt64(const char *str);
+Status parseInt64(const char *str, int64_t *out);
 
 
 

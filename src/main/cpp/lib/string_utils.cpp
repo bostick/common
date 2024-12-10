@@ -21,8 +21,15 @@
 #undef NDEBUG
 
 #include "common/assert.h"
+#include "common/error.h"
+#include "common/logging.h"
 
 #include <sstream>
+#include <cstdlib> // for strtoll
+#include <cstring> // for strerror
+
+
+#define TAG "string_utils"
 
 
 std::vector<std::string> split(const std::string &s, char delim) {
@@ -51,30 +58,73 @@ std::string escape(std::string s) {
     return newString;
 }
 
-int parseInt(const std::string &str) {
+Status parseInt(const std::string &str, int *out) {
 
     ASSERT(!str.empty());
-    
-    return std::stoi(str);
+
+    try {
+
+        *out = std::stoi(str);
+
+        return OK;
+
+    } catch (const std::invalid_argument &ex) {
+
+        LOGE("stoi: %s", ex.what());
+        return ERR;
+
+    } catch (const std::out_of_range &ex) {
+
+        LOGE("stoi: %s", ex.what());
+        return ERR;
+    }
 }
 
 
-int64_t parseInt64(const std::string &str) {
+Status parseInt64(const std::string &str, int64_t *out) {
     
     static_assert(sizeof(long long) == sizeof(int64_t));
     
     ASSERT(!str.empty());
-    
-    return std::stoll(str);
+
+    try {
+
+        *out = std::stoll(str);
+
+        return OK;
+
+    } catch (const std::invalid_argument &ex) {
+
+        LOGE("stoll: %s", ex.what());
+        return ERR;
+
+    } catch (const std::out_of_range &ex) {
+
+        LOGE("stoll: %s", ex.what());
+        return ERR;
+    }
 }
 
-int64_t parseInt64(const char *str) {
+Status parseInt64(const char *str, int64_t *out) {
     
     static_assert(sizeof(long long) == sizeof(int64_t));
-    
+
+    ASSERT(str != NULL);
     ASSERT(*str != '\0');
-    
-    return std::atoll(str);
+
+    //
+    // https://man7.org/linux/man-pages/man3/strtol.3.html#CAVEATS
+    //
+    errno = 0;
+
+    *out = std::strtoll(str, NULL, 10);
+
+    if (errno != 0) {
+        LOGE("strtoll: %s %s", ErrorName(errno), ERRORSTRING(errno));
+        return ERR;
+    }
+
+    return OK;
 }
 
 

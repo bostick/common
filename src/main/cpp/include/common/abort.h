@@ -43,25 +43,6 @@
 
 #endif // __GNUC__ || __clang__
 
-#ifdef __cplusplus
-
-//
-// [[noreturn]] since C++11
-//
-
-#define NORETURN_ATTRIBUTE [[noreturn]]
-
-#else
-
-//
-// [[noreturn]] since C23 and C23 is not yet generally available
-//
-
-//#define NORETURN_ATTRIBUTE /*[[noreturn]]*/
-#define NORETURN_ATTRIBUTE [[noreturn]]
-
-#endif // __cplusplus
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,7 +50,7 @@ extern "C" {
 
 // var arg
 
-PRINTF_ATTRIBUTE void ABORT_expanded NORETURN_ATTRIBUTE (const char *tag, const char *fmt, ...);
+PRINTF_ATTRIBUTE void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
 
 // va_list
 
@@ -77,7 +58,7 @@ PRINTF_ATTRIBUTE void ABORT_expanded NORETURN_ATTRIBUTE (const char *tag, const 
 // the va_list function ABORT_expandedV can be called by code that already has a va_list
 //
 
-void ABORT_expandedV NORETURN_ATTRIBUTE (const char *tag, const char *fmt, va_list args);
+void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list args);
 
 #ifdef __cplusplus
 }
@@ -85,7 +66,6 @@ void ABORT_expandedV NORETURN_ATTRIBUTE (const char *tag, const char *fmt, va_li
 
 
 #undef PRINTF_ATTRIBUTE
-#undef NORETURN_ATTRIBUTE
 
 
 
