@@ -1,8 +1,6 @@
 
 #pragma once
 
-// #include <cstring> // for strerror
-
 
 #define ERRORSTRING(e) std::strerror(e)
 
