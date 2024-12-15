@@ -26,6 +26,10 @@
 // no other headers will be included here
 //
 
+#ifdef TAG
+#error json.inl is being included where TAG is already defined
+#endif // TAG
+
 #define TAG "json"
 
 //
