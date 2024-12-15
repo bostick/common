@@ -18,19 +18,27 @@
 
 #pragma once
 
+#include "common/status.h"
+
 #include <string>
 #include <vector>
+#include <cstddef> // for size_t
+#include <cstdint> // for int64_t
 
 
 std::vector<std::string> split(const std::string &s, char delim);
 
-std::string escape(std::string s);
+std::string escape(const std::string &s);
 
-int parseInt(const std::string &str);
+Status parseInt(const std::string &str, int *out);
 
-int64_t parseInt64(const std::string &str);
+Status parseInt64(const std::string &str, int64_t *out);
 
-int64_t parseInt64(const char *str);
+Status parseInt64(const char *str, int64_t *out);
+
+Status parseSizeT(const std::string &str, size_t *out);
+
+Status parseUInt16(const std::string &str, uint16_t *out);
 
 
 
