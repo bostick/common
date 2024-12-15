@@ -28,6 +28,9 @@
 extern "C" {
 #endif // __cplusplus
 
+//
+// monotonic
+//
 int64_t uptimeMillis(void);
 
 int64_t timeSinceEpochSeconds(void);
