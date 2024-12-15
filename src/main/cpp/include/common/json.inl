@@ -19,7 +19,7 @@
 //
 // do this:
 //
-// #include "common/json.h"
+// #include "common/json.inl"
 //
 // to include this file
 //

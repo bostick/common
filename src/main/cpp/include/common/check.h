@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include "common/logging.h"
-#include "common/status.h"
 
 //
 // if cond is false, then log message and return ERR

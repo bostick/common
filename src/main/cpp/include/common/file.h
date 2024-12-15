@@ -21,7 +21,7 @@
 #include "common/status.h"
 
 #include <vector>
-#include <cstdint>
+#include <cstdint> // for uint8_t
 #include <cstdio> // for FILE
 
 

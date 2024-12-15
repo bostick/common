@@ -101,7 +101,7 @@ const char *ErrorName(int e) {
     case ETIMEDOUT: return "ETIMEDOUT";
     case ETXTBSY: return "ETXTBSY";
     case EXDEV: return "EXDEV";
-    default: LOGE("ErrorName: unhandled error: %d", e); return "";
+    default: LOGE("ErrorName: unhandled error: %d", e); return "UNKNOWN";
     }
 }
 

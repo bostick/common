@@ -142,7 +142,7 @@ extern LOG_declV LOGT_expandedV;
 #endif // IS_PLATFORM_ANDROID
 
 //
-// do not call LOGF from top-level, use ABORT() directly
+// do not call LOGF from top-level, use ABORT_expanded() directly
 //
 // #define LOGF(fmt, ...) LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 #define LOGE(fmt, ...) LOGE_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)

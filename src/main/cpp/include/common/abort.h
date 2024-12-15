@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "common/platform.h"
-
 #include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
 
 
@@ -38,6 +36,10 @@
 #define PRINTF_ATTRIBUTE __attribute__ ((format (printf, 2, 3)))
 
 #else
+
+//
+// can this be easily done on MSVC?
+//
 
 #define PRINTF_ATTRIBUTE
 
