@@ -280,7 +280,7 @@ void SetLogLevel(int level) {
         break;
     }
     default:
-        ABORT_expanded(TAG, "invalid log level: %d", level);
+        ABORT("invalid log level: %d", level);
     }
 }
 

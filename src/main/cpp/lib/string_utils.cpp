@@ -147,7 +147,7 @@ if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
 } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
     *out = std::strtoull(str.c_str(), NULL, 10);
 } else {
-    ABORT_expanded(TAG, "unhandled");
+    ABORT("unhandled");
 }
 
     if (errno != 0) {

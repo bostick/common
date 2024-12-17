@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include "common/platform.h"
+
 #include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
 
 
@@ -68,6 +70,23 @@ void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list arg
 
 
 #undef PRINTF_ATTRIBUTE
+
+
+#if IS_PLATFORM_ANDROID
+
+//
+// see logging.h for what is happening here
+//
+
+#define COMMON_LOGGING_C ""
+
+#else
+
+#define COMMON_LOGGING_C "\n"
+
+#endif // IS_PLATFORM_ANDROID
+
+#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 
 

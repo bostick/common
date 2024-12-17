@@ -39,7 +39,7 @@
 #define JSON_TRY_USER if (true)
 #define JSON_CATCH_USER(exception) if (false)
 #define JSON_THROW_USER(exception) \
-    { ABORT_expanded(TAG, "JSON exception: %s", (exception).what()); }
+    { ABORT("JSON exception: %s", (exception).what()); }
 
 #include <nlohmann/json.hpp>
 
