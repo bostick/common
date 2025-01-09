@@ -58,7 +58,7 @@ int64_t uptimeMillis(void) {
 
     timespec now; // NOLINT(*-pro-type-member-init)
 
-    clock_gettime(CLOCK_MONOTONIC, &now);
+    ::clock_gettime(CLOCK_MONOTONIC, &now);
 
     return static_cast<int64_t>(now.tv_sec) * 1000 + static_cast<int64_t>(now.tv_nsec) / 1000000;
 }
@@ -104,7 +104,8 @@ int64_t timeSinceEpochMillis(void) {
 // compute the current time and store in nowStrBuf
 //
 void GrabNow(void) {
-    time(&timer);
+
+    std::time(&timer);
     timeinfo = std::localtime(&timer);
     //
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
