@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -67,7 +67,20 @@ deleteFile(const char *path);
 //
 //
 Status
+deleteFileIfPresent(const char *path);
+
+//
+//
+//
+Status
 deleteEmptyDirectory(const char *path);
+
+//
+//
+//
+Status
+deleteEmptyDirectoryIfPresent(const char *path);
+
 
 class ScopedFile {
 private:

@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -156,6 +156,24 @@ deleteFile(const char *path) {
 
 
 Status
+deleteFileIfPresent(const char *path) {
+
+    if (!fileExists(path)) {
+        return OK;
+    }
+    
+    std::error_code ec;
+
+    if (!std::filesystem::remove(path, ec)) {
+        LOGE("error deleting file %s: %s", path, ec.message().c_str());
+        return ERR;
+    }
+
+    return OK;
+}
+
+
+Status
 deleteEmptyDirectory(const char *path) {
 
     std::error_code ec;
@@ -169,6 +187,22 @@ deleteEmptyDirectory(const char *path) {
     return ERR;
 }
 
+Status
+deleteEmptyDirectoryIfPresent(const char *path) {
+
+    if (!directoryExists(path)) {
+        return OK;
+    }
+    
+    std::error_code ec;
+
+    if (!std::filesystem::remove(path, ec)) {
+        LOGE("error deleting empty directory %s: %s", path, ec.message().c_str());
+        return ERR;
+    }
+
+    return OK;
+}
 
 
 ScopedFile::ScopedFile(const char *path, const char *mode) :
