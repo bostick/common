@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -28,6 +28,9 @@
 extern "C" {
 #endif // __cplusplus
 
+//
+// monotonic
+//
 int64_t uptimeMillis(void);
 
 int64_t timeSinceEpochSeconds(void);

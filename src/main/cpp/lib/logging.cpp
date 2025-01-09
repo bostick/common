@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -194,6 +194,9 @@ LogTracer::LogTracer(const char *tag, const char *function, const char *file, in
     file(file),
     line(line) {
     GrabNow();
+    //
+    // passing in tag, so cannot use LOGT macro
+    //
 #if IS_PLATFORM_ANDROID
     LOGT_expanded(tag, "%s: enter %s %s:%d", nowStrBuf, function, file, line);
 #else
@@ -214,7 +217,7 @@ LogTracer::~LogTracer() {
 void SetLogLevel(int level) {
 
     //
-    // LOGE_expanded and LOGU_expanded never change, so no need to set
+    // LOGF_expanded and LOGE_expanded never change, so no need to set
     //
 
     switch (level) {

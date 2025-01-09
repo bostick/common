@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,6 +17,10 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
+
+//
+// keep compilable with C and C++
+//
 
 enum Status {
     OK = 0,

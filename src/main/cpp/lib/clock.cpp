@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -116,6 +116,9 @@ void GrabNow(void) {
 }
 
 
+//
+// JNI functions
+//
 
 #if IS_PLATFORM_ANDROID
 
@@ -130,6 +133,8 @@ Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative(JNIEnv *env, jcl
 }
 
 #endif // IS_PLATFORM_ANDROID
+
+
 
 
 
