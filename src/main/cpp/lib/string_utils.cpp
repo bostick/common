@@ -161,9 +161,10 @@ Status parseSizeT(const std::string &str, size_t *out) {
         }
 
         return OK;
-    }
 
-    ABORT("unhandled: sizeof(size_t) is unrecognized: %zu", sizeof(size_t));
+    } else {
+        ABORT("unhandled: sizeof(size_t) is unrecognized: %zu", sizeof(size_t));
+    }
 }
 
 
