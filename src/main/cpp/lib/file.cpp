@@ -22,6 +22,9 @@
 
 #include "common/file.h"
 
+#undef NDEBUG
+
+#include "common/assert.h"
 #include "common/check.h"
 #include "common/error.h"
 #include "common/logging.h"
@@ -71,10 +74,15 @@ openFile(
     if (r != len) {
 
         if (std::feof(file)) {
+
             LOGE("fread failed: unexpected end of file");
-        } else if (std::ferror(file)) {
-            LOGE("fread failed: error reading file");
+
+            return ERR;
         }
+
+        ASSERT(std::ferror(file));
+
+        LOGE("fread failed: error reading file");
 
         return ERR;
     }
@@ -106,12 +114,7 @@ saveFile(
 
 
 bool fileExists(const char *path) {
-
-    ScopedFile x{path, "r"};
-
-    FILE *file = x.get();
-
-    return (file != NULL);
+    return std::filesystem::is_regular_file(path);
 }
 
 
@@ -123,13 +126,14 @@ Status createDirectory(const char *path) {
 
     std::error_code ec;
 
-    if (std::filesystem::create_directories(path, ec)) {
-        return OK;
+    if (!std::filesystem::create_directories(path, ec)) {
+
+        LOGE("error creating directory %s: %s", path, ec.message().c_str());
+
+        return ERR;
     }
 
-    LOGE("error creating directory %s: %s", path, ec.message().c_str());
-
-    return ERR;
+    return OK;
 }
 
 
@@ -141,17 +145,20 @@ bool directoryExists(const char *path) {
 Status
 deleteFile(const char *path) {
 
-    std::error_code ec;
-
-    if (std::filesystem::remove(path, ec)) {
+    if (!fileExists(path)) {
+        LOGE("cannot delete file: does not exist. %s", path);
         return OK;
     }
+    
+    std::error_code ec;
 
-    LOGE("error deleting file %s: %s", path, ec.message().c_str());
+    if (!std::filesystem::remove(path, ec)) {
+        LOGE("error deleting file %s: %s", path, ec.message().c_str());
+        return ERR;
+    }
 
-    return ERR;
+    return OK;
 }
-
 
 Status
 deleteFileIfPresent(const char *path) {
@@ -174,15 +181,19 @@ deleteFileIfPresent(const char *path) {
 Status
 deleteEmptyDirectory(const char *path) {
 
-    std::error_code ec;
-
-    if (std::filesystem::remove(path, ec)) {
+    if (!directoryExists(path)) {
+        LOGE("cannot delete directory: does not exist. %s", path);
         return OK;
     }
+    
+    std::error_code ec;
 
-    LOGE("error deleting empty directory %s: %s", path, ec.message().c_str());
+    if (!std::filesystem::remove(path, ec)) {
+        LOGE("error deleting empty directory %s: %s", path, ec.message().c_str());
+        return ERR;
+    }
 
-    return ERR;
+    return OK;
 }
 
 Status
