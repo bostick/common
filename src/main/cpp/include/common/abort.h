@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -86,7 +86,8 @@ void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list arg
 
 #endif // IS_PLATFORM_ANDROID
 
-#define ABORT(fmt, ...) ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define ABORT(fmt, ...) \
+    ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 
 

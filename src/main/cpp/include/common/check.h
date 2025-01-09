@@ -1,4 +1,4 @@
-// Copyright (C) 2024 by Brenton Bostick
+// Copyright (C) 2025 by Brenton Bostick
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,20 +23,36 @@
 // if cond is false, then log message and return ERR
 //
 #define CHECK(cond, msg, ...) \
-  do { \
-    if (!(cond)) { \
-      LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-      return ERR; \
-    } \
-  } while (0)
+    do { \
+        if (!(cond)) { \
+            LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
+            return ERR; \
+        } \
+    } while (0)
 
 //
 // if cond is true, then log message and return ERR
 //
 #define CHECK_NOT(cond, msg, ...) \
-  do { \
-    if ((cond)) { \
-      LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
-      return ERR; \
-    } \
-  } while (0)
+    do { \
+        if ((cond)) { \
+            LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
+            return ERR; \
+        } \
+    } while (0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
