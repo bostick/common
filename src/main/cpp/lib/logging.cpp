@@ -26,12 +26,8 @@
 #include <android/log.h>
 #endif // IS_PLATFORM_ANDROID
 
-#include <string>
-#include <chrono>
 #include <cstdio> // for fprintf, stderr
-#include <ctime> // for localtime, strftime
 #include <cstdarg> // for va_list, va_start, va_arg, va_end
-#include <cstring> // for strchr
 
 
 #define TAG "logging"

@@ -140,20 +140,30 @@ Status parseSizeT(const std::string &str, size_t *out) {
 
     errno = 0;
 
-if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
-    *out = std::strtoul(str.c_str(), NULL, 10);
-} else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
-    *out = std::strtoull(str.c_str(), NULL, 10);
-} else {
-    ABORT("unhandled");
-}
+    if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
 
-    if (errno != 0) {
-        LOGE("strtoul: %s %s", ErrorName(errno), ERRORSTRING(errno));
-        return ERR;
+        *out = std::strtoul(str.c_str(), NULL, 10);
+
+        if (errno != 0) {
+            LOGE("strtoul: %s %s", ErrorName(errno), ERRORSTRING(errno));
+            return ERR;
+        }
+
+        return OK;
+
+    } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
+
+        *out = std::strtoull(str.c_str(), NULL, 10);
+
+        if (errno != 0) {
+            LOGE("strtoull: %s %s", ErrorName(errno), ERRORSTRING(errno));
+            return ERR;
+        }
+
+        return OK;
     }
 
-    return OK;
+    ABORT("unhandled: sizeof(size_t) is unrecognized: %zu", sizeof(size_t));
 }
 
 
