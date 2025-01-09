@@ -16,11 +16,9 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "common/platform.h"
-
-#if IS_PLATFORM_WINDOWS
+#if _MSC_VER
 #define _CRT_SECURE_NO_DEPRECATE // disable warnings about fopen being insecure on MSVC
-#endif // IS_PLATFORM_WINDOWS
+#endif // _MSC_VER
 
 #include "common/file.h"
 
