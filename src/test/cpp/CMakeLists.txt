@@ -18,6 +18,7 @@ include(GoogleTest)
 
 set(CPP_TEST_SOURCES
     TestClock.cpp
+    TestMathUtils.cpp
 )
 
 add_executable(common-test-exe

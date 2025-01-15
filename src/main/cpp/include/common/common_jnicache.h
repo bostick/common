@@ -64,6 +64,7 @@ extern jmethodID JSONArray_getInt_method;
 extern jmethodID JSONArray_getJSONArray_method;
 extern jmethodID JSONArray_length_method;
 extern jmethodID JSONObject_has_method;
+extern jmethodID JSONObject_getDouble_method;
 extern jmethodID JSONObject_getJSONArray_method;
 #endif // IS_PLATFORM_ANDROID
 
