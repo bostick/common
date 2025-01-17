@@ -182,7 +182,7 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
     }
 
     if (std::numeric_limits<uint16_t>::max() < a) {
-        LOGE("value is greater than can be represented by uint16_t");
+        LOGE("value is greater than can be represented by uint16_t: %lu", a);
         return ERR;
     }
 
