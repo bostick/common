@@ -26,6 +26,7 @@ project(common
 set(COMMON_BUILD_TESTS OFF CACHE BOOL "Build tests")
 
 message(STATUS "COMMON_BUILD_TESTS: ${COMMON_BUILD_TESTS}")
+message(STATUS "SANITIZE: ${SANITIZE}")
 
 
 add_subdirectory(src/main/cpp/lib)

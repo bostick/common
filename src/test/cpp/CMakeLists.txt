@@ -92,6 +92,29 @@ set_target_properties(common-test-exe
 )
 
 
+if(SANITIZE)
+    if(${SANITIZE} STREQUAL "ubsan")
+        target_compile_options(common-test-exe
+            PRIVATE
+                -fsanitize=undefined -fno-sanitize-recover=undefined
+        )
+        target_link_options(common-test-exe
+            PRIVATE
+                -fsanitize=undefined -fno-sanitize-recover=undefined
+        )
+    elseif(${SANITIZE} STREQUAL "asan")
+        target_compile_options(common-test-exe
+            PRIVATE
+                -fsanitize=address -fno-omit-frame-pointer
+        )
+        target_link_options(common-test-exe
+            PRIVATE
+                -fsanitize=address -fno-omit-frame-pointer
+        )
+    endif()
+endif()
+
+
 
 
 
