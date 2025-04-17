@@ -33,11 +33,16 @@ extern "C" {
 //
 int64_t uptimeMillis(void);
 
+//
+// NOT monotonic
+//
 int64_t timeSinceEpochSeconds(void);
 
 //
 // This may TECHNICALLY be the same clock as System.currentTime() on Java, but just use
 // timeSinceEpochMillis() everywhere to be consistent, even on Java.
+//
+// NOT monotonic
 //
 int64_t timeSinceEpochMillis(void);
 
@@ -48,11 +53,6 @@ void GrabNow(void);
 #ifdef __cplusplus
 }
 #endif // __cplusplus
-
-
-
-
-
 
 
 

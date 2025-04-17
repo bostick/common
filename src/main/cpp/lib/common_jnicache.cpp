@@ -34,6 +34,7 @@
 //
 // Classes
 //
+
 // jclass AtomicBoolean_class;
 jclass File_class;
 jclass Status_class;
@@ -51,6 +52,7 @@ jclass JSONObject_class;
 //
 // Static fields
 //
+
 #if IS_PLATFORM_ANDROID
 jfieldID Build_MODEL_field;
 #endif // IS_PLATFORM_ANDROID
@@ -58,6 +60,7 @@ jfieldID Build_MODEL_field;
 //
 // Instance methods
 //
+
 // jmethodID AtomicBoolean_set_method;
 jmethodID File_getAbsolutePath_method;
 jmethodID Status_toInt_method;
@@ -93,6 +96,7 @@ void setupCommonJniCache(JavaVM *vm) {
     //
     // Classes
     //
+
     // SETCLASS(AtomicBoolean_class, "java/util/concurrent/atomic/AtomicBoolean");
     SETCLASS(File_class, "java/io/File");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
@@ -110,6 +114,7 @@ void setupCommonJniCache(JavaVM *vm) {
     //
     // Static fields
     //
+
 #if IS_PLATFORM_ANDROID
     CHECKEXCEPTIONANDNULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
 #endif // IS_PLATFORM_ANDROID
@@ -117,6 +122,7 @@ void setupCommonJniCache(JavaVM *vm) {
     //
     // Instance methods
     //
+
     // EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
     CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
     CHECKEXCEPTIONANDNULL(Status_toInt_method = env->GetMethodID(Status_class, "toInt", "()I"));
@@ -164,7 +170,6 @@ void teardownCommonJniCache(JavaVM *vm) {
     env->DeleteGlobalRef(JSONObject_class);
 #endif // IS_PLATFORM_ANDROID
 }
-
 
 
 

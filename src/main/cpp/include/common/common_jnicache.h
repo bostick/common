@@ -47,6 +47,7 @@ extern jclass JSONObject_class;
 //
 // Static fields
 //
+
 #if IS_PLATFORM_ANDROID
 extern jfieldID Build_MODEL_field;
 #endif // IS_PLATFORM_ANDROID
@@ -54,6 +55,7 @@ extern jfieldID Build_MODEL_field;
 //
 // Instance methods
 //
+
 // extern jmethodID AtomicBoolean_set_method;
 extern jmethodID File_getAbsolutePath_method;
 extern jmethodID Status_toInt_method;
@@ -83,6 +85,10 @@ extern std::map<Status, jobject> statusEnumMap;
 
 void setupCommonJniCache(JavaVM *vm);
 void teardownCommonJniCache(JavaVM *vm);
+
+
+
+
 
 
 
