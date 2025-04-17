@@ -66,9 +66,13 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
 
     getEnvRet = jvm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6);
 
-    if (getEnvRet != JNI_EDETACHED) {
+    ASSERT(getEnvRet != JNI_EVERSION);
+
+    if (getEnvRet == JNI_OK) {
         return;
     }
+
+    ASSERT(getEnvRet == JNI_EDETACHED);
 
     jint res;
     if ((res = jvm->AttachCurrentThread(&env, NULL)) != JNI_OK) {
