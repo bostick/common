@@ -20,12 +20,21 @@ package com.brentonbostick.common;
 
 public class Clock {
 
+	/**
+	 * NOT monotonic
+	 *
+	 * @return time since epoch
+	 */
+	public static long timeSinceEpochMillis() {
+		return timeSinceEpochMillisNative();
+	}
+
 
 	//
     // JNI methods
     //
-    
-	public static native long timeSinceEpochMillisNative();
+
+	private static native long timeSinceEpochMillisNative();
 }
 
 
