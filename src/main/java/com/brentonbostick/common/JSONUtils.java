@@ -31,7 +31,6 @@ import java.nio.charset.StandardCharsets;
 @Keep
 public class JSONUtils {
 
-    /** @noinspection unused*/
     private static final String TAG = "JSONUtils";
 
     public static JSONObject readInputStream(InputStream is) throws IOException, JSONException {

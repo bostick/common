@@ -24,7 +24,7 @@
 
 #include "common/platform.h"
 
-#include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
+#include <stdarg.h> // for va_list
 
 
 #if __GNUC__ || __clang__

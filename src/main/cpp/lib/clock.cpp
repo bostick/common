@@ -56,7 +56,7 @@ char nowStrBuf[80];
 
 int64_t uptimeMillis(void) {
 
-    timespec now; // NOLINT(*-pro-type-member-init)
+    timespec now;
 
     ::clock_gettime(CLOCK_MONOTONIC, &now);
 

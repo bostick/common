@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <stdint.h> // for int64_t NOLINT(*-deprecated-headers)
+#include <stdint.h> // for int64_t
 
 #ifdef __cplusplus
 extern "C" {

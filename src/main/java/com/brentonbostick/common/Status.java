@@ -32,7 +32,6 @@ public enum Status {
         this.id = id;
     }
 
-    /** @noinspection unused*/
     public static Status fromInt(int id) {
         switch (id) {
         case 0:
@@ -44,7 +43,6 @@ public enum Status {
         }
     }
 
-    /** @noinspection unused*/
     public int toInt() {
         return id;
     }
