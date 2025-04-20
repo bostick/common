@@ -111,7 +111,7 @@ void GrabNow(void) {
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
     //
     size_t res;
-    res = std::strftime(nowStrBuf, 80, "%F %X", timeinfo);
+    res = std::strftime(nowStrBuf, sizeof(nowStrBuf), "%F %X", timeinfo);
     ASSERT(res != 0);
 }
 

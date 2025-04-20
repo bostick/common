@@ -33,6 +33,7 @@ import java.nio.charset.StandardCharsets;
 public class InputStreamUtilsTest {
 
     public InputStreamUtilsTest() {
+
     }
 
     @Test

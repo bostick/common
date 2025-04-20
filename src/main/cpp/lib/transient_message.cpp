@@ -40,11 +40,11 @@
 transientMessageCapturer_decl transientMessageCapturer = nullptr;
 
 
-void captureTransientMessage(const char *msg) {
+void captureTransientMessage(const char *message) {
 
     ASSERT(transientMessageCapturer != nullptr);
 
-    transientMessageCapturer(msg);
+    transientMessageCapturer(message);
 }
 
 
