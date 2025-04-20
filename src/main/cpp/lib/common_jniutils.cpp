@@ -20,6 +20,7 @@
 
 #undef NDEBUG
 
+#include "common/abort.h"
 #include "common/assert.h"
 #include "common/common_jnicache.h"
 #include "common/logging.h"
@@ -76,8 +77,7 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
 
     jint res;
     if ((res = jvm->AttachCurrentThread(&env, NULL)) != JNI_OK) {
-        LOGE("Error calling AttachCurrentThread: %d", res);
-        return;
+        ABORT("Error calling AttachCurrentThread: %d", res);
     }
 }
 
@@ -89,8 +89,7 @@ ScopedJniEnv::~ScopedJniEnv() {
 
     jint res;
     if ((res = jvm->DetachCurrentThread()) != JNI_OK) {
-        LOGE("Error calling DetachCurrentThread: %d", res);
-        return;
+        ABORT("Error calling DetachCurrentThread: %d", res);
     }
 }
 

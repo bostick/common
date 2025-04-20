@@ -126,7 +126,7 @@ Status parseInt64(const char *str, int64_t *out) {
     *out = std::strtoll(str, NULL, 10);
 
     if (errno != 0) {
-        LOGE("strtoll: %s", ERRORSTRING(errno));
+        LOGE("strtoll: %s (%s)", std::strerror(errno), ErrorName(errno));
         return ERR;
     }
 
@@ -145,7 +145,7 @@ Status parseSizeT(const std::string &str, size_t *out) {
         *out = std::strtoul(str.c_str(), NULL, 10);
 
         if (errno != 0) {
-            LOGE("strtoul: %s", ERRORSTRING(errno));
+            LOGE("strtoul: %s (%s)", std::strerror(errno), ErrorName(errno));
             return ERR;
         }
 
@@ -156,7 +156,7 @@ Status parseSizeT(const std::string &str, size_t *out) {
         *out = std::strtoull(str.c_str(), NULL, 10);
 
         if (errno != 0) {
-            LOGE("strtoull: %s", ERRORSTRING(errno));
+            LOGE("strtoull: %s (%s)", std::strerror(errno), ErrorName(errno));
             return ERR;
         }
 
@@ -177,7 +177,7 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
     auto a = std::strtoul(str.c_str(), NULL, 10);
 
     if (errno != 0) {
-        LOGE("strtoul: %s", ERRORSTRING(errno));
+        LOGE("strtoul: %s (%s)", std::strerror(errno), ErrorName(errno));
         return ERR;
     }
 

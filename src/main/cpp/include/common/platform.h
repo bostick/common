@@ -38,6 +38,10 @@
 
 #if defined(__ANDROID__)
 
+//
+// https://android.googlesource.com/platform/bionic/+/HEAD/docs/defines.md
+//
+
 #define IS_PLATFORM_ANDROID 1
 #define PLATFORM PLATFORM_ANDROID
 #define PLATFORM_STRING "android"

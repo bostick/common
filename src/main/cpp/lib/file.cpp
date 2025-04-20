@@ -53,11 +53,11 @@ openFile(
 
     int fres = std::fseek(file, 0, SEEK_END);
 
-    CHECK_NOT(fres, "fseek failed: %s %s", ErrorName(errno), std::strerror(errno));
+    CHECK_NOT(fres, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     long res = std::ftell(file);
 
-    CHECK_NOT(res < 0, "ftell failed: %s %s", ErrorName(errno), std::strerror(errno));
+    CHECK_NOT(res < 0, "ftell failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     auto len = static_cast<size_t>(res);
 
@@ -107,7 +107,7 @@ saveFile(
 
     auto r = std::fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
 
-    CHECK(r == buf.size(), "fwrite failed: %s %s", ErrorName(errno), std::strerror(errno));
+    CHECK(r == buf.size(), "fwrite failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     return OK;
 }
@@ -220,7 +220,7 @@ ScopedFile::ScopedFile(const char *path, const char *mode) :
     file = std::fopen(path, mode);
 
     if (file == NULL) {
-        LOGE("cannot open %s: %s %s", path, ErrorName(errno), std::strerror(errno));
+        LOGE("cannot open %s: %s (%s)", path, std::strerror(errno), ErrorName(errno));
         return;
     }
 }

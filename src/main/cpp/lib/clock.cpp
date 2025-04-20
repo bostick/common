@@ -24,7 +24,9 @@
 
 #undef NDEBUG
 
+#include "common/abort.h"
 #include "common/assert.h"
+#include "common/error.h"
 #include "common/platform.h"
 
 #if IS_PLATFORM_ANDROID
@@ -42,6 +44,7 @@
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 #include <chrono>
+#include <cstring> // for strerror
 
 
 #define TAG "clock"
@@ -58,7 +61,9 @@ int64_t uptimeMillis(void) {
 
     timespec now;
 
-    ::clock_gettime(CLOCK_MONOTONIC, &now);
+    if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
+        ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
 
     return static_cast<int64_t>(now.tv_sec) * 1000 + static_cast<int64_t>(now.tv_nsec) / 1000000;
 }
@@ -105,7 +110,10 @@ int64_t timeSinceEpochMillis(void) {
 //
 void GrabNow(void) {
 
-    std::time(&timer);
+    if (std::time(&timer) == -1) {
+        ABORT("time: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
     timeinfo = std::localtime(&timer);
     //
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
