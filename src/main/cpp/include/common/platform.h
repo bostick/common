@@ -20,20 +20,42 @@
 
 
 //
+// Provide preprocessor defines for platform identification.
+//
+// platform.h USED to have these definitions:
+// #define PLATFORM_ANDROID 1
+// #define PLATFORM_IOS 2
+// #define PLATFORM_MACOS 3
+// #define PLATFORM_WINDOWS 4
+// #define PLATFORM_LINUX 5
+//
+// but other libraries may simply check for these definitions and get confused.
+//
+// For example, raylib thinks that it was building on Android even when not on Android, because of this logic:
+//
+// https://github.com/raysan5/raylib/blob/fecf56e15aaba160aefe14b241de19262a20ab3e/src/rcore.c#L333
+//
+// ```
+// #elif defined(PLATFORM_ANDROID)
+//    #include "rcore_android.c"
+// #else
+// ```
+//
+// So keep things simple and only define IS_PLATFORM_ANDROID etc. and PLATFORM_STRING
+//
+// These make less sense to only test for being defined and can be considered an error if used like this:
+//
+// #if defined(IS_PLATFORM_ANDROID)
+// #endif
+//
+
+
+//
 // there is an outside chance these macros are already defined
 //
-#if defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS) || defined(PLATFORM_MACOS) || defined(PLATFORM_WINDOWS) || defined(PLATFORM_LINUX)
-#error Platform macros already defined (PLATFORM_ANDROID, PLATFORM_IOS, PLATFORM_MACOS, PLATFORM_WINDOWS, \
-    PLATFORM_LINUX).
-#endif // defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS) || defined(PLATFORM_MACOS) || defined(PLATFORM_WINDOWS) || defined(PLATFORM_LINUX)
-
-
-// keep 0 undefined
-#define PLATFORM_ANDROID 1
-#define PLATFORM_IOS 2
-#define PLATFORM_MACOS 3
-#define PLATFORM_WINDOWS 4
-#define PLATFORM_LINUX 5
+#if defined(IS_PLATFORM_ANDROID) || defined(IS_PLATFORM_IOS) || defined(IS_PLATFORM_MACOS) || defined(IS_PLATFORM_WINDOWS) || defined(IS_PLATFORM_LINUX) || defined(PLATFORM_STRING)
+#error Platform macros already defined (IS_PLATFORM_ANDROID, IS_PLATFORM_IOS, IS_PLATFORM_MACOS, IS_PLATFORM_WINDOWS, IS_PLATFORM_LINUX, PLATFORM_STRING)
+#endif // defined(IS_PLATFORM_ANDROID) || defined(IS_PLATFORM_IOS) || defined(IS_PLATFORM_MACOS) || defined(IS_PLATFORM_WINDOWS) || defined(IS_PLATFORM_LINUX) || defined(PLATFORM_STRING)
 
 
 #if defined(__ANDROID__)
@@ -43,7 +65,6 @@
 //
 
 #define IS_PLATFORM_ANDROID 1
-#define PLATFORM PLATFORM_ANDROID
 #define PLATFORM_STRING "android"
 
 #elif __APPLE__
@@ -53,13 +74,11 @@
 #if TARGET_OS_IOS
 
 #define IS_PLATFORM_IOS 1
-#define PLATFORM PLATFORM_IOS
 #define PLATFORM_STRING "ios"
 
 #elif TARGET_OS_OSX
 
 #define IS_PLATFORM_MACOS 1
-#define PLATFORM PLATFORM_MACOS
 #define PLATFORM_STRING "macos"
 
 #else // TARGET_OS_IOS
@@ -69,13 +88,11 @@
 #elif defined(_WIN32)
 
 #define IS_PLATFORM_WINDOWS 1
-#define PLATFORM PLATFORM_WINDOWS
 #define PLATFORM_STRING "windows"
 
 #elif defined(__linux__)
 
 #define IS_PLATFORM_LINUX 1
-#define PLATFORM PLATFORM_LINUX
 #define PLATFORM_STRING "linux"
 
 #else
