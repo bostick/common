@@ -74,9 +74,7 @@ openFile(
     if (r != len) {
 
         if (std::feof(file)) {
-
             LOGE("fread failed: unexpected end of file");
-
             return ERR;
         }
 
@@ -127,9 +125,7 @@ Status createDirectory(const char *path) {
     std::error_code ec;
 
     if (!std::filesystem::create_directories(path, ec)) {
-
         LOGE("error creating directory %s: %s", path, ec.message().c_str());
-
         return ERR;
     }
 

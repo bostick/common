@@ -38,11 +38,11 @@ public class InputStreamUtils {
         //
         // read all bytes from is
         //
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // TIRAMISU, API 33, Android 13
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // TIRAMISU, API 33, Android 13 and higher
 
             return is.readAllBytes();
 
-        } else {
+        } else { // S_V2, API 32, Android 12 and lower
 
             byte[] buf = new byte[5000];
 
