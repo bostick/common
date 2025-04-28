@@ -52,7 +52,10 @@
 
 time_t timer;
 struct tm *timeinfo;
-char nowStrBuf[80];
+//
+// max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
+//
+char nowStrBuf[20];
 
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX

@@ -46,7 +46,10 @@ int64_t timeSinceEpochSeconds(void);
 //
 int64_t timeSinceEpochMillis(void);
 
-extern char nowStrBuf[80];
+//
+// max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
+//
+extern char nowStrBuf[20];
 
 void GrabNow(void);
 
