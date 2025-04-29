@@ -140,6 +140,9 @@ Status parseSizeT(const std::string &str, size_t *out) {
 
     errno = 0;
 
+    //
+    // incorrect warning "Condition is always true"
+    //
     if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
 
         *out = std::strtoul(str.c_str(), NULL, 10);
@@ -151,6 +154,9 @@ Status parseSizeT(const std::string &str, size_t *out) {
 
         return OK;
 
+        //
+        // incorrect warning "Condition is always true"
+        //
     } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
 
         *out = std::strtoull(str.c_str(), NULL, 10);
