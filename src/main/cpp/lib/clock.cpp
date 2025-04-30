@@ -50,12 +50,7 @@
 #define TAG "clock"
 
 
-time_t timer;
-struct tm *timeinfo;
-//
-// max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
-//
-char nowStrBuf[20];
+char nowStrBuf[FORMATTIME_SIZE];
 
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
@@ -113,15 +108,26 @@ int64_t timeSinceEpochMillis(void) {
 //
 void GrabNow(void) {
 
+    time_t timer;
     if (std::time(&timer) == -1) {
         ABORT("time: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
 
-    timeinfo = std::localtime(&timer);
+    formatTime(timer, nowStrBuf, sizeof(nowStrBuf));
+}
+
+
+void formatTime(time_t timeV, char *buf, size_t len) {
+
+    tm *timeinfo;
+    if ((timeinfo = std::localtime(&timeV)) == NULL) {
+        ABORT("localtime: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
     //
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
     //
-    if (std::strftime(nowStrBuf, sizeof(nowStrBuf), "%F %X", timeinfo) == 0) {
+    if (std::strftime(buf, len, "%F %X", timeinfo) == 0) {
         ABORT("strftime returned 0");
     }
 }

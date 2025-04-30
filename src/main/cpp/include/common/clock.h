@@ -23,10 +23,16 @@
 #pragma once
 
 #include <stdint.h> // for int64_t
+#include <time.h> // for time_t
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+//
+// max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
+//
+const size_t FORMATTIME_SIZE = 20;
 
 //
 // monotonic
@@ -46,12 +52,11 @@ int64_t timeSinceEpochSeconds(void);
 //
 int64_t timeSinceEpochMillis(void);
 
-//
-// max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
-//
-extern char nowStrBuf[20];
+extern char nowStrBuf[FORMATTIME_SIZE];
 
 void GrabNow(void);
+
+void formatTime(time_t timeV, char *buf, size_t len);
 
 #ifdef __cplusplus
 }
