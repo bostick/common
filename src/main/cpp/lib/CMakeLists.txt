@@ -25,7 +25,7 @@ set(SOURCES_LIB
     logging.cpp
     math_utils.cpp
     string_utils.cpp
-    transient_message.cpp
+    unusual_message.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")

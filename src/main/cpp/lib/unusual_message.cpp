@@ -16,21 +16,63 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-package com.brentonbostick.common;
+#include "common/unusual_message.h"
 
-public class TransientMessage {
+#undef NDEBUG
 
-    public static void captureTransientMessage(String msg) {
-        captureTransientMessageNative(msg);
-    }
+#include "common/assert.h"
+#include "common/platform.h"
+
+#if IS_PLATFORM_ANDROID
+#include "common/common_jniutils.h"
+#endif // IS_PLATFORM_ANDROID
+
+#if IS_PLATFORM_ANDROID
+#include <jni.h>
+#endif // IS_PLATFORM_ANDROID
+
+#include <string>
 
 
-    //
-    // JNI methods
-    //
+#define TAG "unusual_message"
 
-    private static native void captureTransientMessageNative(String msg);
+
+unusualMessageCapturer_decl unusualMessageCapturer = nullptr;
+
+
+void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer) {
+    unusualMessageCapturer = capturer;
 }
+
+
+void captureUnusualMessage(const char *message) {
+
+    ASSERT(unusualMessageCapturer != nullptr);
+
+    unusualMessageCapturer(message);
+}
+
+
+//
+// JNI functions
+//
+
+#if IS_PLATFORM_ANDROID
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_brentonbostick_common_UnusualMessage_captureUnusualMessageNative(JNIEnv *env, jclass clazz, jstring jmsg) {
+
+    (void)clazz;
+
+    ScopedJniString x{env, jmsg};
+
+    const char *tmpMsg = x.get();
+
+    captureUnusualMessage(tmpMsg);
+}
+
+#endif // IS_PLATFORM_ANDROID
 
 
 

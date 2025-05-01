@@ -19,12 +19,12 @@
 #pragma once
 
 
-typedef void (*transientMessageCapturer_decl)(const char *message);
-
-extern transientMessageCapturer_decl transientMessageCapturer;
+typedef void (*unusualMessageCapturer_decl)(const char *message);
 
 
-void captureTransientMessage(const char *message);
+void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer);
+
+void captureUnusualMessage(const char *message);
 
 
 
