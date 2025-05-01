@@ -32,7 +32,7 @@ extern "C" {
 //
 // max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
 //
-const size_t FORMATTIME_SIZE = 20;
+const size_t FORMATTIME_LEN = 19;
 
 //
 // monotonic
@@ -52,7 +52,7 @@ int64_t timeSinceEpochSeconds(void);
 //
 int64_t timeSinceEpochMillis(void);
 
-extern char nowStrBuf[FORMATTIME_SIZE];
+extern char nowStrBuf[FORMATTIME_LEN + 1];
 
 void GrabNow(void);
 

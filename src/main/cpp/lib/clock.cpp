@@ -50,7 +50,7 @@
 #define TAG "clock"
 
 
-char nowStrBuf[FORMATTIME_SIZE];
+char nowStrBuf[FORMATTIME_LEN + 1];
 
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
