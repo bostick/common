@@ -32,10 +32,12 @@
 
 jobject createStatusObject(JNIEnv *env, Status status) {
 
-    jobject resultObject;
-    CHECKEXCEPTIONANDNULL(resultObject = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, static_cast<jint>(status)));
+    auto jstatus = static_cast<jint>(status);
 
-    return resultObject;
+    jobject jresultObject;
+    CHECKEXCEPTIONANDNULL(jresultObject = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, jstatus));
+
+    return jresultObject;
 }
 
 

@@ -73,7 +73,7 @@ openFile(
 
     if (r != len) {
 
-        if (std::feof(file)) {
+        if (std::feof(file) != 0) {
             LOGE("fread failed: unexpected end of file");
             return ERR;
         }

@@ -30,7 +30,7 @@ extern "C" {
 #endif // __cplusplus
 
 //
-// max len is 4 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 = 19
+// len("2025-12-31 12:59:59") = 19
 //
 const size_t FORMATTIME_LEN = 19;
 

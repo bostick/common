@@ -58,7 +58,6 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 int64_t uptimeMillis(void) {
 
     timespec now;
-
     if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
         ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
@@ -120,7 +119,7 @@ void GrabNow(void) {
 void formatTime(time_t timeV, char *buf, size_t len) {
 
     tm *timeinfo;
-    if ((timeinfo = std::localtime(&timeV)) == NULL) {
+    if (timeinfo = std::localtime(&timeV); timeinfo == NULL) {
         ABORT("localtime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
 
