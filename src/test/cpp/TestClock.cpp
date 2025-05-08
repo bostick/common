@@ -23,6 +23,7 @@
 
 #include <thread> // for std::this_thread::sleep_for
 #include <chrono> // for std::chrono::seconds
+#include <locale>
 
 
 #define TAG "ClockTest"
@@ -77,6 +78,25 @@ TEST_F(ClockTest, timeSinceEpoch) {
 
     EXPECT_GT(diff, 1);
     EXPECT_LT(diff, 4);
+}
+
+TEST_F(ClockTest, formatTime) {
+
+    //
+    // test using a different locale that would print wider than allowed
+    //
+    std::setlocale(LC_TIME, "ja_JP");
+
+    char buf[FORMATTIME_LEN + 1];
+
+    time_t timer;
+    if (std::time(&timer) == -1) {
+        FAIL();
+    }
+
+    formatTime(timer, buf, sizeof(buf));
+
+    LOGI("formatTime: buf: %s", buf);
 }
 
 

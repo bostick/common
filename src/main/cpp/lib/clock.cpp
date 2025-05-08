@@ -45,6 +45,7 @@
 
 #include <chrono>
 #include <cstring> // for strerror
+#include <locale>
 
 
 #define TAG "clock"
@@ -123,12 +124,17 @@ void formatTime(time_t timeV, char *buf, size_t len) {
         ABORT("localtime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
 
+    std::locale oldLocale;
+    oldLocale = std::locale::global(std::locale::classic());
+
     //
     // "%F %X" is equivalent to "%Y-%m-%d %H:%M:%S"
     //
     if (std::strftime(buf, len, "%F %X", timeinfo) == 0) {
         ABORT("strftime returned 0");
     }
+
+    std::locale::global(oldLocale);
 }
 
 

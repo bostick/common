@@ -56,6 +56,9 @@ extern char nowStrBuf[FORMATTIME_LEN + 1];
 
 void GrabNow(void);
 
+//
+// formats time as %Y-%m-%d %H:%M:%S in "C" locale
+//
 void formatTime(time_t timeV, char *buf, size_t len);
 
 #ifdef __cplusplus
