@@ -26,6 +26,12 @@
 #include <cstdint> // for int64_t
 
 
+//
+// functionally the same as std::snprintf but also asserts that the result is non-negative and less than size
+//
+size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
+
+
 std::vector<std::string> split(const std::string &s, char delim);
 
 std::string escape(const std::string &s);

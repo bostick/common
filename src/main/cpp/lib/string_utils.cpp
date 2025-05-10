@@ -33,6 +33,8 @@
 #include <sstream>
 #include <cstdlib> // for strtoll
 #include <cstring> // for strerror
+#include <cstdio> // for vsnprintf
+#include <cstdarg> // for va_list
 
 
 #define TAG "string_utils"
@@ -195,6 +197,22 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
     *out = static_cast<uint16_t>(a);
 
     return OK;
+}
+
+
+size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
+
+    int res;
+
+    va_list args;
+    va_start(args, format);
+    res = std::vsnprintf(dest, size, format, args);
+    va_end(args);
+
+    ASSERT(res >= 0);
+    ASSERT(res < static_cast<int>(size));
+
+    return static_cast<size_t>(res);
 }
 
 
