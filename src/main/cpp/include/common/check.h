@@ -28,7 +28,7 @@
             LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
             return ERR; \
         } \
-    } while (0)
+    } while (false)
 
 //
 // if cond is true, then log message and return ERR
@@ -39,7 +39,7 @@
             LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
             return ERR; \
         } \
-    } while (0)
+    } while (false)
 
 
 
