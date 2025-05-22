@@ -66,6 +66,16 @@ int64_t uptimeMillis(void) {
     return static_cast<int64_t>(now.tv_sec) * 1000 + static_cast<int64_t>(now.tv_nsec) / 1000000;
 }
 
+int64_t uptimeMicros(void) {
+
+    timespec now;
+    if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
+        ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return static_cast<int64_t>(now.tv_sec) * 1000000 + static_cast<int64_t>(now.tv_nsec) / 1000;
+}
+
 #elif IS_PLATFORM_MACOS
 
 //

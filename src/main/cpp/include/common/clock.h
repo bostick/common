@@ -39,6 +39,8 @@ const size_t FORMATTIME_LEN = 19;
 //
 int64_t uptimeMillis(void);
 
+int64_t uptimeMicros(void);
+
 //
 // NOT monotonic
 //

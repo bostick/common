@@ -37,18 +37,21 @@ int64_t uptimeMillis(void) {
     return static_cast<int64_t>(1000.0 * systemUptime);
 }
 
+int64_t uptimeMicros(void) {
+
+    NSTimeInterval systemUptime = [[NSProcessInfo processInfo] systemUptime];
+    
+    return static_cast<int64_t>(1000000.0 * systemUptime);
+}
+
 #elif IS_PLATFORM_MACOS
 
 int64_t uptimeMillis(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000 / 1000);
+}
 
-   auto t = mach_absolute_time();
-
-   static mach_timebase_info_data_t timebase;
-   if (timebase.denom == 0) {
-       static_cast<void>(mach_timebase_info(&timebase));
-   }
-
-   return static_cast<int64_t>(t * timebase.numer / timebase.denom / 1000000);
+int64_t uptimeMicros(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000);
 }
 
 #else
