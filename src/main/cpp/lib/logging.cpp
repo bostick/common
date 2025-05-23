@@ -21,6 +21,7 @@
 #include "common/abort.h"
 #include "common/clock.h"
 #include "common/platform.h"
+#include "common/unusual_message.h"
 
 #if IS_PLATFORM_ANDROID
 #include <android/log.h>
@@ -35,23 +36,24 @@
 
 void LogFatalV(const char *tag, const char *fmt, va_list args);
 void LogErrorV(const char *tag, const char *fmt, va_list args);
+void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args);
 void LogWarnV(const char *tag, const char *fmt, va_list args);
 void LogInfoV(const char *tag, const char *fmt, va_list args);
 void LogDebugV(const char *tag, const char *fmt, va_list args);
 void LogTraceV(const char *tag, const char *fmt, va_list args);
 
 
-void LogFatal(const char *tag, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    LogFatalV(tag, fmt, args);
-    va_end(args);
-}
-
 void LogError(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogErrorV(tag, fmt, args);
+    va_end(args);
+}
+
+void LogErrorAndCapture(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogErrorAndCaptureV(tag, fmt, args);
     va_end(args);
 }
 
@@ -103,6 +105,16 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 }
 
+void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args) {
+
+    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
+
+    char buf[1000];
+    std::vsnprintf(buf, sizeof(buf), fmt, args);
+
+    captureUnusualMessage(buf);
+}
+
 void LogWarnV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
 }
@@ -131,6 +143,19 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
     (void)tag;
     std::vfprintf(stderr, fmt, args);
     std::fflush(stderr);
+}
+
+
+void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args) {
+
+    (void)tag;
+
+    std::vfprintf(stderr, fmt, args);
+
+    char buf[1000];
+    std::vsnprintf(buf, sizeof(buf), fmt, args);
+
+    captureUnusualMessage(buf);
 }
 
 void LogWarnV(const char *tag, const char *fmt, va_list args) {
@@ -169,8 +194,11 @@ void LogNullV(const char *tag, const char *fmt, va_list args) {
 //
 // default log level is INFO
 //
-LOG_decl LOGF_expanded = LogFatal;
+// do not call LOGF from top-level, use LOGF_expandedV() directly inside of aborts
+//
+//LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
+LOG_decl LOGE_andCapture_expanded = LogErrorAndCapture;
 LOG_decl LOGW_expanded = LogWarn;
 LOG_decl LOGI_expanded = LogInfo;
 LOG_decl LOGD_expanded = LogNull;

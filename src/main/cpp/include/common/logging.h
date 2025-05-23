@@ -79,8 +79,12 @@ extern "C" {
 
 // var arg
 
-extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
+//
+// do not call LOGF from top-level, use LOGF_expandedV() directly inside of aborts
+//
+//extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGE_andCapture_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGW_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGI_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGD_expanded;
@@ -92,6 +96,9 @@ extern PRINTF_ATTRIBUTE LOG_decl LOGT_expanded;
 // the va_list functions LOGE_expandedV et al can be called by code that already has a va_list
 //
 
+//
+// the caller of LOGF_expandedV should abort immediately after calling LOGF_expandedV
+//
 extern LOG_declV LOGF_expandedV;
 extern LOG_declV LOGE_expandedV;
 extern LOG_declV LOGW_expandedV;
@@ -142,12 +149,15 @@ extern LOG_declV LOGT_expandedV;
 #endif // IS_PLATFORM_ANDROID
 
 //
-// do not call LOGF from top-level, use ABORT_expanded() directly
+// do not call LOGF from top-level, use LOGF_expandedV() directly inside of aborts
 //
 // #define LOGF(fmt, ...) LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 #define LOGE(fmt, ...) \
     LOGE_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+
+#define LOGE_andCapture(fmt, ...) \
+    LOGE_andCapture_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 #define LOGW(fmt, ...) \
     LOGW_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
