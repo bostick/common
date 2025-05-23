@@ -45,7 +45,7 @@ void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer) {
 }
 
 
-void captureUnusualMessage(const char *message) {
+void captureUnusualMessage(const std::string &message) {
 
     ASSERT(unusualMessageCapturer != nullptr);
 

@@ -18,13 +18,15 @@
 
 #pragma once
 
+#include <string>
 
-typedef void (*unusualMessageCapturer_decl)(const char *message);
+
+typedef void (*unusualMessageCapturer_decl)(const std::string &message);
 
 
 void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer);
 
-void captureUnusualMessage(const char *message);
+void captureUnusualMessage(const std::string &message);
 
 
 
