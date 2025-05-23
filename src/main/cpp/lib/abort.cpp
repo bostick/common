@@ -19,6 +19,7 @@
 #include "common/abort.h"
 
 #include "common/logging.h"
+#include "common/unusual_message.h"
 
 #include <cstdlib> // for abort
 
@@ -38,7 +39,14 @@ void ABORT_expanded(const char *tag, const char *fmt, ...) {
 
 
 void ABORT_expandedV(const char *tag, const char *fmt, va_list args) {
+
     LOGF_expandedV(tag, fmt, args);
+
+    char buf[1000];
+    std::vsnprintf(buf, sizeof(buf), fmt, args);
+
+    captureUnusualMessage(buf);
+
     std::abort();
 }
 
