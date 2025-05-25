@@ -29,6 +29,8 @@
 //
 // functionally the same as std::snprintf but also asserts that the result is non-negative and less than size
 //
+// returns the number of characters written, not counting the terminating null character.
+//
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
 
 
