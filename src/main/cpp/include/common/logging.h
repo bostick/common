@@ -25,6 +25,7 @@
 #include "common/platform.h"
 
 #include <stdarg.h> // for va_list
+#include <stddef.h> // for size_t
 
 
 //
@@ -170,6 +171,9 @@ extern LOG_declV LOGT_expandedV;
 
 #define LOGT(fmt, ...) \
     LOGT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+
+
+void LOGE_chunks(const char *buf, size_t len);
 
 
 #ifdef __cplusplus

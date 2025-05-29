@@ -312,6 +312,19 @@ void SetLogLevel(int level) {
 }
 
 
+void LOGE_chunks(const char *buf, size_t len) {
+
+    size_t chunkCount = len / 500;
+
+    size_t i;
+    for (i = 0; i < chunkCount; i++) {
+        LOGE("%s", std::string(buf + i * 500, 500).c_str());
+    }
+    LOGE("%s", buf + i * 500);
+    LOGE();
+}
+
+
 
 
 
