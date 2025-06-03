@@ -23,23 +23,23 @@ import androidx.annotation.Keep;
 @Keep
 public enum Status {
 
-    OK(0),
-    ERR(-1);
+    OK((byte)0),
+    ERR((byte)-1);
 
-    private final int id;
+    private final byte id;
 
-    Status(int id) {
+    Status(byte id) {
         this.id = id;
     }
 
     public static Status fromInt(int id) {
         switch (id) {
-        case 0:
-            return OK;
-        case -1:
-            return ERR;
-        default:
-            throw new RuntimeException("Unhandled value: " + id);
+            case 0:
+                return OK;
+            case -1:
+                return ERR;
+            default:
+                throw new RuntimeException("Unhandled value: " + id);
         }
     }
 
