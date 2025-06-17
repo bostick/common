@@ -34,13 +34,13 @@
 #define TAG "logging"
 
 
-void LogFatalV(const char *tag, const char *fmt, va_list args);
-void LogErrorV(const char *tag, const char *fmt, va_list args);
-void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args);
-void LogWarnV(const char *tag, const char *fmt, va_list args);
-void LogInfoV(const char *tag, const char *fmt, va_list args);
-void LogDebugV(const char *tag, const char *fmt, va_list args);
-void LogTraceV(const char *tag, const char *fmt, va_list args);
+static void LogFatalV(const char *tag, const char *fmt, va_list args);
+static void LogErrorV(const char *tag, const char *fmt, va_list args);
+static void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args);
+static void LogWarnV(const char *tag, const char *fmt, va_list args);
+static void LogInfoV(const char *tag, const char *fmt, va_list args);
+static void LogDebugV(const char *tag, const char *fmt, va_list args);
+static void LogTraceV(const char *tag, const char *fmt, va_list args);
 
 
 void LogError(const char *tag, const char *fmt, ...) {
