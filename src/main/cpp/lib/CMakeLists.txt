@@ -64,6 +64,15 @@ target_link_libraries(common-lib
 endif()
 
 
+# 
+# 
+# 
+target_link_options(common-lib
+    PRIVATE
+        -u Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative
+)
+
+
 #
 # Set up warnings
 #
@@ -98,7 +107,6 @@ endif()
 
 set_target_properties(common-lib
     PROPERTIES
-        OUTPUT_NAME common
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS NO

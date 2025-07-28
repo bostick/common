@@ -56,6 +56,11 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
+//
+// don't use CLOCK_MONOTONIC_RAW on Android
+// https://github.com/libsdl-org/SDL/commit/62d82ffc15b21fcc432fd9e0499c4585cd8d89c8
+//
+
 int64_t uptimeMillis(void) {
 
     timespec now;
