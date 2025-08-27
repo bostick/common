@@ -33,6 +33,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
 list(APPEND SOURCES_LIB
     common_jnicache.cpp
     common_jniutils.cpp
+    opengl_utils.cpp
 )
 
 endif()
