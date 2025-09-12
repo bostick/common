@@ -38,15 +38,15 @@ std::vector<std::string> split(const std::string &s, char delim);
 
 std::string escape(const std::string &s);
 
-Status parseInt(const std::string &str, int *out);
+[[nodiscard]] Status parseInt(const std::string &str, int *out);
 
-Status parseInt64(const std::string &str, int64_t *out);
+[[nodiscard]] Status parseInt64(const std::string &str, int64_t *out);
 
-Status parseInt64(const char *str, int64_t *out);
+[[nodiscard]] Status parseInt64(const char *str, int64_t *out);
 
-Status parseSizeT(const std::string &str, size_t *out);
+[[nodiscard]] Status parseSizeT(const std::string &str, size_t *out);
 
-Status parseUInt16(const std::string &str, uint16_t *out);
+[[nodiscard]] Status parseUInt16(const std::string &str, uint16_t *out);
 
 
 
