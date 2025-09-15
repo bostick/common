@@ -31,6 +31,9 @@
 #define TAG "common_jnicache"
 
 
+using enum Status;
+
+
 //
 // Classes
 //

@@ -22,8 +22,10 @@
 
 #pragma once
 
+#include <cstdint>
 
-enum Status {
+
+enum class Status : int8_t {
     OK = 0,
     ERR = -1,
 };

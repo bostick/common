@@ -37,6 +37,9 @@
 #define TAG "file"
 
 
+using enum Status;
+
+
 //
 // use fopen and friends
 //

@@ -36,7 +36,7 @@
 
 static void LogFatalV(const char *tag, const char *fmt, va_list args);
 static void LogErrorV(const char *tag, const char *fmt, va_list args);
-static void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args);
+static void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
 static void LogWarnV(const char *tag, const char *fmt, va_list args);
 static void LogInfoV(const char *tag, const char *fmt, va_list args);
 static void LogDebugV(const char *tag, const char *fmt, va_list args);
@@ -50,10 +50,10 @@ void LogError(const char *tag, const char *fmt, ...) {
     va_end(args);
 }
 
-void LogErrorAndCapture(const char *tag, const char *fmt, ...) {
+void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    LogErrorAndCaptureV(tag, fmt, args);
+    LogErrorAndCaptureUnusualV(tag, fmt, args);
     va_end(args);
 }
 
@@ -105,7 +105,7 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 }
 
-void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args) {
+void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 
@@ -146,7 +146,7 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
 }
 
 
-void LogErrorAndCaptureV(const char *tag, const char *fmt, va_list args) {
+void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
     (void)tag;
 
@@ -198,7 +198,7 @@ void LogNullV(const char *tag, const char *fmt, va_list args) {
 //
 //LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
-LOG_decl LOGE_andCapture_expanded = LogErrorAndCapture;
+LOG_decl LOGE_andCaptureUnusual_expanded = LogErrorAndCaptureUnusual;
 LOG_decl LOGW_expanded = LogWarn;
 LOG_decl LOGI_expanded = LogInfo;
 LOG_decl LOGD_expanded = LogNull;
