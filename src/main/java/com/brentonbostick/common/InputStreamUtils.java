@@ -18,6 +18,9 @@
 
 package com.brentonbostick.common;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.TIRAMISU;
+
 import android.os.Build;
 
 import java.io.IOException;
@@ -38,7 +41,7 @@ public class InputStreamUtils {
         //
         // read all bytes from is
         //
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // TIRAMISU, API 33, Android 13 and higher
+        if (SDK_INT >= TIRAMISU) { // TIRAMISU, API 33, Android 13 and higher
 
             return is.readAllBytes();
 

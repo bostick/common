@@ -18,6 +18,8 @@
 
 package com.brentonbostick.common;
 
+import static java.nio.charset.StandardCharsets.US_ASCII;
+
 import androidx.annotation.Keep;
 
 import org.json.JSONException;
@@ -37,7 +39,7 @@ public class JSONUtils {
 
         byte[] buf = InputStreamUtils.readInputStream(is);
 
-        String s = new String(buf, StandardCharsets.US_ASCII);
+        String s = new String(buf, US_ASCII);
 
         return new JSONObject(s);
     }
@@ -46,7 +48,7 @@ public class JSONUtils {
 
         String s = j.toString();
 
-        byte[] buf = s.getBytes(StandardCharsets.US_ASCII);
+        byte[] buf = s.getBytes(US_ASCII);
 
         os.write(buf);
     }
