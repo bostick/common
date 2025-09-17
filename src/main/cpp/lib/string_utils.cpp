@@ -219,6 +219,22 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
 }
 
 
+Status STRNCPY(char *dest, const char *src, size_t len) {
+
+    std::strncpy(dest, src, len);
+
+    //
+    // Because strncpy() does not guarantee to NUL terminate the string itself,
+    // this must be done explicitly.
+    //
+    if (dest[len - 1] != '\0') {
+        return ERR;
+    }
+
+    return OK;
+}
+
+
 
 
 

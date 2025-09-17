@@ -34,6 +34,12 @@
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
 
 
+//
+//
+//
+[[nodiscard]] Status STRNCPY(char *dest, const char *src, size_t len);
+
+
 std::vector<std::string> split(const std::string &s, char delim);
 
 std::string escape(const std::string &s);
