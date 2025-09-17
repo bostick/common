@@ -24,10 +24,23 @@
 #define CHECKGLERROR(code) \
     do { \
         (code); \
-        const GLenum checkGLErrorLocal = glGetError();   \
-        if (checkGLErrorLocal != GL_NO_ERROR) {          \
+        const GLenum checkGLErrorLocal = glGetError(); \
+        if (checkGLErrorLocal != GL_NO_ERROR) { \
             ABORT("GL error: %s", GLErrorName(checkGLErrorLocal)); \
-        }                   \
+        } \
+    } while (false)
+
+
+#define CHECKGLERRORIFZERO(code) \
+    do { \
+        GLuint res; \
+        res = (code); \
+        if (res == 0) { \
+            const GLenum checkGLErrorLocal = glGetError(); \
+            if (checkGLErrorLocal != GL_NO_ERROR) { \
+                ABORT("GL error: %s", GLErrorName(checkGLErrorLocal)); \
+            } \
+        } \
     } while (false)
 
 
