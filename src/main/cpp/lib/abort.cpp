@@ -42,6 +42,9 @@ void ABORT_expandedV(const char *tag, const char *fmt, va_list args) {
 
     LOGF_expandedV(tag, fmt, args);
 
+    //
+    // fine if truncated
+    //
     char buf[1000];
     std::vsnprintf(buf, sizeof(buf), fmt, args);
 

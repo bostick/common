@@ -21,8 +21,6 @@ package com.brentonbostick.common;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.TIRAMISU;
 
-import android.os.Build;
-
 import java.io.IOException;
 import java.io.InputStream;
 

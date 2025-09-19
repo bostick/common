@@ -109,6 +109,9 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
 
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 
+    //
+    // fine if truncated
+    //
     char buf[1000];
     std::vsnprintf(buf, sizeof(buf), fmt, args);
 
@@ -152,6 +155,9 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
 
     std::vfprintf(stderr, fmt, args);
 
+    //
+    // fine if truncated
+    //
     char buf[1000];
     std::vsnprintf(buf, sizeof(buf), fmt, args);
 
@@ -245,68 +251,68 @@ void SetLogLevel(int level) {
     //
 
     switch (level) {
-    case LOGLEVEL_FATAL:
-    case LOGLEVEL_ERROR: {
-        LOGW_expanded = LogNull;
-        LOGI_expanded = LogNull;
-        LOGD_expanded = LogNull;
-        LOGT_expanded = LogNull;
+        case LOGLEVEL_FATAL:
+        case LOGLEVEL_ERROR: {
+            LOGW_expanded = LogNull;
+            LOGI_expanded = LogNull;
+            LOGD_expanded = LogNull;
+            LOGT_expanded = LogNull;
 
-        LOGW_expandedV = LogNullV;
-        LOGI_expandedV = LogNullV;
-        LOGD_expandedV = LogNullV;
-        LOGT_expandedV = LogNullV;
-        break;
-    }
-    case LOGLEVEL_WARN: {
-        LOGW_expanded = LogWarn;
-        LOGI_expanded = LogNull;
-        LOGD_expanded = LogNull;
-        LOGT_expanded = LogNull;
+            LOGW_expandedV = LogNullV;
+            LOGI_expandedV = LogNullV;
+            LOGD_expandedV = LogNullV;
+            LOGT_expandedV = LogNullV;
+            break;
+        }
+        case LOGLEVEL_WARN: {
+            LOGW_expanded = LogWarn;
+            LOGI_expanded = LogNull;
+            LOGD_expanded = LogNull;
+            LOGT_expanded = LogNull;
 
-        LOGW_expandedV = LogWarnV;
-        LOGI_expandedV = LogNullV;
-        LOGD_expandedV = LogNullV;
-        LOGT_expandedV = LogNullV;
-        break;
-    }
-    case LOGLEVEL_INFO: {
-        LOGW_expanded = LogWarn;
-        LOGI_expanded = LogInfo;
-        LOGD_expanded = LogNull;
-        LOGT_expanded = LogNull;
+            LOGW_expandedV = LogWarnV;
+            LOGI_expandedV = LogNullV;
+            LOGD_expandedV = LogNullV;
+            LOGT_expandedV = LogNullV;
+            break;
+        }
+        case LOGLEVEL_INFO: {
+            LOGW_expanded = LogWarn;
+            LOGI_expanded = LogInfo;
+            LOGD_expanded = LogNull;
+            LOGT_expanded = LogNull;
 
-        LOGW_expandedV = LogWarnV;
-        LOGI_expandedV = LogInfoV;
-        LOGD_expandedV = LogNullV;
-        LOGT_expandedV = LogNullV;
-        break;
-    }
-    case LOGLEVEL_DEBUG: {
-        LOGW_expanded = LogWarn;
-        LOGI_expanded = LogInfo;
-        LOGD_expanded = LogDebug;
-        LOGT_expanded = LogNull;
+            LOGW_expandedV = LogWarnV;
+            LOGI_expandedV = LogInfoV;
+            LOGD_expandedV = LogNullV;
+            LOGT_expandedV = LogNullV;
+            break;
+        }
+        case LOGLEVEL_DEBUG: {
+            LOGW_expanded = LogWarn;
+            LOGI_expanded = LogInfo;
+            LOGD_expanded = LogDebug;
+            LOGT_expanded = LogNull;
 
-        LOGW_expandedV = LogWarnV;
-        LOGI_expandedV = LogInfoV;
-        LOGD_expandedV = LogDebugV;
-        LOGT_expandedV = LogNullV;
-        break;
-    }
-    case LOGLEVEL_TRACE: {
-        LOGW_expanded = LogWarn;
-        LOGI_expanded = LogInfo;
-        LOGD_expanded = LogDebug;
-        LOGT_expanded = LogTrace;
+            LOGW_expandedV = LogWarnV;
+            LOGI_expandedV = LogInfoV;
+            LOGD_expandedV = LogDebugV;
+            LOGT_expandedV = LogNullV;
+            break;
+        }
+        case LOGLEVEL_TRACE: {
+            LOGW_expanded = LogWarn;
+            LOGI_expanded = LogInfo;
+            LOGD_expanded = LogDebug;
+            LOGT_expanded = LogTrace;
 
-        LOGW_expandedV = LogWarnV;
-        LOGI_expandedV = LogInfoV;
-        LOGD_expandedV = LogDebugV;
-        LOGT_expandedV = LogTraceV;
-        break;
-    }
-    default:
+            LOGW_expandedV = LogWarnV;
+            LOGI_expandedV = LogInfoV;
+            LOGD_expandedV = LogDebugV;
+            LOGT_expandedV = LogTraceV;
+            break;
+        }
+        default:
         ABORT("invalid log level: %d", level);
     }
 }
