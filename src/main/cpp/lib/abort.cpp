@@ -48,7 +48,12 @@ void ABORT_expandedV(const char *tag, const char *fmt, va_list args) {
     char buf[1000];
     std::vsnprintf(buf, sizeof(buf), fmt, args);
 
-    captureUnusualMessage(buf);
+    //
+    // nothing like captureUnusualMessage(buf) is allowed here
+    //
+    // specialized code for captureUnusualMessage() may end up calling ABORT and create
+    // an infinite loop
+    //
 
     std::abort();
 }
