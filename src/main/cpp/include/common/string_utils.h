@@ -29,13 +29,13 @@
 //
 // functionally the same as std::snprintf but also asserts that the result is non-negative and less than size
 //
-// returns the number of characters written, not counting the terminating null character.
+// returns the number of characters written, not counting the terminating NUL character.
 //
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
 
 
 //
-//
+// functionally the same as std::strncpy but returns ERR if the result string is not NUL-terminated.
 //
 [[nodiscard]] Status STRNCPY(char *dest, const char *src, size_t len);
 

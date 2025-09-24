@@ -18,7 +18,10 @@
 
 #include "common/logging.h"
 
+#undef NDEBUG
+
 #include "common/abort.h"
+#include "common/assert.h"
 #include "common/clock.h"
 #include "common/platform.h"
 #include "common/unusual_message.h"
@@ -98,14 +101,22 @@ void LogNull(const char *tag, const char *fmt, ...) {
 #if IS_PLATFORM_ANDROID
 
 void LogFatalV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
     __android_log_vprint(ANDROID_LOG_FATAL, tag, fmt, args);
 }
 
 void LogErrorV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 }
 
 void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
 
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 
@@ -119,19 +130,39 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
 }
 
 void LogWarnV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
     __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
 }
 
 void LogInfoV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
     __android_log_vprint(ANDROID_LOG_INFO, tag, fmt, args);
 }
 
 void LogDebugV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
     __android_log_vprint(ANDROID_LOG_DEBUG, tag, fmt, args);
 }
 
 void LogTraceV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
     __android_log_vprint(ANDROID_LOG_VERBOSE, tag, fmt, args);
+}
+
+void LogNullV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
+    (void)fmt;
+    (void)args;
 }
 
 #else
@@ -188,13 +219,13 @@ void LogTraceV(const char *tag, const char *fmt, va_list args) {
     std::fflush(stderr);
 }
 
-#endif // IS_PLATFORM_ANDROID
-
 void LogNullV(const char *tag, const char *fmt, va_list args) {
     (void)tag;
     (void)fmt;
     (void)args;
 }
+
+#endif // IS_PLATFORM_ANDROID
 
 
 //
