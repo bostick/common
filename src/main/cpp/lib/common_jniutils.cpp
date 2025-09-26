@@ -33,7 +33,7 @@
 jobject createStatusObject(JNIEnv *env, Status status) {
 
     jobject jstatus;
-    CHECKEXCEPTIONANDNULL(jstatus = env->CallStaticObjectMethod(Status_class, Status_fromInt_method, static_cast<jint>(status)));
+    CHECKEXCEPTIONANDNULL(jstatus = env->CallStaticObjectMethod(Status_class, Status_fromByte_method, static_cast<jbyte>(status)));
 
     return jstatus;
 }

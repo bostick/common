@@ -58,7 +58,7 @@ extern jfieldID Build_MODEL_field;
 
 // extern jmethodID AtomicBoolean_set_method;
 extern jmethodID File_getAbsolutePath_method;
-extern jmethodID Status_toInt_method;
+extern jmethodID Status_toByte_method;
 #if IS_PLATFORM_ANDROID
 extern jmethodID Activity_getPackageName_method;
 extern jmethodID JSONArray_getDouble_method;
@@ -74,7 +74,7 @@ extern jmethodID JSONObject_getJSONArray_method;
 // Static methods
 //
 
-extern jmethodID Status_fromInt_method;
+extern jmethodID Status_fromByte_method;
 
 //
 // Enums

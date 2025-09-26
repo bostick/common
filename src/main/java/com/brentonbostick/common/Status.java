@@ -32,7 +32,7 @@ public enum Status {
         this.id = id;
     }
 
-    public static Status fromInt(int id) {
+    public static Status fromByte(byte id) {
         switch (id) {
             case 0:
                 return OK;
@@ -43,7 +43,8 @@ public enum Status {
         }
     }
 
-    public int toInt() {
+    /** @noinspection unused*/
+    public byte toByte() {
         return id;
     }
 }

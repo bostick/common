@@ -66,7 +66,7 @@ jfieldID Build_MODEL_field;
 
 // jmethodID AtomicBoolean_set_method;
 jmethodID File_getAbsolutePath_method;
-jmethodID Status_toInt_method;
+jmethodID Status_toByte_method;
 #if IS_PLATFORM_ANDROID
 jmethodID Activity_getPackageName_method;
 jmethodID JSONArray_getDouble_method;
@@ -82,7 +82,7 @@ jmethodID JSONObject_has_method;
 // Static methods
 //
 
-jmethodID Status_fromInt_method;
+jmethodID Status_fromByte_method;
 
 //
 // Enums
@@ -128,7 +128,7 @@ void setupCommonJniCache(JavaVM *vm) {
 
     // EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
     CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
-    CHECKEXCEPTIONANDNULL(Status_toInt_method = env->GetMethodID(Status_class, "toInt", "()I"));
+    CHECKEXCEPTIONANDNULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
 #if IS_PLATFORM_ANDROID
     CHECKEXCEPTIONANDNULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
     CHECKEXCEPTIONANDNULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
@@ -144,7 +144,7 @@ void setupCommonJniCache(JavaVM *vm) {
     // Static methods
     //
 
-    CHECKEXCEPTIONANDNULL(Status_fromInt_method = env->GetStaticMethodID(Status_class, "fromInt", "(I)Lcom/brentonbostick/common/Status;"));
+    CHECKEXCEPTIONANDNULL(Status_fromByte_method = env->GetStaticMethodID(Status_class, "fromByte", "(B)Lcom/brentonbostick/common/Status;"));
 
     //
     // Enums
