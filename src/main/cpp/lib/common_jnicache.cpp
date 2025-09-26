@@ -66,7 +66,7 @@ jfieldID Build_MODEL_field;
 
 // jmethodID AtomicBoolean_set_method;
 jmethodID File_getAbsolutePath_method;
-jmethodID Status_toByte_method;
+//jmethodID Status_toByte_method;
 #if IS_PLATFORM_ANDROID
 jmethodID Activity_getPackageName_method;
 jmethodID JSONArray_getDouble_method;
@@ -128,7 +128,7 @@ void setupCommonJniCache(JavaVM *vm) {
 
     // EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
     CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
-    CHECKEXCEPTIONANDNULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
+//    CHECKEXCEPTIONANDNULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
 #if IS_PLATFORM_ANDROID
     CHECKEXCEPTIONANDNULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
     CHECKEXCEPTIONANDNULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));

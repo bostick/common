@@ -58,7 +58,7 @@ extern jfieldID Build_MODEL_field;
 
 // extern jmethodID AtomicBoolean_set_method;
 extern jmethodID File_getAbsolutePath_method;
-extern jmethodID Status_toByte_method;
+//extern jmethodID Status_toByte_method;
 #if IS_PLATFORM_ANDROID
 extern jmethodID Activity_getPackageName_method;
 extern jmethodID JSONArray_getDouble_method;
