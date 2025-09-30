@@ -80,10 +80,7 @@ extern "C" {
 
 // var arg
 
-//
-// do not call LOGF from top-level, use LOGF_expandedV() directly inside of aborts
-//
-//extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_andCaptureUnusual_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGW_expanded;
@@ -149,10 +146,8 @@ extern LOG_declV LOGT_expandedV;
 
 #endif // IS_PLATFORM_ANDROID
 
-//
-// do not call LOGF from top-level, use LOGF_expandedV() directly inside of aborts
-//
-// #define LOGF(fmt, ...) LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#define LOGF(fmt, ...) \
+    LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 #define LOGE(fmt, ...) \
     LOGE_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)

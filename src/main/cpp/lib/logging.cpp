@@ -46,6 +46,13 @@ static void LogDebugV(const char *tag, const char *fmt, va_list args);
 static void LogTraceV(const char *tag, const char *fmt, va_list args);
 
 
+void LogFatal(const char *tag, const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    LogFatalV(tag, fmt, args);
+    va_end(args);
+}
+
 void LogError(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
@@ -230,10 +237,7 @@ void LogNullV(const char *tag, const char *fmt, va_list args) {
 
 //
 // default log level is INFO
-//
-// do not call LOGF from top-level, use LOGF_expandedV() directly inside of aborts
-//
-//LOG_decl LOGF_expanded = LogFatal;
+LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
 LOG_decl LOGE_andCaptureUnusual_expanded = LogErrorAndCaptureUnusual;
 LOG_decl LOGW_expanded = LogWarn;
