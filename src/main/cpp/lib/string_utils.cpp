@@ -75,7 +75,13 @@ Status parseInt(const std::string &str, int *out) {
 
     try {
 
-        *out = std::stoi(str);
+        size_t pos; // number of characters processed
+        *out = std::stoi(str, &pos);
+
+        if (pos != str.size()) {
+            LOGE("stoi: did not process all characters in string");
+            return ERR;
+        }
 
         return OK;
 
@@ -100,7 +106,13 @@ Status parseInt64(const std::string &str, int64_t *out) {
 
     try {
 
-        *out = std::stoll(str);
+        size_t pos; // number of characters processed
+        *out = std::stoll(str, &pos);
+
+        if (pos != str.size()) {
+            LOGE("stoll: did not process all characters in string");
+            return ERR;
+        }
 
         return OK;
 
@@ -123,15 +135,23 @@ Status parseInt64(const char *str, int64_t *out) {
     ASSERT(str != NULL);
     ASSERT(*str != '\0');
 
+    size_t len = std::strlen(str);
+
     //
     // https://man7.org/linux/man-pages/man3/strtol.3.html#CAVEATS
     //
     errno = 0;
 
-    *out = std::strtoll(str, NULL, 10);
+    char *c; // last character that was converted
+    *out = std::strtoll(str, &c, 10);
 
     if (errno != 0) {
         LOGE("strtoll: %s (%s)", std::strerror(errno), ErrorName(errno));
+        return ERR;
+    }
+
+    if (c != str + len) {
+        LOGE("strtoll: did not process all characters in string");
         return ERR;
     }
 
@@ -150,10 +170,16 @@ Status parseSizeT(const std::string &str, size_t *out) {
     //
     if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
 
-        *out = std::strtoul(str.c_str(), NULL, 10);
+        char *c; // last character that was converted
+        *out = std::strtoul(str.c_str(), &c, 10);
 
         if (errno != 0) {
             LOGE("strtoul: %s (%s)", std::strerror(errno), ErrorName(errno));
+            return ERR;
+        }
+
+        if (c != str.c_str() + str.size()) {
+            LOGE("strtoul: did not process all characters in string");
             return ERR;
         }
 
@@ -164,10 +190,16 @@ Status parseSizeT(const std::string &str, size_t *out) {
         //
     } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
 
-        *out = std::strtoull(str.c_str(), NULL, 10);
+        char *c; // last character that was converted
+        *out = std::strtoull(str.c_str(), &c, 10);
 
         if (errno != 0) {
             LOGE("strtoull: %s (%s)", std::strerror(errno), ErrorName(errno));
+            return ERR;
+        }
+
+        if (c != str.c_str() + str.size()) {
+            LOGE("strtoull: did not process all characters in string");
             return ERR;
         }
 
@@ -185,10 +217,16 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
 
     errno = 0;
 
-    auto a = std::strtoul(str.c_str(), NULL, 10);
+    char *c; // last character that was converted
+    auto a = std::strtoul(str.c_str(), &c, 10);
 
     if (errno != 0) {
         LOGE("strtoul: %s (%s)", std::strerror(errno), ErrorName(errno));
+        return ERR;
+    }
+
+    if (c != str.c_str() + str.size()) {
+        LOGE("strtoul: did not process all characters in string");
         return ERR;
     }
 
