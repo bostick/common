@@ -151,7 +151,15 @@ extern LOG_declV LOGT_expandedV;
 
 #endif // IS_PLATFORM_ANDROID
 
-#ifdef __cplusplus
+
+//
+// must use -Wno-gnu-zero-variadic-macro-arguments if getting warnings like:
+// warning: must specify at least one argument for '...' parameter of variadic macro
+//
+// seems to be an issue with clang:
+// https://stackoverflow.com/questions/78605260/error-must-specify-at-least-one-argument-for-parameter-of-variadic-macro
+// https://github.com/llvm/llvm-project/issues/76375
+//
 
 #define LOGF(fmt, ...) \
     LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
@@ -173,42 +181,6 @@ extern LOG_declV LOGT_expandedV;
 
 #define LOGT(fmt, ...) \
     LOGT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
-
-#else
-
-//
-// warnings like:
-// warning: must specify at least one argument for '...' parameter of variadic macro
-//
-// mean that using common/logging in C requires the macros to be defined for each # of arguments needed
-//
-// but you cannot define a macro more than once
-//
-// so, can only use 1-arg logging in C for now
-//
-
-#define LOGF(fmt) \
-    LOGF_expanded(TAG, fmt)
-
-#define LOGE(fmt) \
-    LOGE_expanded(TAG, fmt)
-
-#define LOGE_andCaptureUnusual(fmt) \
-    LOGE_andCaptureUnusual_expanded(TAG, fmt)
-
-#define LOGW(fmt) \
-    LOGW_expanded(TAG, fmt)
-
-#define LOGI(fmt) \
-    LOGI_expanded(TAG, fmt)
-
-#define LOGD(fmt) \
-    LOGD_expanded(TAG, fmt)
-
-#define LOGT(fmt) \
-    LOGT_expanded(TAG, fmt)
-
-#endif //__cplusplus
 
 
 void LOGE_chunks(const char *buf, size_t len);

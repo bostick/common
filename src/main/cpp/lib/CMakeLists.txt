@@ -112,6 +112,9 @@ set_target_properties(common-lib
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS NO
         POSITION_INDEPENDENT_CODE ON
+        C_STANDARD 23
+        C_STANDARD_REQUIRED ON
+        C_EXTENSIONS NO
 )
 
 
