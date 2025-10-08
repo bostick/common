@@ -100,7 +100,7 @@ void setupCommonJniCache(JavaVM *vm) {
     // Classes
     //
 
-    // SETCLASS(AtomicBoolean_class, "java/util/concurrent/atomic/AtomicBoolean");
+//    SETCLASS(AtomicBoolean_class, "java/util/concurrent/atomic/AtomicBoolean");
     SETCLASS(File_class, "java/io/File");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
 #if IS_PLATFORM_ANDROID
@@ -126,7 +126,7 @@ void setupCommonJniCache(JavaVM *vm) {
     // Instance methods
     //
 
-    // EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
+//    EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
     CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
 //    CHECKEXCEPTIONANDNULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
 #if IS_PLATFORM_ANDROID
