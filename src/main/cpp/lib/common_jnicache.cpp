@@ -166,7 +166,7 @@ void teardownCommonJniCache(JavaVM *vm) {
     env->DeleteGlobalRef(statusEnumMap[ERR]);
     statusEnumMap.clear();
 
-    // env->DeleteGlobalRef(AtomicBoolean_class);
+//    env->DeleteGlobalRef(AtomicBoolean_class);
     env->DeleteGlobalRef(File_class);
     env->DeleteGlobalRef(Status_class);
 #if IS_PLATFORM_ANDROID

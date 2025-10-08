@@ -63,7 +63,7 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 
 int64_t uptimeMillis(void) {
 
-    timespec now;
+    timespec now; // NOLINT(*-pro-type-member-init)
     if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
         ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
@@ -73,7 +73,7 @@ int64_t uptimeMillis(void) {
 
 int64_t uptimeMicros(void) {
 
-    timespec now;
+    timespec now; // NOLINT(*-pro-type-member-init)
     if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
         ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }

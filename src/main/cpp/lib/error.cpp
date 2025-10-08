@@ -98,7 +98,7 @@ const char *ErrorName(int e) {
         case ENOTEMPTY: return "ENOTEMPTY";
         case ENOTRECOVERABLE: return "ENOTRECOVERABLE";
         case ENOTSOCK: return "ENOTSOCK";
-    //    case ENOTSUP: return "ENOTSUP";
+//        case ENOTSUP: return "ENOTSUP";
         case ENOTTY: return "ENOTTY";
         case ENXIO: return "ENXIO";
         // On Linux, ENOTSUP and EOPNOTSUPP are the same despite POSIX saying they should be distinct.

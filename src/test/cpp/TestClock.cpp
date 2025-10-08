@@ -33,9 +33,9 @@ class ClockTest : public ::testing::Test {
 protected:
     static void SetUpTestSuite() {
 
-        // SetLogLevel(LOGLEVEL_TRACE);
+//        SetLogLevel(LOGLEVEL_TRACE);
         SetLogLevel(LOGLEVEL_INFO);
-        // SetLogLevel(LOGLEVEL_ERROR);
+//        SetLogLevel(LOGLEVEL_ERROR);
     }
     
     static void TearDownTestSuite() {
