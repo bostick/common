@@ -75,7 +75,7 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
 
     ASSERT(getEnvRet == JNI_EDETACHED);
 
-    jint res;
+    jint res; // NOLINT(*-init-variables)
     if (res = jvm->AttachCurrentThread(&env, NULL); res != JNI_OK) {
         ABORT("Error calling AttachCurrentThread: %d", res);
     }
@@ -87,7 +87,7 @@ ScopedJniEnv::~ScopedJniEnv() {
         return;
     }
 
-    jint res;
+    jint res; // NOLINT(*-init-variables)
     if (res = jvm->DetachCurrentThread(); res != JNI_OK) {
         ABORT("Error calling DetachCurrentThread: %d", res);
     }

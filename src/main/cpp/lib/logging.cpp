@@ -44,58 +44,59 @@ static void LogWarnV(const char *tag, const char *fmt, va_list args);
 static void LogInfoV(const char *tag, const char *fmt, va_list args);
 static void LogDebugV(const char *tag, const char *fmt, va_list args);
 static void LogTraceV(const char *tag, const char *fmt, va_list args);
+static void LogNullV(const char *tag, const char *fmt, va_list args);
 
 
-void LogFatal(const char *tag, const char *fmt, ...) {
+static void LogFatal(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogFatalV(tag, fmt, args);
     va_end(args);
 }
 
-void LogError(const char *tag, const char *fmt, ...) {
+static void LogError(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogErrorV(tag, fmt, args);
     va_end(args);
 }
 
-void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
+static void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogErrorAndCaptureUnusualV(tag, fmt, args);
     va_end(args);
 }
 
-void LogWarn(const char *tag, const char *fmt, ...) {
+static void LogWarn(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogWarnV(tag, fmt, args);
     va_end(args);
 }
 
-void LogInfo(const char *tag, const char *fmt, ...) {
+static void LogInfo(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogInfoV(tag, fmt, args);
     va_end(args);
 }
 
-void LogDebug(const char *tag, const char *fmt, ...) {
+static void LogDebug(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogDebugV(tag, fmt, args);
     va_end(args);
 }
 
-void LogTrace(const char *tag, const char *fmt, ...) {
+static void LogTrace(const char *tag, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     LogTraceV(tag, fmt, args);
     va_end(args);
 }
 
-void LogNull(const char *tag, const char *fmt, ...) {
+static void LogNull(const char *tag, const char *fmt, ...) {
     (void)tag;
     (void)fmt;
 }
@@ -357,11 +358,11 @@ void LOGE_chunks(const char *buf, size_t len) {
 
     size_t chunkCount = len / 500;
 
-    size_t i;
+    size_t i; // NOLINT(*-init-variables)
     for (i = 0; i < chunkCount; i++) {
-        LOGE("%s", std::string(buf + i * 500, 500).c_str());
+        LOGE("%s", std::string(buf + (i * 500), 500).c_str());
     }
-    LOGE("%s", buf + i * 500);
+    LOGE("%s", buf + (i * 500));
     LOGE();
 }
 

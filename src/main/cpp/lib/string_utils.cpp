@@ -75,7 +75,7 @@ Status parseInt(const std::string &str, int *out) {
 
     try {
 
-        size_t pos; // number of characters processed
+        size_t pos; // number of characters processed NOLINT(*-init-variables)
         *out = std::stoi(str, &pos);
 
         if (pos != str.size()) {
@@ -106,7 +106,7 @@ Status parseInt64(const std::string &str, int64_t *out) {
 
     try {
 
-        size_t pos; // number of characters processed
+        size_t pos; // number of characters processed NOLINT(*-init-variables)
         *out = std::stoll(str, &pos);
 
         if (pos != str.size()) {
@@ -142,7 +142,7 @@ Status parseInt64(const char *str, int64_t *out) {
     //
     errno = 0;
 
-    char *c; // last character that was converted
+    char *c; // last character that was converted NOLINT(*-init-variables)
     *out = std::strtoll(str, &c, 10);
 
     if (errno != 0) {
@@ -170,7 +170,7 @@ Status parseSizeT(const std::string &str, size_t *out) {
     //
     if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
 
-        char *c; // last character that was converted
+        char *c; // last character that was converted NOLINT(*-init-variables)
         *out = std::strtoul(str.c_str(), &c, 10);
 
         if (errno != 0) {
@@ -190,7 +190,7 @@ Status parseSizeT(const std::string &str, size_t *out) {
         //
     } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
 
-        char *c; // last character that was converted
+        char *c; // last character that was converted NOLINT(*-init-variables)
         *out = std::strtoull(str.c_str(), &c, 10);
 
         if (errno != 0) {
@@ -217,7 +217,7 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
 
     errno = 0;
 
-    char *c; // last character that was converted
+    char *c; // last character that was converted NOLINT(*-init-variables)
     auto a = std::strtoul(str.c_str(), &c, 10);
 
     if (errno != 0) {
@@ -243,10 +243,9 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
 
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
 
-    int res;
-
     va_list args;
     va_start(args, format);
+    int res; // NOLINT(*-init-variables)
     res = std::vsnprintf(dest, size, format, args);
     va_end(args);
 

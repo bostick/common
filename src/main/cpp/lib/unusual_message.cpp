@@ -35,8 +35,8 @@
 #define TAG "unusual_message"
 
 
-unusualMessageCapturer_decl unusualMessageCapturer = nullptr;
-unusualMessageCapturer_decl unusualMessageCapturerWhileAborting = nullptr;
+static unusualMessageCapturer_decl unusualMessageCapturer = nullptr;
+static unusualMessageCapturer_decl unusualMessageCapturerWhileAborting = nullptr;
 
 
 void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer) {
