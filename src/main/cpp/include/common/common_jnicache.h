@@ -83,8 +83,8 @@ extern jmethodID Status_fromByte_method;
 extern std::map<Status, jobject> statusEnumMap;
 
 
-void setupCommonJniCache(JavaVM *vm);
-void teardownCommonJniCache(JavaVM *vm);
+void setupCommonJniCache(JavaVM *jvm);
+void teardownCommonJniCache(JavaVM *jvm);
 
 
 

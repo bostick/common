@@ -17,7 +17,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 template <typename T>
-void push_back_unique(std::vector<T> &v, T e) {
+void push_back_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage)
 
     auto it = std::find(v.begin(), v.end(), e);
 
@@ -28,7 +28,7 @@ void push_back_unique(std::vector<T> &v, T e) {
 
 
 template <typename T>
-void erase_unique(std::vector<T> &v, T e) {
+void erase_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage)
 
     auto it = std::find(v.begin(), v.end(), e);
 

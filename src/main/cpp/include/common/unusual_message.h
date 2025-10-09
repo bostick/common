@@ -21,7 +21,7 @@
 #include <string>
 
 
-typedef void (*unusualMessageCapturer_decl)(const std::string &message);
+using unusualMessageCapturer_decl = void (*)(const std::string &message);
 
 
 void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer);

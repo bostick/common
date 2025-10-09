@@ -68,7 +68,7 @@ int64_t uptimeMillis(void) {
         ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
 
-    return static_cast<int64_t>(now.tv_sec) * 1000 + static_cast<int64_t>(now.tv_nsec) / 1000000;
+    return (static_cast<int64_t>(now.tv_sec) * 1000) + (static_cast<int64_t>(now.tv_nsec) / 1000000);
 }
 
 int64_t uptimeMicros(void) {
@@ -78,7 +78,7 @@ int64_t uptimeMicros(void) {
         ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
 
-    return static_cast<int64_t>(now.tv_sec) * 1000000 + static_cast<int64_t>(now.tv_nsec) / 1000;
+    return (static_cast<int64_t>(now.tv_sec) * 1000000) + (static_cast<int64_t>(now.tv_nsec) / 1000);
 }
 
 #elif IS_PLATFORM_MACOS
@@ -123,7 +123,7 @@ int64_t timeSinceEpochMillis(void) {
 //
 void GrabNow(void) {
 
-    time_t timer;
+    time_t timer; // NOLINT(*-init-variables)
     if (std::time(&timer) == -1) {
         ABORT("time: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
@@ -134,7 +134,7 @@ void GrabNow(void) {
 
 void formatTime(time_t timeV, char *buf, size_t len) {
 
-    tm *timeinfo;
+    tm *timeinfo; // NOLINT(*-init-variables)
     if (timeinfo = std::localtime(&timeV); timeinfo == NULL) {
         ABORT("localtime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }

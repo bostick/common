@@ -47,7 +47,7 @@
 //
 // greater = more noise
 //
-#define LOGLEVEL_FATAL -1
+#define LOGLEVEL_FATAL (-1)
 #define LOGLEVEL_ERROR 0
 #define LOGLEVEL_WARN 1
 #define LOGLEVEL_INFO 2
@@ -56,10 +56,10 @@
 
 
 // var arg
-typedef void (*LOG_decl)(const char *tag, const char *fmt, ...);
+typedef void (*LOG_decl)(const char *tag, const char *fmt, ...); // NOLINT(*-use-using)
 
 // va_list
-typedef void (*LOG_declV)(const char *tag, const char *fmt, va_list args);
+typedef void (*LOG_declV)(const char *tag, const char *fmt, va_list args); // NOLINT(*-use-using)
 
 
 #if __GNUC__ || __clang__

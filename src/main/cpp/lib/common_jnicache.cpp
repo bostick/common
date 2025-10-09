@@ -91,10 +91,10 @@ jmethodID Status_fromByte_method;
 std::map<Status, jobject> statusEnumMap;
 
 
-void setupCommonJniCache(JavaVM *vm) {
+void setupCommonJniCache(JavaVM *jvm) {
 
-    JNIEnv *env;
-    GETENV(env, vm);
+    JNIEnv *env; // NOLINT(*-init-variables)
+    GETENV(env, jvm);
 
     //
     // Classes
@@ -154,10 +154,10 @@ void setupCommonJniCache(JavaVM *vm) {
     INSERTINTOMAP(statusEnumMap, ERR, createStatusObject(env, ERR));
 }
 
-void teardownCommonJniCache(JavaVM *vm) {
+void teardownCommonJniCache(JavaVM *jvm) {
 
-    JNIEnv *env;
-    GETENV(env, vm);
+    JNIEnv *env; // NOLINT(*-init-variables)
+    GETENV(env, jvm);
 
     env->DeleteGlobalRef(statusEnumMap[OK]);
     //

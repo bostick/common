@@ -36,7 +36,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
     do { \
         jint getEnvRet; \
         ASSERT(jvm != NULL); \
-        if ((getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6)) != JNI_OK) { \
+        if (getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6); getEnvRet != JNI_OK) { \
             ABORT("Error calling GetEnv: %d", getEnvRet); \
         } \
     } while (false)
