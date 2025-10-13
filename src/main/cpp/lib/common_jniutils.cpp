@@ -63,9 +63,7 @@ const char *ScopedJniString::get() {
 ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
     jvm(jvm),
     env(),
-    getEnvRet() {
-
-    getEnvRet = jvm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6);
+    getEnvRet(jvm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) {
 
     ASSERT(getEnvRet != JNI_EVERSION);
 

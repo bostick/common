@@ -56,15 +56,17 @@ openFile(
 
     int fres = std::fseek(file, 0, SEEK_END);
 
-    CHECK_NOT(fres, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
+    CHECK_NOT(fres == -1, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
-    long res = std::ftell(file);
+    long res = std::ftell(file); // NOLINT(google-runtime-int)
 
     CHECK_NOT(res < 0, "ftell failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     auto len = static_cast<size_t>(res);
 
-    std::rewind(file);
+    fres = std::fseek(file, 0, SEEK_SET);
+
+    CHECK_NOT(fres == -1, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     out = std::vector<uint8_t>(len);
 
@@ -214,9 +216,7 @@ deleteEmptyDirectoryIfPresent(const char *path) {
 
 
 ScopedFile::ScopedFile(const char *path, const char *mode) :
-    file() {
-
-    file = std::fopen(path, mode);
+    file(std::fopen(path, mode)) {
 
     if (file == NULL) {
         LOGE("cannot open %s: %s (%s)", path, std::strerror(errno), ErrorName(errno));

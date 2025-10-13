@@ -100,7 +100,7 @@ Status parseInt(const std::string &str, int *out) {
 
 Status parseInt64(const std::string &str, int64_t *out) {
 
-    static_assert(sizeof(int64_t) == sizeof(long long));
+    static_assert(sizeof(int64_t) == sizeof(long long)); // NOLINT(google-runtime-int)
     
     ASSERT(!str.empty());
 
@@ -130,7 +130,7 @@ Status parseInt64(const std::string &str, int64_t *out) {
 
 Status parseInt64(const char *str, int64_t *out) {
 
-    static_assert(sizeof(int64_t) == sizeof(long long));
+    static_assert(sizeof(int64_t) == sizeof(long long)); // NOLINT(google-runtime-int)
 
     ASSERT(str != NULL);
     ASSERT(*str != '\0');
@@ -168,7 +168,7 @@ Status parseSizeT(const std::string &str, size_t *out) {
     //
     // incorrect warning "Condition is always true"
     //
-    if constexpr (sizeof(size_t) == sizeof(unsigned long)) {
+    if constexpr (sizeof(size_t) == sizeof(unsigned long)) { // NOLINT(google-runtime-int)
 
         char *c; // last character that was converted NOLINT(*-init-variables)
         *out = std::strtoul(str.c_str(), &c, 10);
@@ -188,7 +188,7 @@ Status parseSizeT(const std::string &str, size_t *out) {
         //
         // incorrect warning "Condition is always true"
         //
-    } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) {
+    } else if constexpr (sizeof(size_t) == sizeof(unsigned long long)) { // NOLINT(google-runtime-int)
 
         char *c; // last character that was converted NOLINT(*-init-variables)
         *out = std::strtoull(str.c_str(), &c, 10);
@@ -250,6 +250,9 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
     va_end(args);
 
     ASSERT(res >= 0);
+    //
+    // incorrect warning: comparison between 'signed' and 'unsigned' integers
+    //
     ASSERT(res < static_cast<int>(size));
 
     return static_cast<size_t>(res);
