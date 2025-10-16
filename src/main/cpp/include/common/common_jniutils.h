@@ -35,7 +35,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETENV(env, jvm) \
     do { \
         jint getEnvRet; \
-        ASSERT(jvm != NULL); \
+        ASSERT(jvm != nullptr); \
         if (getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6); getEnvRet != JNI_OK) { \
             ABORT("Error calling GetEnv: %d", getEnvRet); \
         } \
@@ -47,7 +47,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETJAVAVM(env, jvm) \
     do { \
         jint getJavaVMRet; \
-        ASSERT(env != NULL); \
+        ASSERT(env != nullptr); \
         if ((getJavaVMRet = env->GetJavaVM(&jvm)) != 0) { \
             ABORT("Error calling GetJavaVM: %d", getJavaVMRet); \
         } \
@@ -57,22 +57,22 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define CHECKNULL(code) \
     do { \
         const void *checkNullLocal = (code); \
-        ASSERT(checkNullLocal != NULL); \
+        ASSERT(checkNullLocal != nullptr); \
     } while (false)
 
 #define CHECKEXCEPTION(code) \
     do { \
-        ASSERT(env != NULL); \
+        ASSERT(env != nullptr); \
         (code); \
         ASSERT(!env->ExceptionCheck() || (env->ExceptionDescribe(), "Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception.")); \
     } while (false)
 
 #define CHECKEXCEPTIONANDNULL(code) \
     do { \
-        ASSERT(env != NULL); \
+        ASSERT(env != nullptr); \
         void *checkExceptionAndNullLocal = (code); \
         ASSERT(!env->ExceptionCheck() || (env->ExceptionDescribe(), "Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception.")); \
-        ASSERT(checkExceptionAndNullLocal != NULL); \
+        ASSERT(checkExceptionAndNullLocal != nullptr); \
     } while (false)
 
 
@@ -119,19 +119,19 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
 
     if (count > JSIZE_MAX) {
         newArrayObject_logCount(count);
-        return NULL;
+        return nullptr;
     }
 
     auto jCount = static_cast<jsize>(count);
 
-    jobjectArray arrayObj = env->NewObjectArray(jCount, clazz, NULL);
+    jobjectArray arrayObj = env->NewObjectArray(jCount, clazz, nullptr);
     if (env->ExceptionCheck()) {
         env->ExceptionDescribe();
-        return NULL;
+        return nullptr;
     }
-    if (arrayObj == NULL) {
+    if (arrayObj == nullptr) {
         newArrayObject_log("Error creating array object");
-        return NULL;
+        return nullptr;
     }
 
     for (jsize i = 0; i < jCount; i++) {
@@ -139,17 +139,17 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
         jobject obj = F(env, buffer[i]);
         if (env->ExceptionCheck()) {
             env->ExceptionDescribe();
-            return NULL;
+            return nullptr;
         }
-        if (obj == NULL) {
+        if (obj == nullptr) {
             newArrayObject_log("Error assigning object to array");
-            return NULL;
+            return nullptr;
         }
 
         env->SetObjectArrayElement(arrayObj, i, obj);
         if (env->ExceptionCheck()) {
             env->ExceptionDescribe();
-            return NULL;
+            return nullptr;
         }
 
         env->DeleteLocalRef(obj);

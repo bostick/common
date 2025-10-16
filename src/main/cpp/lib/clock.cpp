@@ -135,7 +135,7 @@ void GrabNow(void) {
 void formatTime(time_t timeV, char *buf, size_t len) {
 
     tm *timeinfo; // NOLINT(*-init-variables)
-    if (timeinfo = std::localtime(&timeV); timeinfo == NULL) {
+    if (timeinfo = std::localtime(&timeV); timeinfo == nullptr) {
         ABORT("localtime: %s (%s)", std::strerror(errno), ErrorName(errno));
     }
 

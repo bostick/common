@@ -43,12 +43,12 @@ ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
     env(env),
     jstr(jstr) {
 
-    CHECKNULL(str = env->GetStringUTFChars(jstr, NULL));
+    CHECKNULL(str = env->GetStringUTFChars(jstr, nullptr));
 }
 
 ScopedJniString::~ScopedJniString() {
 
-    if (str == NULL) {
+    if (str == nullptr) {
         return;
     }
 
@@ -74,7 +74,7 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
     ASSERT(getEnvRet == JNI_EDETACHED);
 
     jint res; // NOLINT(*-init-variables)
-    if (res = jvm->AttachCurrentThread(&env, NULL); res != JNI_OK) {
+    if (res = jvm->AttachCurrentThread(&env, nullptr); res != JNI_OK) {
         ABORT("Error calling AttachCurrentThread: %d", res);
     }
 }
@@ -100,7 +100,7 @@ ScopedJniPrimitiveArrayCritical::ScopedJniPrimitiveArrayCritical(JNIEnv *env, ja
     env(env),
     jarr(jarr) {
 
-    CHECKNULL(data = env->GetPrimitiveArrayCritical(jarr, NULL));
+    CHECKNULL(data = env->GetPrimitiveArrayCritical(jarr, nullptr));
 }
 
 ScopedJniPrimitiveArrayCritical::~ScopedJniPrimitiveArrayCritical() {

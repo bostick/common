@@ -218,7 +218,7 @@ deleteEmptyDirectoryIfPresent(const char *path) {
 ScopedFile::ScopedFile(const char *path, const char *mode) :
     file(std::fopen(path, mode)) {
 
-    if (file == NULL) {
+    if (file == nullptr) {
         LOGE("cannot open %s: %s (%s)", path, std::strerror(errno), ErrorName(errno));
         return;
     }
@@ -226,7 +226,7 @@ ScopedFile::ScopedFile(const char *path, const char *mode) :
 
 ScopedFile::~ScopedFile() {
 
-    if (file == NULL) {
+    if (file == nullptr) {
         return;
     }
 

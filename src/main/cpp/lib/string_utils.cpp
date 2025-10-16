@@ -132,7 +132,7 @@ Status parseInt64(const char *str, int64_t *out) {
 
     static_assert(sizeof(int64_t) == sizeof(long long)); // NOLINT(google-runtime-int)
 
-    ASSERT(str != NULL);
+    ASSERT(str != nullptr);
     ASSERT(*str != '\0');
 
     size_t len = std::strlen(str);
