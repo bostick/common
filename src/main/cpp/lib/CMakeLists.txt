@@ -24,6 +24,7 @@ set(SOURCES_LIB
     file.cpp
     logging.cpp
     math_utils.cpp
+    random.cpp
     string_utils.cpp
     unusual_message.cpp
 )
