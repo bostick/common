@@ -21,25 +21,12 @@
 #include <GLES3/gl3.h>
 
 
-#define CHECKGLERROR(code, func) \
+#define CHECKGLERROR(func, params) \
     do { \
-        (code); \
+        func params; \
         const GLenum checkGLErrorLocal = glGetError(); \
         if (checkGLErrorLocal != GL_NO_ERROR) { \
-            ABORT("GL function %s failed: %s", func, GLErrorName(checkGLErrorLocal)); \
-        } \
-    } while (false)
-
-
-#define CHECKGLERRORIFZERO(code, func) \
-    do { \
-        GLuint res; \
-        res = (code); \
-        if (res == 0) { \
-            const GLenum checkGLErrorLocal = glGetError(); \
-            if (checkGLErrorLocal != GL_NO_ERROR) { \
-                ABORT("GL function %s failed: %s", func, GLErrorName(checkGLErrorLocal)); \
-            } \
+            ABORT("GL function %s failed: %s", #func, GLErrorName(checkGLErrorLocal)); \
         } \
     } while (false)
 
