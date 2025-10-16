@@ -25,6 +25,15 @@
 #include <cstdint>
 
 
+#define CHECKERR(func, params) \
+    do { \
+        const Status checkErrLocal = func params; \
+        if (checkErrLocal != OK) { \
+            ABORT("%s failed", #func); \
+        } \
+    } while (false)
+
+
 enum class Status : int8_t {
     OK = 0,
     ERR = -1,
