@@ -26,7 +26,7 @@ void SeedRandom(uint32_t s) {
 
 // Random floating point number in range [lo, hi]
 float NextRandomFloatInRangeInclusive(float lo, float hi) {
-    auto r = (float)( NextRandomInteger() & ( RAND_LIMIT ) );
+    auto r = static_cast<float>(NextRandomInteger() & ( RAND_LIMIT ) );
     r /= RAND_LIMIT;
     r = (( hi - lo ) * r) + lo;
     return r;
