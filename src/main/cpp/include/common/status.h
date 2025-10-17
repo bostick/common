@@ -25,11 +25,11 @@
 #include <cstdint>
 
 
-#define CHECKERR(func, params) \
+#define CHECKERR(code) \
     do { \
-        const Status checkErrLocal = func params; \
+        const Status checkErrLocal = (code); \
         if (checkErrLocal != OK) { \
-            ABORT("%s failed", #func); \
+            ABORT("code did not return OK: %s", #code); \
         } \
     } while (false)
 
