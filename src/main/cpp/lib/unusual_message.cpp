@@ -86,7 +86,7 @@ Java_com_brentonbostick_common_UnusualMessage_captureUnusualMessageNative(JNIEnv
 
     (void)clazz;
 
-    ScopedJniString x{env, jmsg};
+    ScopedJniString x{ env, jmsg };
 
     const char *tmpMsg = x.get();
 

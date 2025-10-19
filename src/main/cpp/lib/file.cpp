@@ -48,7 +48,7 @@ openFile(
     const char *path,
     std::vector<uint8_t> &out) {
 
-    ScopedFile x{path, "rb"};
+    ScopedFile x{ path, "rb" };
 
     FILE *file = x.get();
 
@@ -102,7 +102,7 @@ saveFile(
     const char *path,
     const std::vector<uint8_t> &buf) {
 
-    ScopedFile x{path, "wb"};
+    ScopedFile x{ path, "wb" };
 
     FILE *file = x.get();
 

@@ -250,10 +250,7 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
     va_end(args);
 
     ASSERT(res >= 0);
-    //
-    // incorrect warning: comparison between 'signed' and 'unsigned' integers
-    //
-    ASSERT(res < static_cast<int>(size));
+    ASSERT(res < static_cast<int>(size)); // incorrect warning: comparison between 'signed' and 'unsigned' integers
 
     return static_cast<size_t>(res);
 }
