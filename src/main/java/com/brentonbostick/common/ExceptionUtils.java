@@ -33,7 +33,7 @@ public class ExceptionUtils {
         Throwable cause = t.getCause();
 
         if (cause != null) {
-            msg += "\n\nCause:\n" + cause.getClass().getName() + "\n" + cause.getMessage();
+            msg += "\nCause:\n" + cause.getClass().getName() + "\n" + cause.getMessage();
         }
 
         return msg;
