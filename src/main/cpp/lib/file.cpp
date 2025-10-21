@@ -70,7 +70,7 @@ openFile(
 
     out = std::vector<uint8_t>(len);
 
-    size_t r = std::fread(out.data(), sizeof(uint8_t), len, file);
+    size_t r = std::fread(out.data(), 1, len, file);
 
     //
     // fread does not distinguish between end-of-file and error, and callers must use feof and ferror to determine which occurred.
@@ -108,7 +108,7 @@ saveFile(
 
     CHECK(file, "cannot open %s", path);
 
-    auto r = std::fwrite(buf.data(), sizeof(uint8_t), buf.size(), file);
+    auto r = std::fwrite(buf.data(), 1, buf.size(), file);
 
     CHECK(r == buf.size(), "fwrite failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
