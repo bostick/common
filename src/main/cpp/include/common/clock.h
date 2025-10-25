@@ -32,7 +32,13 @@ extern "C" {
 //
 // len("2025-12-31 12:59:59") = 19
 //
-const size_t FORMATTIME_LEN = 19;
+// was:
+// const size_t FORMATTIME_LEN = 19;
+// but compiling as C gives:
+// error: variable length array folded to constant array as an extension
+// with nowStrBuf below
+//
+#define FORMATTIME_LEN 19
 
 //
 // monotonic

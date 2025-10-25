@@ -54,7 +54,14 @@ extern "C" {
 
 // var arg
 
+#ifdef __cplusplus
 PRINTF_ATTRIBUTE void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
+#else
+//
+// error: [[]] attributes are a C23 extension [-Werror,-Wc23-extensions]
+//
+PRINTF_ATTRIBUTE void ABORT_expanded(const char *tag, const char *fmt, ...);
+#endif // __cplusplus
 
 // va_list
 
@@ -62,7 +69,14 @@ PRINTF_ATTRIBUTE void ABORT_expanded [[noreturn]] (const char *tag, const char *
 // the va_list function ABORT_expandedV can be called by code that already has a va_list
 //
 
+#ifdef __cplusplus
 void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list args);
+#else
+//
+// error: [[]] attributes are a C23 extension [-Werror,-Wc23-extensions]
+//
+void ABORT_expandedV(const char *tag, const char *fmt, va_list args);
+#endif // __cplusplus
 
 #ifdef __cplusplus
 }
