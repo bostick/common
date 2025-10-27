@@ -161,9 +161,11 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
 
 class ScopedJniString {
 private:
+
     JNIEnv *env;
     jstring jstr;
     const char *str;
+
 public:
     ScopedJniString(JNIEnv *env, jstring jstr);
 
@@ -175,10 +177,13 @@ public:
 
 class ScopedJniEnv {
 private:
+
     JavaVM *jvm;
     JNIEnv *env;
     jint getEnvRet;
+
 public:
+
     explicit ScopedJniEnv(JavaVM *jvm);
 
     ~ScopedJniEnv();
@@ -189,9 +194,11 @@ public:
 
 class ScopedJniPrimitiveArrayCritical {
 private:
+
     JNIEnv *env;
     jarray jarr;
     void *data;
+
 public:
     ScopedJniPrimitiveArrayCritical(JNIEnv *env, jarray jarr);
 
