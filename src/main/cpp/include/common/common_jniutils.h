@@ -60,37 +60,67 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(checkNullLocal != nullptr); \
     } while (false)
 
-#define CHECKEXCEPTION(code) \
+//
+// ExceptionDescribe:
+// Prints an exception and a backtrace of the stack to a system error-reporting channel, such as stderr. This is a convenience routine provided for debugging.
+//
+
+#define ABORT_ON_EXCEPTION(code) \
     do { \
         ASSERT(env != nullptr); \
         (code); \
-        ASSERT(!env->ExceptionCheck() || (env->ExceptionDescribe(), "Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception.")); \
+        if (env->ExceptionCheck()) { \
+            env->ExceptionDescribe(); \
+            ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
+        } \
     } while (false)
 
-#define CHECKEXCEPTIONANDNULL(code) \
+#define ABORT_ON_EXCEPTION_OR_NULL(code) \
     do { \
         ASSERT(env != nullptr); \
         void *checkExceptionAndNullLocal = (code); \
-        ASSERT(!env->ExceptionCheck() || (env->ExceptionDescribe(), "Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception.")); \
+        if (env->ExceptionCheck()) { \
+            env->ExceptionDescribe(); \
+            ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
+        } \
         ASSERT(checkExceptionAndNullLocal != nullptr); \
+    } while (false)
+
+#define RETURN_ON_EXCEPTION(code) \
+    do { \
+        ASSERT(env != nullptr); \
+        (code); \
+        if (env->ExceptionCheck()) { \
+            env->ExceptionDescribe(); \
+            return ERR; \
+        } \
+    } while (false)
+
+#define CONSUME_EXCEPTION(code) \
+    do { \
+        ASSERT(env != nullptr); \
+        (code); \
+        if (env->ExceptionCheck()) { \
+            env->ExceptionClear(); \
+        } \
     } while (false)
 
 
 #define SETCLASS(classVar, classNameString) \
     do { \
         jclass setClassLocal = env->FindClass(classNameString); \
-        CHECKEXCEPTIONANDNULL(setClassLocal); \
+        ABORT_ON_EXCEPTION_OR_NULL(setClassLocal); \
         classVar = reinterpret_cast<jclass>(env->NewGlobalRef(setClassLocal)); \
-        CHECKEXCEPTIONANDNULL(classVar); \
+        ABORT_ON_EXCEPTION_OR_NULL(classVar); \
         env->DeleteLocalRef(setClassLocal); \
     } while (false)
 
 #define INSERTINTOMAP(map, e, code) \
     do { \
         jobject insertIntoMapLocal = (code); \
-        CHECKEXCEPTIONANDNULL(insertIntoMapLocal); \
+        ABORT_ON_EXCEPTION_OR_NULL(insertIntoMapLocal); \
         jobject objectVar = env->NewGlobalRef(insertIntoMapLocal); \
-        CHECKEXCEPTIONANDNULL(objectVar); \
+        ABORT_ON_EXCEPTION_OR_NULL(objectVar); \
         map[e] = objectVar; \
         env->DeleteLocalRef(insertIntoMapLocal); \
     } while (false)

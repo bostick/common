@@ -119,32 +119,32 @@ void setupCommonJniCache(JavaVM *jvm) {
     //
 
 #if IS_PLATFORM_ANDROID
-    CHECKEXCEPTIONANDNULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
+    ABORT_ON_EXCEPTION_OR_NULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
 #endif // IS_PLATFORM_ANDROID
 
     //
     // Instance methods
     //
 
-//    EXCEPTIONANDNULLCHECK(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
-    CHECKEXCEPTIONANDNULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
-//    CHECKEXCEPTIONANDNULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
+//    ABORT_ON_EXCEPTION_OR_NULL(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
+    ABORT_ON_EXCEPTION_OR_NULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
+//    ABORT_ON_EXCEPTION_OR_NULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
 #if IS_PLATFORM_ANDROID
-    CHECKEXCEPTIONANDNULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
-    CHECKEXCEPTIONANDNULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
-    CHECKEXCEPTIONANDNULL(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));
-    CHECKEXCEPTIONANDNULL(JSONArray_getJSONArray_method = env->GetMethodID(JSONArray_class, "getJSONArray", "(I)Lorg/json/JSONArray;"));
-    CHECKEXCEPTIONANDNULL(JSONArray_length_method = env->GetMethodID(JSONArray_class, "length", "()I"));
-    CHECKEXCEPTIONANDNULL(JSONObject_getDouble_method = env->GetMethodID(JSONObject_class, "getDouble", "(Ljava/lang/String;)D"));
-    CHECKEXCEPTIONANDNULL(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
-    CHECKEXCEPTIONANDNULL(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
+    ABORT_ON_EXCEPTION_OR_NULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONArray_getJSONArray_method = env->GetMethodID(JSONArray_class, "getJSONArray", "(I)Lorg/json/JSONArray;"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONArray_length_method = env->GetMethodID(JSONArray_class, "length", "()I"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONObject_getDouble_method = env->GetMethodID(JSONObject_class, "getDouble", "(Ljava/lang/String;)D"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
+    ABORT_ON_EXCEPTION_OR_NULL(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
 #endif // IS_PLATFORM_ANDROID
 
     //
     // Static methods
     //
 
-    CHECKEXCEPTIONANDNULL(Status_fromByte_method = env->GetStaticMethodID(Status_class, "fromByte", "(B)Lcom/brentonbostick/common/Status;"));
+    ABORT_ON_EXCEPTION_OR_NULL(Status_fromByte_method = env->GetStaticMethodID(Status_class, "fromByte", "(B)Lcom/brentonbostick/common/Status;"));
 
     //
     // Enums
