@@ -356,7 +356,7 @@ void SetLogLevel(int level) {
 
 void LOGE_chunks(const char *buf, size_t len) {
 
-    size_t chunkCount = len / 500;
+    size_t chunkCount = (len / 500);
 
     size_t i; // NOLINT(*-init-variables)
     for (i = 0; i < chunkCount; i++) {
