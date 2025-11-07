@@ -23,8 +23,8 @@ import androidx.annotation.Keep;
 @Keep
 public enum Status {
 
-    OK((byte)0),
-    ERR((byte)-1);
+    OK((byte) 0),
+    ERR((byte) -1);
 
     private final byte id;
 
