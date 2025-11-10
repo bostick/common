@@ -40,6 +40,7 @@ using enum Status;
 
 // jclass AtomicBoolean_class;
 jclass File_class;
+jclass IOException_class;
 jclass Status_class;
 #if IS_PLATFORM_ANDROID
 jclass Activity_class;
@@ -102,6 +103,7 @@ void setupCommonJniCache(JavaVM *jvm) {
 
 //    SETCLASS(AtomicBoolean_class, "java/util/concurrent/atomic/AtomicBoolean");
     SETCLASS(File_class, "java/io/File");
+    SETCLASS(IOException_class, "java/io/IOException");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
 #if IS_PLATFORM_ANDROID
     SETCLASS(Activity_class, "android/app/Activity");

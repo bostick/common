@@ -32,6 +32,7 @@
 
 // extern jclass AtomicBoolean_class;
 extern jclass File_class;
+extern jclass IOException_class;
 extern jclass Status_class;
 #if IS_PLATFORM_ANDROID
 extern jclass Activity_class;
