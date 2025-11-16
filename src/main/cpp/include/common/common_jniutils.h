@@ -86,15 +86,6 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(checkExceptionAndNullLocal != nullptr); \
     } while (false)
 
-#define RETURN_ON_EXCEPTION(code) \
-    do { \
-        ASSERT(env != nullptr); \
-        (code); \
-        if (env->ExceptionCheck()) { \
-            env->ExceptionDescribe(); \
-            return ERR; \
-        } \
-    } while (false)
 
 #define CONSUME_EXCEPTION(code) \
     do { \
