@@ -9,15 +9,15 @@ Accumulator::Accumulator(size_t capacity) :
     sum() {}
 
 
-int64_t Accumulator::computeMean() const {
+double Accumulator::computeMean() const {
 
     if (buf.empty()) {
         return -1;
     }
 
-    int64_t rtt = (sum / static_cast<int64_t>(buf.size()));
+    double mean = (static_cast<double>(sum) / static_cast<double>(buf.size()));
 
-    return rtt;
+    return mean;
 }
 
 
