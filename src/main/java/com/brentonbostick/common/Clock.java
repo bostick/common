@@ -21,7 +21,10 @@ package com.brentonbostick.common;
 public class Clock {
 
 	/**
-	 * NOT monotonic
+     * This may TECHNICALLY be the same clock as System.currentTime() on Java, but just use
+     * timeSinceEpochMillis() everywhere to be consistent, even on Java.
+	 * <p>
+     * NOT monotonic
 	 *
 	 * @return time since epoch
 	 */
