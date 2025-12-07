@@ -29,7 +29,7 @@
 
 void ABORT_expanded(const char *tag, const char *fmt, ...) {
 
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     ABORT_expandedV(tag, fmt, args);
 

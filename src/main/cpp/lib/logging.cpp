@@ -48,49 +48,49 @@ static void LogNullV(const char *tag, const char *fmt, va_list args);
 
 
 static void LogFatal(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogFatalV(tag, fmt, args);
     va_end(args);
 }
 
 static void LogError(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogErrorV(tag, fmt, args);
     va_end(args);
 }
 
 static void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogErrorAndCaptureUnusualV(tag, fmt, args);
     va_end(args);
 }
 
 static void LogWarn(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogWarnV(tag, fmt, args);
     va_end(args);
 }
 
 static void LogInfo(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogInfoV(tag, fmt, args);
     va_end(args);
 }
 
 static void LogDebug(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogDebugV(tag, fmt, args);
     va_end(args);
 }
 
 static void LogTrace(const char *tag, const char *fmt, ...) {
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogTraceV(tag, fmt, args);
     va_end(args);
@@ -227,7 +227,7 @@ void LogTraceV(const char *tag, const char *fmt, va_list args) {
     std::fflush(stderr);
 }
 
-void LogNullV(const char *tag, const char *fmt, va_list args) {
+void LogNullV(const char *tag, const char *fmt, va_list args) { // NOLINT(readability-non-const-parameter)
     (void)tag;
     (void)fmt;
     (void)args;

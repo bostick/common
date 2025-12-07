@@ -243,7 +243,7 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
 
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
 
-    va_list args;
+    va_list args; // NOLINT(*-init-variables)
     va_start(args, format);
     int res; // NOLINT(*-init-variables)
     res = std::vsnprintf(dest, size, format, args);
