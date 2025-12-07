@@ -112,6 +112,22 @@ void *ScopedJniPrimitiveArrayCritical::get() {
 }
 
 
+ScopedJniByteArray::ScopedJniByteArray(JNIEnv *env, jbyteArray jarr) :
+    env(env),
+    jarr(jarr) {
+
+    CHECKNULL(data = env->GetByteArrayElements(jarr, nullptr));
+}
+
+ScopedJniByteArray::~ScopedJniByteArray() {
+    env->ReleaseByteArrayElements(jarr, data, 0);
+}
+
+const jbyte *ScopedJniByteArray::get() {
+    return data;
+}
+
+
 
 
 

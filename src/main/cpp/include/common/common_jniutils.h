@@ -229,6 +229,22 @@ public:
 };
 
 
+class ScopedJniByteArray {
+private:
+
+    JNIEnv *env;
+    jbyteArray jarr;
+    jbyte *data;
+
+public:
+    ScopedJniByteArray(JNIEnv *env, jbyteArray jarr);
+
+    ~ScopedJniByteArray();
+
+    const jbyte *get();
+};
+
+
 
 
 
