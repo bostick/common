@@ -58,4 +58,20 @@ readability-*,
 -readability-redundant-member-init,
 -readability-identifier-length,
 '
-ExcludeHeaderFilterRegex: '.*(glm|SDL3|imgui|json|box2d|eigen).*'
+# do not need ExcludeHeaderFilterRegex here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
