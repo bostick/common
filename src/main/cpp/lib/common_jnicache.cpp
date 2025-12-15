@@ -42,6 +42,7 @@ using enum Status;
 jclass File_class;
 jclass IOException_class;
 jclass Status_class;
+jclass Throwable_class;
 #if IS_PLATFORM_ANDROID
 jclass Activity_class;
 jclass Build_class;
@@ -68,6 +69,7 @@ jfieldID Build_MODEL_field;
 // jmethodID AtomicBoolean_set_method;
 jmethodID File_getAbsolutePath_method;
 //jmethodID Status_toByte_method;
+jmethodID Throwable_getMessage_method;
 #if IS_PLATFORM_ANDROID
 jmethodID Activity_getPackageName_method;
 jmethodID JSONArray_getDouble_method;
@@ -105,6 +107,7 @@ void setupCommonJniCache(JavaVM *jvm) {
     SETCLASS(File_class, "java/io/File");
     SETCLASS(IOException_class, "java/io/IOException");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
+    SETCLASS(Throwable_class, "java/lang/Throwable");
 #if IS_PLATFORM_ANDROID
     SETCLASS(Activity_class, "android/app/Activity");
     SETCLASS(Build_class, "android/os/Build");
@@ -131,6 +134,7 @@ void setupCommonJniCache(JavaVM *jvm) {
 //    ABORT_ON_EXCEPTION_OR_NULL(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
     ABORT_ON_EXCEPTION_OR_NULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
 //    ABORT_ON_EXCEPTION_OR_NULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
+    ABORT_ON_EXCEPTION_OR_NULL(Throwable_getMessage_method = env->GetMethodID(Throwable_class, "getMessage", "()Ljava/lang/String;"));
 #if IS_PLATFORM_ANDROID
     ABORT_ON_EXCEPTION_OR_NULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
     ABORT_ON_EXCEPTION_OR_NULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
@@ -171,6 +175,7 @@ void teardownCommonJniCache(JavaVM *jvm) {
 //    env->DeleteGlobalRef(AtomicBoolean_class);
     env->DeleteGlobalRef(File_class);
     env->DeleteGlobalRef(Status_class);
+    env->DeleteGlobalRef(Throwable_class);
 #if IS_PLATFORM_ANDROID
     env->DeleteGlobalRef(Activity_class);
     env->DeleteGlobalRef(Build_class);

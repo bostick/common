@@ -34,6 +34,7 @@
 extern jclass File_class;
 extern jclass IOException_class;
 extern jclass Status_class;
+extern jclass Throwable_class;
 #if IS_PLATFORM_ANDROID
 extern jclass Activity_class;
 extern jclass Build_class;
@@ -60,6 +61,7 @@ extern jfieldID Build_MODEL_field;
 // extern jmethodID AtomicBoolean_set_method;
 extern jmethodID File_getAbsolutePath_method;
 //extern jmethodID Status_toByte_method;
+extern jmethodID Throwable_getMessage_method;
 #if IS_PLATFORM_ANDROID
 extern jmethodID Activity_getPackageName_method;
 extern jmethodID JSONArray_getDouble_method;
