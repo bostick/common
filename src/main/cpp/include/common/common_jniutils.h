@@ -70,6 +70,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(env != nullptr); \
         (code); \
         if (env->ExceptionCheck()) { \
+            LOGI("Aborting on pending exception:"); \
             env->ExceptionDescribe(); \
             ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
         } \
@@ -80,6 +81,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(env != nullptr); \
         void *checkExceptionAndNullLocal = (code); \
         if (env->ExceptionCheck()) { \
+            LOGI("Aborting on pending exception:"); \
             env->ExceptionDescribe(); \
             ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
         } \
@@ -92,6 +94,8 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(env != nullptr); \
         (code); \
         if (env->ExceptionCheck()) { \
+            LOGI("Consuming pending exception:"); \
+            env->ExceptionDescribe(); \
             env->ExceptionClear(); \
         } \
     } while (false)

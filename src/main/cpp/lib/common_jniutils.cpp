@@ -43,6 +43,8 @@ ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
     env(env),
     jstr(jstr) {
 
+    ASSERT(jstr != nullptr);
+
     CHECKNULL(str = env->GetStringUTFChars(jstr, nullptr));
 }
 
