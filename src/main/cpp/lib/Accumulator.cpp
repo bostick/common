@@ -38,6 +38,18 @@ double Accumulator::computeMean() const {
 }
 
 
+int64_t Accumulator::last() const {
+
+    if (buf.empty()) {
+        return -1;
+    }
+
+    size_t i = (index + capacity - 1) % capacity;
+
+    return buf[i];
+}
+
+
 void Accumulator::push(int64_t val) {
 
     if (buf.size() == capacity) {
