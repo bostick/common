@@ -30,7 +30,7 @@ struct Accumulator {
     size_t index;
     int64_t sum;
 
-    Accumulator(size_t capacity);
+    explicit Accumulator(size_t capacity);
 
     double computeMean() const;
     void push(int64_t val);
