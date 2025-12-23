@@ -31,6 +31,7 @@
 
 
 jobject createStatusObject(JNIEnv *env, Status status) {
+    LOG_ENTRY_EXIT;
 
     jobject jstatus; // NOLINT(*-init-variables)
     ABORT_ON_EXCEPTION_OR_NULL(jstatus = env->CallStaticObjectMethod(Status_class, Status_fromByte_method, static_cast<jbyte>(status)));
@@ -42,6 +43,7 @@ jobject createStatusObject(JNIEnv *env, Status status) {
 ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
     env(env),
     jstr(jstr) {
+    LOG_ENTRY_EXIT;
 
     ASSERT(jstr != nullptr);
 
@@ -49,6 +51,7 @@ ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
 }
 
 ScopedJniString::~ScopedJniString() {
+    LOG_ENTRY_EXIT;
 
     if (str == nullptr) {
         return;
@@ -66,6 +69,7 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
     jvm(jvm),
     env(),
     getEnvRet(jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6)) {
+//    LOG_ENTRY_EXIT;
 
     ASSERT(getEnvRet != JNI_EVERSION);
 
@@ -82,6 +86,7 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *jvm) :
 }
 
 ScopedJniEnv::~ScopedJniEnv() {
+//    LOG_ENTRY_EXIT;
 
     if (getEnvRet != JNI_EDETACHED) {
         return;
@@ -101,11 +106,14 @@ JNIEnv *ScopedJniEnv::get() {
 ScopedJniPrimitiveArrayCritical::ScopedJniPrimitiveArrayCritical(JNIEnv *env, jarray jarr) :
     env(env),
     jarr(jarr) {
+//    LOG_ENTRY_EXIT;
 
     CHECKNULL(data = env->GetPrimitiveArrayCritical(jarr, nullptr));
 }
 
 ScopedJniPrimitiveArrayCritical::~ScopedJniPrimitiveArrayCritical() {
+//    LOG_ENTRY_EXIT;
+
     env->ReleasePrimitiveArrayCritical(jarr, data, 0);
 }
 
@@ -117,11 +125,14 @@ void *ScopedJniPrimitiveArrayCritical::get() {
 ScopedJniByteArray::ScopedJniByteArray(JNIEnv *env, jbyteArray jarr) :
     env(env),
     jarr(jarr) {
+//    LOG_ENTRY_EXIT;
 
     CHECKNULL(data = env->GetByteArrayElements(jarr, nullptr));
 }
 
 ScopedJniByteArray::~ScopedJniByteArray() {
+//    LOG_ENTRY_EXIT;
+
     env->ReleaseByteArrayElements(jarr, data, 0);
 }
 
