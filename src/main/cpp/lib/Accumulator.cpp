@@ -18,21 +18,70 @@
 
 #include "common/Accumulator.h"
 
+#undef NDEBUG
+
+#include "common/assert.h"
+
 
 Accumulator::Accumulator(size_t capacity) :
     capacity(capacity),
     buf(),
     index(),
-    sum() {}
+    filteredMean() {}
 
 
-double Accumulator::computeMean() const {
+double Accumulator::getFilteredMean() const {
 
-    if (buf.empty()) {
-        return -1;
+    ASSERT(!buf.empty());
+
+    return filteredMean;
+}
+
+double Accumulator::_computeFilteredMean() const {
+
+    ASSERT(2 <= buf.size());
+
+    std::vector<int64_t> tmp = buf;
+
+    double sum = 0.0;
+    for (int64_t x : tmp) {
+        sum += static_cast<double>(x);
     }
 
-    double mean = (static_cast<double>(sum) / static_cast<double>(buf.size()));
+    double mean = sum / static_cast<double>(buf.size());
+
+    sum = 0.0;
+    for (int64_t x : tmp) {
+        sum += (static_cast<double>(x) - mean) * (static_cast<double>(x) - mean);
+    }
+
+    double sd = ::sqrt(sum / static_cast<double>(buf.size() - 1));
+
+    std::sort(tmp.begin(), tmp.end()); // NOLINT(*-use-ranges)
+
+    double median; // NOLINT(*-init-variables)
+    if (tmp.size() % 2 == 0) {
+
+        median = static_cast<double>(tmp[(tmp.size() - 1) / 2] + tmp[tmp.size() / 2]) / 2.0;
+
+    } else {
+
+        median = static_cast<double>(tmp[tmp.size() / 2]);
+    }
+
+    std::vector<int64_t> tmp2;
+    for (int64_t x : tmp) {
+        if (std::abs(static_cast<double>(x) - median) <= sd) {
+            tmp2.push_back(x);
+        }
+    }
+
+    sum = 0.0;
+    for (int64_t x : tmp2) {
+        sum += static_cast<double>(x);
+    }
+
+    mean = sum / static_cast<double>(tmp2.size());
 
     return mean;
 }
@@ -54,22 +103,23 @@ void Accumulator::push(int64_t val) {
 
     if (buf.size() == capacity) {
 
-        sum -= buf[index];
-
         buf[index] = val;
 
-        sum += val;
+    } else {
 
-        index = (index + 1) % capacity;
-
-        return;
+        buf.push_back(val);
     }
 
-    buf.push_back(val);
-
-    sum += val;
-
     index = (index + 1) % capacity;
+
+    if (buf.size() == 1) {
+
+        filteredMean = static_cast<double>(buf[0]);
+
+    } else {
+
+        filteredMean = _computeFilteredMean();
+    }
 }
 
 

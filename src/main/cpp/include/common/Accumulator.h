@@ -28,11 +28,12 @@ struct Accumulator {
     size_t capacity;
     std::vector<int64_t> buf;
     size_t index;
-    int64_t sum;
+    double filteredMean;
 
     explicit Accumulator(size_t capacity);
 
-    double computeMean() const;
+    double getFilteredMean() const;
+    double _computeFilteredMean() const;
     int64_t last() const;
     void push(int64_t val);
 };
