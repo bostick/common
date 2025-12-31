@@ -28,6 +28,7 @@
 #include "common/assert.h"
 #include "common/error.h"
 #include "common/platform.h"
+#include "common/logging.h"
 
 #if IS_PLATFORM_ANDROID
 #include <jni.h>

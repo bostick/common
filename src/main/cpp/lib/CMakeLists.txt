@@ -18,7 +18,6 @@
 
 
 set(SOURCES_LIB
-    abort.cpp
     clock.cpp
     error.cpp
     file.cpp

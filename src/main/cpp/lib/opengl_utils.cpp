@@ -18,7 +18,10 @@
 
 #include "common/opengl_utils.h"
 
+#undef NDEBUG
+
 #include "common/abort.h"
+#include "common/logging.h"
 
 
 #define TAG "opengl_utils"

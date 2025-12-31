@@ -26,11 +26,7 @@ using unusualMessageCapturer_decl = void (*)(const std::string &message);
 
 void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer);
 
-void SetUnusualMessageCapturerWhileAborting(unusualMessageCapturer_decl capturer);
-
 void captureUnusualMessage(const std::string &message);
-
-void captureUnusualMessageWhileAborting(const std::string &message);
 
 
 

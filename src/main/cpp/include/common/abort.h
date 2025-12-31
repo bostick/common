@@ -22,68 +22,13 @@
 
 #pragma once
 
+#ifdef NDEBUG
+#error Undefine NDEBUG before including common/abort.h
+#endif // NDEBUG
+
 #include "common/platform.h"
 
-#include <stdarg.h> // for va_list
-
-
-#if __GNUC__ || __clang__
-
-//
-// declare that ABORT_expanded takes printf-style arguments
-//
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
-//
-
-#define PRINTF_ATTRIBUTE __attribute__ ((format (printf, 2, 3)))
-
-#else
-
-//
-// can this be easily done on MSVC?
-//
-
-#define PRINTF_ATTRIBUTE
-
-#endif // __GNUC__ || __clang__
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-// var arg
-
-#ifdef __cplusplus
-PRINTF_ATTRIBUTE void ABORT_expanded [[noreturn]] (const char *tag, const char *fmt, ...);
-#else
-//
-// error: [[]] attributes are a C23 extension [-Werror,-Wc23-extensions]
-//
-PRINTF_ATTRIBUTE void ABORT_expanded(const char *tag, const char *fmt, ...);
-#endif // __cplusplus
-
-// va_list
-
-//
-// the va_list function ABORT_expandedV can be called by code that already has a va_list
-//
-
-#ifdef __cplusplus
-void ABORT_expandedV [[noreturn]] (const char *tag, const char *fmt, va_list args);
-#else
-//
-// error: [[]] attributes are a C23 extension [-Werror,-Wc23-extensions]
-//
-void ABORT_expandedV(const char *tag, const char *fmt, va_list args);
-#endif // __cplusplus
-
-#ifdef __cplusplus
-}
-#endif // __cplusplus
-
-
-#undef PRINTF_ATTRIBUTE
+#include <assert.h>
 
 
 #if IS_PLATFORM_ANDROID
@@ -101,7 +46,11 @@ void ABORT_expandedV(const char *tag, const char *fmt, va_list args);
 #endif // IS_PLATFORM_ANDROID
 
 #define ABORT(fmt, ...) \
-    ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+    do { \
+        LOGF(fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__); \
+        assert(false && fmt); /*NOLINT(misc-static-assert)*/ \
+    } \
+    while (false)
 
 
 
