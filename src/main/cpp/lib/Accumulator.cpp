@@ -22,6 +22,9 @@
 
 #include "common/assert.h"
 
+#include <algorithm>
+#include <cmath>
+
 
 Accumulator::Accumulator(size_t capacity) :
     capacity(capacity),
