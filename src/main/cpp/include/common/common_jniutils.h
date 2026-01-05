@@ -249,6 +249,19 @@ public:
 };
 
 
+class ScopedLocalRef {
+private:
+
+    JNIEnv *env;
+    jobject jobj;
+
+public:
+    ScopedLocalRef(JNIEnv *env, jobject jobj);
+
+    ~ScopedLocalRef();
+};
+
+
 
 
 

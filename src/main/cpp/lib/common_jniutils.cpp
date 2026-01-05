@@ -141,6 +141,19 @@ const jbyte *ScopedJniByteArray::get() {
 }
 
 
+ScopedLocalRef::ScopedLocalRef(JNIEnv *env, jobject jobj) :
+        env(env),
+        jobj(jobj) {
+//    LOG_ENTRY_EXIT;
+}
+
+ScopedLocalRef::~ScopedLocalRef() {
+//    LOG_ENTRY_EXIT;
+
+    env->DeleteLocalRef(jobj);
+}
+
+
 
 
 
