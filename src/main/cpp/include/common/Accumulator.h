@@ -36,6 +36,7 @@ struct Accumulator {
     double _computeFilteredMean() const;
     int64_t last() const;
     void push(int64_t val);
+    bool empty() const;
 };
 
 

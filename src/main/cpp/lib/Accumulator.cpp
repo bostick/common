@@ -126,6 +126,11 @@ void Accumulator::push(int64_t val) {
 }
 
 
+bool Accumulator::empty() const {
+    return buf.empty();
+}
+
+
 
 
 
