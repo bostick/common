@@ -108,7 +108,7 @@ saveFile(
 
     CHECK(file, "cannot open %s", path);
 
-    auto r = std::fwrite(buf.data(), 1, buf.size(), file);
+    size_t r = std::fwrite(buf.data(), 1, buf.size(), file);
 
     CHECK(r == buf.size(), "fwrite failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 

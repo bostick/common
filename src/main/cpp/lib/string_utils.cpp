@@ -57,7 +57,7 @@ std::string escape(const std::string &s) {
 
     std::string newString;
     for (auto it = s.begin(); it < s.end(); it++) {
-        auto c = *it;
+        char c = *it;
         if (c == '\n') {
             newString += "\\n";
         }
@@ -218,7 +218,7 @@ Status parseUInt16(const std::string &str, uint16_t *out) {
     errno = 0;
 
     char *c; // last character that was converted NOLINT(*-init-variables)
-    auto a = std::strtoul(str.c_str(), &c, 10);
+    unsigned long a = std::strtoul(str.c_str(), &c, 10); // NOLINT(google-runtime-int)
 
     if (errno != 0) {
         LOGE("strtoul: %s (%s)", std::strerror(errno), ErrorName(errno));
@@ -245,8 +245,7 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
 
     va_list args; // NOLINT(*-init-variables)
     va_start(args, format);
-    int res; // NOLINT(*-init-variables)
-    res = std::vsnprintf(dest, size, format, args);
+    int res = std::vsnprintf(dest, size, format, args);
     va_end(args);
 
     ASSERT(res >= 0);

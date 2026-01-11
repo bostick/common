@@ -43,7 +43,7 @@ jobject createStatusObject(JNIEnv *env, Status status) {
 ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
     env(env),
     jstr(jstr) {
-    LOG_ENTRY_EXIT;
+//    LOG_ENTRY_EXIT;
 
     ASSERT(jstr != nullptr);
 
@@ -51,7 +51,7 @@ ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
 }
 
 ScopedJniString::~ScopedJniString() {
-    LOG_ENTRY_EXIT;
+//    LOG_ENTRY_EXIT;
 
     if (str == nullptr) {
         return;

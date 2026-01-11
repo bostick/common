@@ -61,6 +61,10 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 // don't use CLOCK_MONOTONIC_RAW on Android
 // https://github.com/libsdl-org/SDL/commit/62d82ffc15b21fcc432fd9e0499c4585cd8d89c8
 //
+// get clock resolution with:
+// timespec res;
+// if (::clock_getres(CLOCK_MONOTONIC, &res) == -1) {
+//
 
 int64_t uptimeMillis(void) {
 
