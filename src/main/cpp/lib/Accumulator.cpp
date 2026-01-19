@@ -30,7 +30,8 @@ Accumulator::Accumulator(size_t capacity) :
     capacity(capacity),
     buf(),
     index(),
-    filteredMean() {}
+    filteredMean(),
+    mean() {}
 
 
 double Accumulator::getFilteredMean() const {
@@ -38,6 +39,13 @@ double Accumulator::getFilteredMean() const {
     ASSERT(!buf.empty());
 
     return filteredMean;
+}
+
+double Accumulator::getMean() const {
+
+    ASSERT(!buf.empty());
+
+    return mean;
 }
 
 double Accumulator::_computeFilteredMean() const {
@@ -51,11 +59,11 @@ double Accumulator::_computeFilteredMean() const {
         sum += static_cast<double>(x);
     }
 
-    double mean = sum / static_cast<double>(buf.size());
+    double meanTmp = sum / static_cast<double>(buf.size());
 
     sum = 0.0;
     for (int64_t x : tmp) {
-        sum += (static_cast<double>(x) - mean) * (static_cast<double>(x) - mean);
+        sum += (static_cast<double>(x) - meanTmp) * (static_cast<double>(x) - meanTmp);
     }
 
     double sd = ::sqrt(sum / static_cast<double>(buf.size() - 1));
@@ -84,9 +92,26 @@ double Accumulator::_computeFilteredMean() const {
         sum += static_cast<double>(x);
     }
 
-    mean = sum / static_cast<double>(tmp2.size());
+    meanTmp = sum / static_cast<double>(tmp2.size());
 
-    return mean;
+    return meanTmp;
+}
+
+
+double Accumulator::_computeMean() const {
+
+    ASSERT(2 <= buf.size());
+
+    std::vector<int64_t> tmp = buf;
+
+    double sum = 0.0;
+    for (int64_t x : tmp) {
+        sum += static_cast<double>(x);
+    }
+
+    double meanTmp = sum / static_cast<double>(buf.size());
+
+    return meanTmp;
 }
 
 
@@ -118,10 +143,12 @@ void Accumulator::push(int64_t val) {
     if (buf.size() == 1) {
 
         filteredMean = static_cast<double>(buf[0]);
+        mean = static_cast<double>(buf[0]);
 
     } else {
 
         filteredMean = _computeFilteredMean();
+        mean = _computeMean();
     }
 }
 
