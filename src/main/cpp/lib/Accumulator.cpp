@@ -158,6 +158,15 @@ bool Accumulator::empty() const {
 }
 
 
+size_t Accumulator::size() const {
+    return buf.size();
+}
+
+int64_t &Accumulator::operator[](size_t indexIn) {
+    return buf[indexIn];
+}
+
+
 
 
 

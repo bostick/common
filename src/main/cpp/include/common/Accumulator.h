@@ -41,6 +41,8 @@ struct Accumulator {
     int64_t last() const;
     void push(int64_t val);
     bool empty() const;
+    size_t size() const;
+    int64_t &operator[](size_t index);
 };
 
 
