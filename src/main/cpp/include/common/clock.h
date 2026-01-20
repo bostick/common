@@ -45,6 +45,9 @@ extern "C" {
 //
 int64_t uptimeMillis(void);
 
+//
+// monotonic
+//
 int64_t uptimeMicros(void);
 
 //
