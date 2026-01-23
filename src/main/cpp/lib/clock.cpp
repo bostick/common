@@ -86,6 +86,26 @@ int64_t uptimeMicros(void) {
     return (static_cast<int64_t>(now.tv_sec) * 1000000) + (static_cast<int64_t>(now.tv_nsec) / 1000);
 }
 
+int64_t timeSinceEpochSeconds(void) {
+
+    timespec now; // NOLINT(*-pro-type-member-init)
+    if (::clock_gettime(CLOCK_REALTIME, &now) == -1) {
+        ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return static_cast<int64_t>(now.tv_sec);
+}
+
+int64_t timeSinceEpochMillis(void) {
+
+    timespec now; // NOLINT(*-pro-type-member-init)
+    if (::clock_gettime(CLOCK_REALTIME, &now) == -1) {
+        ABORT("clock_gettime: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return (static_cast<int64_t>(now.tv_sec) * 1000) + (static_cast<int64_t>(now.tv_nsec) / 1000000);
+}
+
 #elif IS_PLATFORM_MACOS
 
 //
@@ -98,11 +118,6 @@ int64_t uptimeMillis(void) {
 
     return GetTickCount64();
 }
-
-#else
-#error
-#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
-
 
 int64_t timeSinceEpochSeconds(void) {
 
@@ -121,6 +136,10 @@ int64_t timeSinceEpochMillis(void) {
 
     return epoch.count();
 }
+
+#else
+#error
+#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 
 //

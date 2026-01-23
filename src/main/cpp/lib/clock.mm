@@ -54,6 +54,14 @@ int64_t uptimeMicros(void) {
     return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000);
 }
 
+int64_t timeSinceEpochSeconds(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000 / 1000);
+}
+
+int64_t timeSinceEpochMillis(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000);
+}
+
 #else
 #error
 #endif // IS_PLATFORM_IOS
