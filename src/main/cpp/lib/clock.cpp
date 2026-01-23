@@ -193,6 +193,16 @@ Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative(JNIEnv *env, jcl
     return timeSinceEpochMillis();
 }
 
+extern "C"
+JNIEXPORT jlong JNICALL
+Java_com_brentonbostick_common_Clock_uptimeMillisNative(JNIEnv *env, jclass clazz) {
+
+    (void)env;
+    (void)clazz;
+
+    return uptimeMillis();
+}
+
 #endif // IS_PLATFORM_ANDROID
 
 

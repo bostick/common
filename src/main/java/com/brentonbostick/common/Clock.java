@@ -32,12 +32,21 @@ public class Clock {
 		return timeSinceEpochMillisNative();
 	}
 
+    /**
+     * monotonic
+     *
+     * @return time since epoch
+     */
+    public static long uptimeMillis() {
+        return uptimeMillisNative();
+    }
 
 	//
     // JNI methods
     //
 
 	private static native long timeSinceEpochMillisNative();
+    private static native long uptimeMillisNative();
 }
 
 
