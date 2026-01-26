@@ -28,7 +28,7 @@
 
 #include "common/platform.h"
 
-#include <assert.h>
+#include <assert.h> // NOLINT(*-deprecated-headers)
 
 
 #if IS_PLATFORM_ANDROID

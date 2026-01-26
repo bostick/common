@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include <stdint.h> // for int64_t
-#include <time.h> // for time_t
+#include <stdint.h> // for int64_t NOLINT(*-deprecated-headers)
+#include <time.h> // for time_t NOLINT(*-deprecated-headers)
 
 #ifdef __cplusplus
 extern "C" {

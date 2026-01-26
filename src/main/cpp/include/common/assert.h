@@ -27,7 +27,7 @@
 #endif // NDEBUG
 
 
-#include <assert.h>
+#include <assert.h> // NOLINT(*-deprecated-headers)
 
 
 #define ASSERT(...) \
