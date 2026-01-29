@@ -174,6 +174,7 @@ void teardownCommonJniCache(JavaVM *jvm) {
 
 //    env->DeleteGlobalRef(AtomicBoolean_class);
     env->DeleteGlobalRef(File_class);
+    env->DeleteGlobalRef(IOException_class);
     env->DeleteGlobalRef(Status_class);
     env->DeleteGlobalRef(Throwable_class);
 #if IS_PLATFORM_ANDROID
