@@ -69,7 +69,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
     do { \
         ASSERT(env != nullptr); \
         (code); \
-        if (env->ExceptionCheck()) { \
+        if (env->ExceptionCheck() == JNI_TRUE) { \
             LOGI("Aborting on pending exception:"); \
             env->ExceptionDescribe(); \
             ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
@@ -80,7 +80,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
     do { \
         ASSERT(env != nullptr); \
         void *checkExceptionAndNullLocal = (code); \
-        if (env->ExceptionCheck()) { \
+        if (env->ExceptionCheck() == JNI_TRUE) { \
             LOGI("Aborting on pending exception:"); \
             env->ExceptionDescribe(); \
             ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
@@ -93,7 +93,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
     do { \
         ASSERT(env != nullptr); \
         (code); \
-        if (env->ExceptionCheck()) { \
+        if (env->ExceptionCheck() == JNI_TRUE) { \
             LOGI("Consuming pending exception:"); \
             env->ExceptionDescribe(); \
             env->ExceptionClear(); \
@@ -150,7 +150,7 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
     auto jCount = static_cast<jsize>(count);
 
     jobjectArray arrayObj = env->NewObjectArray(jCount, clazz, nullptr);
-    if (env->ExceptionCheck()) {
+    if (env->ExceptionCheck() == JNI_TRUE) {
         env->ExceptionDescribe();
         return nullptr;
     }
@@ -162,7 +162,7 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
     for (jsize i = 0; i < jCount; i++) {
 
         jobject obj = F(env, buffer[i]);
-        if (env->ExceptionCheck()) {
+        if (env->ExceptionCheck() == JNI_TRUE) {
             env->ExceptionDescribe();
             return nullptr;
         }
@@ -172,7 +172,7 @@ jobjectArray newArrayObject(JNIEnv *env, const T *buffer, size_t count, jclass c
         }
 
         env->SetObjectArrayElement(arrayObj, i, obj);
-        if (env->ExceptionCheck()) {
+        if (env->ExceptionCheck() == JNI_TRUE) {
             env->ExceptionDescribe();
             return nullptr;
         }
