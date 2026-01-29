@@ -35,6 +35,7 @@ extern jclass File_class;
 extern jclass IOException_class;
 extern jclass Status_class;
 extern jclass Throwable_class;
+extern jclass ExceptionUtils_class;
 #if IS_PLATFORM_ANDROID
 extern jclass Activity_class;
 extern jclass Build_class;
@@ -78,6 +79,7 @@ extern jmethodID JSONObject_getJSONArray_method;
 //
 
 extern jmethodID Status_fromByte_method;
+extern jmethodID ExceptionUtils_toNiceString_method;
 
 //
 // Enums

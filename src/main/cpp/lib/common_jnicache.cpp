@@ -43,6 +43,7 @@ jclass File_class;
 jclass IOException_class;
 jclass Status_class;
 jclass Throwable_class;
+jclass ExceptionUtils_class;
 #if IS_PLATFORM_ANDROID
 jclass Activity_class;
 jclass Build_class;
@@ -86,6 +87,7 @@ jmethodID JSONObject_has_method;
 //
 
 jmethodID Status_fromByte_method;
+jmethodID ExceptionUtils_toNiceString_method;
 
 //
 // Enums
@@ -108,6 +110,7 @@ void setupCommonJniCache(JavaVM *jvm) {
     SETCLASS(IOException_class, "java/io/IOException");
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
     SETCLASS(Throwable_class, "java/lang/Throwable");
+    SETCLASS(ExceptionUtils_class, "com/brentonbostick/common/ExceptionUtils");
 #if IS_PLATFORM_ANDROID
     SETCLASS(Activity_class, "android/app/Activity");
     SETCLASS(Build_class, "android/os/Build");
@@ -151,6 +154,7 @@ void setupCommonJniCache(JavaVM *jvm) {
     //
 
     ABORT_ON_EXCEPTION_OR_NULL(Status_fromByte_method = env->GetStaticMethodID(Status_class, "fromByte", "(B)Lcom/brentonbostick/common/Status;"));
+    ABORT_ON_EXCEPTION_OR_NULL(ExceptionUtils_toNiceString_method = env->GetStaticMethodID(ExceptionUtils_class, "toNiceString", "(Ljava/lang/Throwable;)Ljava/lang/String;"));
 
     //
     // Enums
@@ -177,6 +181,7 @@ void teardownCommonJniCache(JavaVM *jvm) {
     env->DeleteGlobalRef(IOException_class);
     env->DeleteGlobalRef(Status_class);
     env->DeleteGlobalRef(Throwable_class);
+    env->DeleteGlobalRef(ExceptionUtils_class);
 #if IS_PLATFORM_ANDROID
     env->DeleteGlobalRef(Activity_class);
     env->DeleteGlobalRef(Build_class);

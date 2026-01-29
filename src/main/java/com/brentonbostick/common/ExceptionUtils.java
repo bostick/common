@@ -18,6 +18,9 @@
 
 package com.brentonbostick.common;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class ExceptionUtils {
 
     public static String toNiceString(Throwable t) {
@@ -28,12 +31,27 @@ public class ExceptionUtils {
 
         msg += title;
 
-        msg += "\n" + t.getMessage();
+        String message = t.getMessage();
+
+        if (message != null) {
+            msg += "\n" + message;
+        }
 
         Throwable cause = t.getCause();
 
         if (cause != null) {
-            msg += "\nCause:\n" + cause.getClass().getName() + "\n" + cause.getMessage();
+
+            msg += "\nCause:\n";
+
+            String title2 = cause.getClass().getName();
+
+            msg += title2;
+
+            String message2 = cause.getMessage();
+
+            if (message2 != null) {
+                msg += "\n" + message2;
+            }
         }
 
         return msg;
