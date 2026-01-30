@@ -22,7 +22,6 @@
 
 #include "common/abort.h"
 #include "common/assert.h"
-#include "common/clock.h"
 #include "common/platform.h"
 #include "common/unusual_message.h"
 
@@ -259,23 +258,21 @@ LogTracer::LogTracer(const char *tag, const char *function, const char *file, in
     function(function),
     file(file),
     line(line) {
-    GrabNow();
     //
     // passing in tag, so cannot use LOGT macro
     //
 #if IS_PLATFORM_ANDROID
-    LOGT_expanded(tag, "%s: enter %s %s:%d", nowStrBuf, function, file, line);
+    LOGT_expanded(tag, "enter %s %s:%d", function, file, line);
 #else
-    LOGT_expanded(tag, "%s: enter %s %s:%d\n", nowStrBuf, function, file, line);
+    LOGT_expanded(tag, "enter %s %s:%d\n", function, file, line);
 #endif // IS_PLATFORM_ANDROID
 }
 
 LogTracer::~LogTracer() {
-    GrabNow();
 #if IS_PLATFORM_ANDROID
-    LOGT_expanded(tag, "%s: exit %s %s:%d", nowStrBuf, function, file, line);
+    LOGT_expanded(tag, "exit %s %s:%d", function, file, line);
 #else
-    LOGT_expanded(tag, "%s: exit %s %s:%d\n", nowStrBuf, function, file, line);
+    LOGT_expanded(tag, "exit %s %s:%d\n", function, file, line);
 #endif // IS_PLATFORM_ANDROID
 }
 

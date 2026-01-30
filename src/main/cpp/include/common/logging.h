@@ -189,13 +189,16 @@ void LOGE_chunks(const char *buf, size_t len);
 #ifdef __cplusplus
 
 class LogTracer {
+private:
+
     const char *tag;
     const char *function;
     const char *file;
     int line;
-public:
-    LogTracer(const char *tag, const char *function, const char *file, int line);
 
+public:
+
+    LogTracer(const char *tag, const char *function, const char *file, int line);
     ~LogTracer();
 };
 
