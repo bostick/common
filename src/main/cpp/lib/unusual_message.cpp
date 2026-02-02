@@ -36,10 +36,15 @@
 
 
 static unusualMessageCapturer_decl unusualMessageCapturer = nullptr;
+static unusualMessageCapturer_decl unusualMessageCapturerWhileAborting = nullptr;
 
 
 void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer) {
     unusualMessageCapturer = capturer;
+}
+
+void SetUnusualMessageCapturerWhileAborting(unusualMessageCapturer_decl capturer) {
+    unusualMessageCapturerWhileAborting = capturer;
 }
 
 
@@ -51,6 +56,17 @@ void captureUnusualMessage(const std::string &message) {
     }
 
     unusualMessageCapturer(message);
+}
+
+
+void captureUnusualMessageWhileAborting(const std::string &message) {
+
+    if (unusualMessageCapturerWhileAborting == nullptr) {
+        LOGE("cannot capture unusual message while aborting: unusualMessageCapturerWhileAborting is NULL");
+        return;
+    }
+
+    unusualMessageCapturerWhileAborting(message);
 }
 
 

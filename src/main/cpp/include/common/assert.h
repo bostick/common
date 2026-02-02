@@ -23,15 +23,19 @@
 #pragma once
 
 #ifdef NDEBUG
-#error Undefine NDEBUG before including common/assert.h
+#error Undefine NDEBUG before including common/abort.h
 #endif // NDEBUG
 
+#include "common/abort.h"
 
-#include <assert.h> // NOLINT(*-deprecated-headers)
 
-
-#define ASSERT(...) \
-    assert(__VA_ARGS__)
+#define ASSERT(cond) \
+    do { \
+        auto assertRes = static_cast<bool>(cond); \
+        if (!assertRes) { \
+            ABORT_expanded(TAG, "assert failed: " #cond); \
+        } \
+    } while (false)
 
 
 

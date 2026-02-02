@@ -26,6 +26,9 @@
 #include <cmath>
 
 
+#define TAG "Accumulator"
+
+
 Accumulator::Accumulator(size_t capacity) :
     capacity(capacity),
     buf(),

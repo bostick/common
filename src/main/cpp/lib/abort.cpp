@@ -16,21 +16,44 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#pragma once
+#include "common/abort.h"
 
-#include <string>
+#include "common/logging.h"
+#include "common/unusual_message.h"
+
+#include <cstdlib> // for abort
 
 
-using unusualMessageCapturer_decl = void (*)(const std::string &message);
+#define TAG "abort"
 
 
-void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer);
+void ABORT_expanded(const char *tag, const char *fmt, ...) {
 
-void SetUnusualMessageCapturerWhileAborting(unusualMessageCapturer_decl capturer);
+    va_list args; // NOLINT(*-init-variables)
+    va_start(args, fmt);
+    ABORT_expandedV(tag, fmt, args);
 
-void captureUnusualMessage(const std::string &message);
+    //
+    // unreachable
+    //
+    // va_end(args);
+}
 
-void captureUnusualMessageWhileAborting(const std::string &message);
+
+void ABORT_expandedV(const char *tag, const char *fmt, va_list args) {
+
+    LOGF_expandedV(tag, fmt, args);
+
+    //
+    // fine if truncated
+    //
+    char buf[1000];
+    std::vsnprintf(buf, sizeof(buf), fmt, args);
+
+    captureUnusualMessageWhileAborting(buf);
+
+    std::abort();
+}
 
 
 
