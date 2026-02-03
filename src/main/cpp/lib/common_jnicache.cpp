@@ -97,6 +97,9 @@ std::map<Status, jobject> statusEnumMap;
 
 
 void setupCommonJniCache(JavaVM *jvm) {
+    LOG_ENTRY_EXIT;
+
+    LOGD("GETENV");
 
     JNIEnv *env; // NOLINT(*-init-variables)
     GETENV(env, jvm);
@@ -104,6 +107,8 @@ void setupCommonJniCache(JavaVM *jvm) {
     //
     // Classes
     //
+
+    LOGD("set classes");
 
 //    SETCLASS(AtomicBoolean_class, "java/util/concurrent/atomic/AtomicBoolean");
     SETCLASS(File_class, "java/io/File");
@@ -122,9 +127,13 @@ void setupCommonJniCache(JavaVM *jvm) {
     // Instance fields
     //
 
+    LOGD("set instance fields");
+
     //
     // Static fields
     //
+
+    LOGD("set static fields");
 
 #if IS_PLATFORM_ANDROID
     ABORT_ON_EXCEPTION_OR_NULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
@@ -133,6 +142,8 @@ void setupCommonJniCache(JavaVM *jvm) {
     //
     // Instance methods
     //
+
+    LOGD("set instance methods");
 
 //    ABORT_ON_EXCEPTION_OR_NULL(AtomicBoolean_set_method = env->GetMethodID(AtomicBoolean_class, "set", "(Z)V"));
     ABORT_ON_EXCEPTION_OR_NULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
@@ -153,6 +164,8 @@ void setupCommonJniCache(JavaVM *jvm) {
     // Static methods
     //
 
+    LOGD("set static methods");
+
     ABORT_ON_EXCEPTION_OR_NULL(Status_fromByte_method = env->GetStaticMethodID(Status_class, "fromByte", "(B)Lcom/brentonbostick/common/Status;"));
     ABORT_ON_EXCEPTION_OR_NULL(ExceptionUtils_toNiceString_method = env->GetStaticMethodID(ExceptionUtils_class, "toNiceString", "(Ljava/lang/Throwable;)Ljava/lang/String;"));
 
@@ -160,11 +173,14 @@ void setupCommonJniCache(JavaVM *jvm) {
     // Enums
     //
 
+    LOGD("set enums");
+
     INSERTINTOMAP(statusEnumMap, OK, createStatusObject(env, OK));
     INSERTINTOMAP(statusEnumMap, ERR, createStatusObject(env, ERR));
 }
 
 void teardownCommonJniCache(JavaVM *jvm) {
+    LOG_ENTRY_EXIT;
 
     JNIEnv *env; // NOLINT(*-init-variables)
     GETENV(env, jvm);
