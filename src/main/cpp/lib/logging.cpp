@@ -236,21 +236,21 @@ void LogNullV(const char *tag, const char *fmt, va_list args) { // NOLINT(readab
 
 
 //
-// default log level is INFO
+// default log level is TRACE
 LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
 LOG_decl LOGE_andCaptureUnusual_expanded = LogErrorAndCaptureUnusual;
 LOG_decl LOGW_expanded = LogWarn;
 LOG_decl LOGI_expanded = LogInfo;
-LOG_decl LOGD_expanded = LogNull;
-LOG_decl LOGT_expanded = LogNull;
+LOG_decl LOGD_expanded = LogDebug;
+LOG_decl LOGT_expanded = LogTrace;
 
 LOG_declV LOGF_expandedV = LogFatalV;
 LOG_declV LOGE_expandedV = LogErrorV;
 LOG_declV LOGW_expandedV = LogWarnV;
 LOG_declV LOGI_expandedV = LogInfoV;
-LOG_declV LOGD_expandedV = LogNullV;
-LOG_declV LOGT_expandedV = LogNullV;
+LOG_declV LOGD_expandedV = LogDebugV;
+LOG_declV LOGT_expandedV = LogTraceV;
 
 
 LogTracer::LogTracer(const char *tag, const char *function, const char *file, int line) :
