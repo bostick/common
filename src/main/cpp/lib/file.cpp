@@ -52,7 +52,7 @@ openFile(
 
     FILE *file = x.get();
 
-    CHECK(file, "cannot open %s", path);
+    RETURN_ERR_IF_FALSE(file, "cannot open %s", path);
 
     int fres = std::fseek(file, 0, SEEK_END);
 
@@ -106,11 +106,11 @@ saveFile(
 
     FILE *file = x.get();
 
-    CHECK(file, "cannot open %s", path);
+    RETURN_ERR_IF_FALSE(file, "cannot open %s", path);
 
     size_t r = std::fwrite(buf.data(), 1, buf.size(), file);
 
-    CHECK(r == buf.size(), "fwrite failed: %s (%s)", std::strerror(errno), ErrorName(errno));
+    RETURN_ERR_IF_FALSE(r == buf.size(), "fwrite failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     return OK;
 }

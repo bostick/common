@@ -22,7 +22,7 @@
 //
 // if cond is false, then log message and return ERR
 //
-#define CHECK(cond, msg, ...) \
+#define RETURN_ERR_IF_FALSE(cond, msg, ...) \
     do { \
         if (!(cond)) { \
             LOGE(msg __VA_OPT__(,) __VA_ARGS__); \
