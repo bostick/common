@@ -21,7 +21,7 @@
 #include <GLES3/gl3.h>
 
 
-#define CHECKGLERROR(code) \
+#define ABORT_ON_GL_ERROR(code) \
     do { \
         (code); \
         const GLenum checkGLErrorLocal = glGetError(); \
