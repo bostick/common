@@ -56,17 +56,17 @@ openFile(
 
     int fres = std::fseek(file, 0, SEEK_END);
 
-    CHECK_NOT(fres == -1, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
+    RETURN_ERR_IF_TRUE(fres == -1, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     long res = std::ftell(file); // NOLINT(google-runtime-int)
 
-    CHECK_NOT(res < 0, "ftell failed: %s (%s)", std::strerror(errno), ErrorName(errno));
+    RETURN_ERR_IF_TRUE(res < 0, "ftell failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     auto len = static_cast<size_t>(res);
 
     fres = std::fseek(file, 0, SEEK_SET);
 
-    CHECK_NOT(fres == -1, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
+    RETURN_ERR_IF_TRUE(fres == -1, "fseek failed: %s (%s)", std::strerror(errno), ErrorName(errno));
 
     out = std::vector<uint8_t>(len);
 
