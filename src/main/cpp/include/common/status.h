@@ -25,7 +25,7 @@
 #include <cstdint>
 
 
-#define CHECKERR(code) \
+#define ABORT_ON_ERR(code) \
     do { \
         const Status checkErrLocal = (code); \
         if (checkErrLocal != OK) { \
