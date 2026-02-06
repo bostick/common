@@ -54,7 +54,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
     } while (false)
 
 
-#define CHECKNULL(code) \
+#define ABORT_ON_NULL(code) \
     do { \
         const void *checkNullLocal = (code); \
         ASSERT(checkNullLocal != nullptr); \

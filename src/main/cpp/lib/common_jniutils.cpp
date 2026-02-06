@@ -47,7 +47,7 @@ ScopedJniString::ScopedJniString(JNIEnv *env, jstring jstr) :
 
     ASSERT(jstr != nullptr);
 
-    CHECKNULL(str = env->GetStringUTFChars(jstr, nullptr));
+    ABORT_ON_NULL(str = env->GetStringUTFChars(jstr, nullptr));
 }
 
 ScopedJniString::~ScopedJniString() {
@@ -108,7 +108,7 @@ ScopedJniPrimitiveArrayCritical::ScopedJniPrimitiveArrayCritical(JNIEnv *env, ja
     jarr(jarr) {
 //    LOG_ENTRY_EXIT;
 
-    CHECKNULL(data = env->GetPrimitiveArrayCritical(jarr, nullptr));
+    ABORT_ON_NULL(data = env->GetPrimitiveArrayCritical(jarr, nullptr));
 }
 
 ScopedJniPrimitiveArrayCritical::~ScopedJniPrimitiveArrayCritical() {
@@ -127,7 +127,7 @@ ScopedJniByteArray::ScopedJniByteArray(JNIEnv *env, jbyteArray jarr) :
     jarr(jarr) {
 //    LOG_ENTRY_EXIT;
 
-    CHECKNULL(data = env->GetByteArrayElements(jarr, nullptr));
+    ABORT_ON_NULL(data = env->GetByteArrayElements(jarr, nullptr));
 }
 
 ScopedJniByteArray::~ScopedJniByteArray() {
