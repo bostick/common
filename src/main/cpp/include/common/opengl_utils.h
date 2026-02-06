@@ -30,7 +30,7 @@
         } \
     } while (false)
 
-#define CHECKGLZERO(code) \
+#define ABORT_ON_GL_ZERO(code) \
     do { \
         const auto checkGLZeroLocal = (code); \
         const GLenum checkGLErrorLocal = glGetError(); \
