@@ -33,7 +33,7 @@
     do { \
         auto assertRes = static_cast<bool>(cond); \
         if (!assertRes) { \
-            ABORT_expanded(TAG, "assert failed: " #cond); \
+            ABORT_expanded(TAG, "assert failed: %s", #cond); \
         } \
     } while (false)
 
