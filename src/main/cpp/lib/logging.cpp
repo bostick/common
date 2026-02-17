@@ -40,6 +40,7 @@ static void LogFatalV(const char *tag, const char *fmt, va_list args);
 static void LogErrorV(const char *tag, const char *fmt, va_list args);
 static void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
 static void LogWarnV(const char *tag, const char *fmt, va_list args);
+static void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
 static void LogInfoV(const char *tag, const char *fmt, va_list args);
 static void LogDebugV(const char *tag, const char *fmt, va_list args);
 static void LogTraceV(const char *tag, const char *fmt, va_list args);
@@ -71,6 +72,13 @@ static void LogWarn(const char *tag, const char *fmt, ...) {
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogWarnV(tag, fmt, args);
+    va_end(args);
+}
+
+static void LogWarnAndCaptureUnusual(const char *tag, const char *fmt, ...) {
+    va_list args; // NOLINT(*-init-variables)
+    va_start(args, fmt);
+    LogWarnAndCaptureUnusualV(tag, fmt, args);
     va_end(args);
 }
 
@@ -143,6 +151,21 @@ void LogWarnV(const char *tag, const char *fmt, va_list args) {
     __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
 }
 
+void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
+
+    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
+
+    __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
+
+    //
+    // fine if truncated
+    //
+    char buf[1000];
+    std::vsnprintf(buf, sizeof(buf), fmt, args);
+
+    captureUnusualMessage(buf);
+}
+
 void LogInfoV(const char *tag, const char *fmt, va_list args) {
 
     ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
@@ -186,7 +209,6 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
     std::fflush(stderr);
 }
 
-
 void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
     (void)tag;
@@ -206,6 +228,21 @@ void LogWarnV(const char *tag, const char *fmt, va_list args) {
     (void)tag;
     std::vfprintf(stderr, fmt, args);
     std::fflush(stderr);
+}
+
+void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
+
+    (void)tag;
+
+    std::vfprintf(stderr, fmt, args);
+
+    //
+    // fine if truncated
+    //
+    char buf[1000];
+    std::vsnprintf(buf, sizeof(buf), fmt, args);
+
+    captureUnusualMessage(buf);
 }
 
 void LogInfoV(const char *tag, const char *fmt, va_list args) {
@@ -241,6 +278,7 @@ LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
 LOG_decl LOGE_andCaptureUnusual_expanded = LogErrorAndCaptureUnusual;
 LOG_decl LOGW_expanded = LogWarn;
+LOG_decl LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
 LOG_decl LOGI_expanded = LogInfo;
 LOG_decl LOGD_expanded = LogDebug;
 LOG_decl LOGT_expanded = LogTrace;

@@ -89,6 +89,7 @@ extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_andCaptureUnusual_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGW_expanded;
+extern PRINTF_ATTRIBUTE LOG_decl LOGW_andCaptureUnusual_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGI_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGD_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGT_expanded;
@@ -172,6 +173,9 @@ extern LOG_declV LOGT_expandedV;
 
 #define LOGW(fmt, ...) \
     LOGW_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+
+#define LOGW_andCaptureUnusual(fmt, ...) \
+    LOGW_andCaptureUnusual_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 
 #define LOGI(fmt, ...) \
     LOGI_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
