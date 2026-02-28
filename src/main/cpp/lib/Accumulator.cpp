@@ -24,17 +24,23 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 
 
 #define TAG "Accumulator"
 
 
 Accumulator::Accumulator(size_t capacity) :
-    capacity(capacity),
+    _capacity(capacity),
     buf(),
     index(),
     filteredMean(),
     mean() {}
+
+
+size_t Accumulator::capacity() const {
+    return _capacity;
+}
 
 
 double Accumulator::getFilteredMean() const {
@@ -51,7 +57,7 @@ double Accumulator::getMean() const {
     return mean;
 }
 
-double Accumulator::_computeFilteredMean() const {
+double Accumulator::computeFilteredMean() const {
 
     ASSERT(2 <= buf.size());
 
@@ -101,7 +107,7 @@ double Accumulator::_computeFilteredMean() const {
 }
 
 
-double Accumulator::_computeMean() const {
+double Accumulator::computeMean() const {
 
     ASSERT(2 <= buf.size());
 
@@ -122,7 +128,7 @@ int64_t Accumulator::last() const {
 
     ASSERT(!buf.empty());
 
-    size_t i = (index + capacity - 1) % capacity;
+    size_t i = (index + _capacity - 1) % _capacity;
 
     return buf[i];
 }
@@ -130,7 +136,7 @@ int64_t Accumulator::last() const {
 
 void Accumulator::push(int64_t val) {
 
-    if (buf.size() == capacity) {
+    if (buf.size() == _capacity) {
 
         buf[index] = val;
 
@@ -139,7 +145,7 @@ void Accumulator::push(int64_t val) {
         buf.push_back(val);
     }
 
-    index = ((index + 1) % capacity);
+    index = ((index + 1) % _capacity);
 
     if (buf.size() == 1) {
 
@@ -148,8 +154,8 @@ void Accumulator::push(int64_t val) {
 
     } else {
 
-        filteredMean = _computeFilteredMean();
-        mean = _computeMean();
+        filteredMean = computeFilteredMean();
+        mean = computeMean();
     }
 }
 
@@ -165,6 +171,58 @@ size_t Accumulator::size() const {
 
 int64_t &Accumulator::operator[](size_t indexIn) {
     return buf[indexIn];
+}
+
+
+
+void Accumulator::copyContiguous(std::span<int64_t> dst, size_t *countp) {
+
+    size_t count = buf.size();
+
+    if (count == 0) {
+
+        //
+        // nothing to copy
+        //
+
+        *countp = count;
+
+    } else if (count != _capacity) {
+
+        //
+        // not yet filled completely
+        //
+        // copy entire buffer
+        //
+        std::memcpy(dst.data(), buf.data(), count * sizeof(int64_t));
+
+        *countp = count;
+
+    } else {
+
+        size_t firstCopyCount = (_capacity - index);
+
+        //
+        // filled completely
+        //
+        // copy from index to end of buf
+        //
+        std::memcpy(dst.data(), std::span(buf).subspan(index).data(), firstCopyCount * sizeof(int64_t));
+
+        if (firstCopyCount != _capacity) {
+
+            size_t secondCopyCount = (_capacity - firstCopyCount);
+
+            //
+            // filled completely
+            //
+            // copy from start of buf to last
+            //
+            std::memcpy(dst.subspan(firstCopyCount).data(), buf.data(), (secondCopyCount * sizeof(int64_t)));
+        }
+
+        *countp = count;
+    }
 }
 
 

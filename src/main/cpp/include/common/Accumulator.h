@@ -19,30 +19,39 @@
 #pragma once
 
 #include <vector>
+#include <span>
 #include <cstdint>
 #include <cstddef>
 
 
-struct Accumulator {
+class Accumulator {
+private:
 
-    size_t capacity;
+    size_t _capacity;
     std::vector<int64_t> buf;
     size_t index;
     double filteredMean;
     double mean;
 
+    double computeFilteredMean() const;
+    double computeMean() const;
+
+public:
+
     explicit Accumulator(size_t capacity);
+
+    size_t capacity() const;
 
     double getFilteredMean() const;
     double getMean() const;
 
-    double _computeFilteredMean() const;
-    double _computeMean() const;
     int64_t last() const;
     void push(int64_t val);
     bool empty() const;
     size_t size() const;
     int64_t &operator[](size_t index);
+
+    void copyContiguous(std::span<int64_t> dst, size_t *count);
 };
 
 
