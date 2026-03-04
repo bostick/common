@@ -18,6 +18,8 @@
 
 package com.brentonbostick.common;
 
+import android.os.RemoteException;
+
 import androidx.annotation.Keep;
 
 @Keep
@@ -39,7 +41,10 @@ public class ExceptionUtils {
 
         Throwable cause = t.getCause();
 
-        if (cause != null) {
+        //
+        // RemoteException just provides stack trace junk that we don't care about
+        //
+        if (cause != null && cause.getClass() != RemoteException.class) {
 
             msg += "\nCause:\n";
 
