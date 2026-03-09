@@ -19,6 +19,8 @@
 //
 // keep compilable with C and C++
 //
+// do not use static_cast here
+//
 
 #pragma once
 
@@ -31,7 +33,7 @@
 
 #define ASSERT(cond) \
     do { \
-        auto assertRes = static_cast<bool>(cond); \
+        bool assertRes = (bool)(cond); \
         if (!assertRes) { \
             ABORT_expanded(TAG, "assert failed: %s", #cond); \
         } \
