@@ -177,6 +177,7 @@ void setupCommonJniCache(JavaVM *jvm) {
 
     INSERTINTOMAP(statusEnumMap, OK, createStatusObject(env, OK));
     INSERTINTOMAP(statusEnumMap, ERR, createStatusObject(env, ERR));
+    static_assert(static_cast<int8_t>(STATUS_COUNT) == 2);
 }
 
 void teardownCommonJniCache(JavaVM *jvm) {

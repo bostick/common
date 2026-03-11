@@ -37,6 +37,7 @@
 enum class Status : int8_t {
     OK = 0,
     ERR = -1,
+    STATUS_COUNT = 2,
 };
 
 
