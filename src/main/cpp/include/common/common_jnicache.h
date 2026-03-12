@@ -41,6 +41,7 @@ extern jclass Activity_class;
 extern jclass Build_class;
 extern jclass JSONArray_class;
 extern jclass JSONObject_class;
+extern jclass Process_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -80,6 +81,8 @@ extern jmethodID JSONObject_getJSONArray_method;
 
 extern jmethodID Status_fromByte_method;
 extern jmethodID ExceptionUtils_toNiceString_method;
+extern jmethodID Process_getThreadPriority_method;
+extern jmethodID Process_setThreadPriority_method;
 
 //
 // Enums

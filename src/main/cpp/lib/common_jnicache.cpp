@@ -49,6 +49,7 @@ jclass Activity_class;
 jclass Build_class;
 jclass JSONArray_class;
 jclass JSONObject_class;
+jclass Process_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -88,6 +89,8 @@ jmethodID JSONObject_has_method;
 
 jmethodID Status_fromByte_method;
 jmethodID ExceptionUtils_toNiceString_method;
+jmethodID Process_getThreadPriority_method;
+jmethodID Process_setThreadPriority_method;
 
 //
 // Enums
@@ -96,7 +99,7 @@ jmethodID ExceptionUtils_toNiceString_method;
 std::map<Status, jobject> statusEnumMap;
 
 
-void setupCommonJniCache(JavaVM *jvm) {
+void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     LOG_ENTRY_EXIT;
 
     LOGD("GETENV");
@@ -121,6 +124,7 @@ void setupCommonJniCache(JavaVM *jvm) {
     SETCLASS(Build_class, "android/os/Build");
     SETCLASS(JSONArray_class, "org/json/JSONArray");
     SETCLASS(JSONObject_class, "org/json/JSONObject");
+    SETCLASS(Process_class, "android/os/Process");
 #endif // IS_PLATFORM_ANDROID
 
     //
@@ -168,6 +172,8 @@ void setupCommonJniCache(JavaVM *jvm) {
 
     ABORT_ON_EXCEPTION_OR_NULL(Status_fromByte_method = env->GetStaticMethodID(Status_class, "fromByte", "(B)Lcom/brentonbostick/common/Status;"));
     ABORT_ON_EXCEPTION_OR_NULL(ExceptionUtils_toNiceString_method = env->GetStaticMethodID(ExceptionUtils_class, "toNiceString", "(Ljava/lang/Throwable;)Ljava/lang/String;"));
+    ABORT_ON_EXCEPTION_OR_NULL(Process_getThreadPriority_method = env->GetStaticMethodID(Process_class, "getThreadPriority", "(I)I"));
+    ABORT_ON_EXCEPTION_OR_NULL(Process_setThreadPriority_method = env->GetStaticMethodID(Process_class, "setThreadPriority", "(II)V"));
 
     //
     // Enums
@@ -204,6 +210,7 @@ void teardownCommonJniCache(JavaVM *jvm) {
     env->DeleteGlobalRef(Build_class);
     env->DeleteGlobalRef(JSONArray_class);
     env->DeleteGlobalRef(JSONObject_class);
+    env->DeleteGlobalRef(Process_class);
 #endif // IS_PLATFORM_ANDROID
 }
 
