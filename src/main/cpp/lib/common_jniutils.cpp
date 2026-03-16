@@ -31,7 +31,7 @@
 
 
 jobject createStatusObject(JNIEnv *env, Status status) {
-    LOG_ENTRY_EXIT;
+//    LOG_ENTRY_EXIT;
 
     jobject jstatus; // NOLINT(*-init-variables)
     ABORT_ON_EXCEPTION_OR_NULL(jstatus = env->CallStaticObjectMethod(Status_class, Status_fromByte_method, static_cast<jbyte>(status)));
