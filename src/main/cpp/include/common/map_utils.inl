@@ -17,7 +17,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 template <typename K, typename V>
-void insert_unique(std::map<K, V> &m, K k, V v) { // NOLINT(*-use-internal-linkage)
+static void insert_unique(std::map<K, V> &m, K k, const V &v) {
 
     const auto [it, success] = m.insert({k, v});
 
@@ -26,7 +26,7 @@ void insert_unique(std::map<K, V> &m, K k, V v) { // NOLINT(*-use-internal-linka
 
 
 template <typename K, typename V>
-V erase_unique(std::map<K, V> &m, K k) { // NOLINT(*-use-internal-linkage)
+static V erase_unique(std::map<K, V> &m, const K &k) {
 
     auto it = m.find(k);
 
