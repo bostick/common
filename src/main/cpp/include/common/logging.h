@@ -197,17 +197,41 @@ private:
 
     const char *tag;
     const char *function;
+
+public:
+
+    LogTracer(const char *tag, const char *function);
+    ~LogTracer();
+};
+
+class DebugLogTracer {
+private:
+
+    const char *tag;
+    const char *function;
     const char *file;
     int line;
 
 public:
 
-    LogTracer(const char *tag, const char *function, const char *file, int line);
-    ~LogTracer();
+    DebugLogTracer(const char *tag, const char *function, const char *file, int line);
+    ~DebugLogTracer();
 };
 
+//
+// if LOCAL_DEBUGGING, then include __FILE__ and __LINE__
+//
+#if LOCAL_DEBUGGING
+
 #define COMMON_LOGGING_LOG_ENTRY_EXIT_FOR(tag, x, y, z) \
-    LogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x, y, z)
+    DebugLogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x, y, z)
+
+#else
+
+#define COMMON_LOGGING_LOG_ENTRY_EXIT_FOR(tag, x, y, z) \
+    LogTracer SomeLongNameThatIsNotLikelyToBeUsedInTheFunctionLogger(tag, x)
+
+#endif // LOCAL_DEBUGGING
 
 //
 // Place LOG_ENTRY_EXIT at start of function definition and log entry and exit.

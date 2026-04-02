@@ -291,11 +291,32 @@ LOG_declV LOGD_expandedV = LogDebugV;
 LOG_declV LOGT_expandedV = LogTraceV;
 
 
-LogTracer::LogTracer(const char *tag, const char *function, const char *file, int line) :
+LogTracer::LogTracer(const char *tag, const char *function) :
     tag(tag),
-    function(function),
-    file(file),
-    line(line) {
+    function(function) {
+    //
+    // passing in tag, so cannot use LOGT macro
+    //
+#if IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "enter %s", function);
+#else
+    LOGT_expanded(tag, "enter %s\n", function);
+#endif // IS_PLATFORM_ANDROID
+}
+
+LogTracer::~LogTracer() {
+#if IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "exit %s", function);
+#else
+    LOGT_expanded(tag, "exit %s\n", function);
+#endif // IS_PLATFORM_ANDROID
+}
+
+DebugLogTracer::DebugLogTracer(const char *tag, const char *function, const char *file, int line) :
+        tag(tag),
+        function(function),
+        file(file),
+        line(line) {
     //
     // passing in tag, so cannot use LOGT macro
     //
@@ -306,7 +327,7 @@ LogTracer::LogTracer(const char *tag, const char *function, const char *file, in
 #endif // IS_PLATFORM_ANDROID
 }
 
-LogTracer::~LogTracer() {
+DebugLogTracer::~DebugLogTracer() {
 #if IS_PLATFORM_ANDROID
     LOGT_expanded(tag, "exit %s %s:%d", function, file, line);
 #else
