@@ -35,7 +35,10 @@ Accumulator::Accumulator(size_t capacity) :
     buf(),
     index(),
     filteredMean(),
-    mean() {}
+    mean() {
+
+    buf.reserve(capacity);
+}
 
 
 size_t Accumulator::capacity() const {
@@ -90,6 +93,7 @@ double Accumulator::computeFilteredMean() const {
     }
 
     std::vector<int64_t> tmp2;
+    tmp2.reserve(tmp.size());
     for (int64_t x : tmp) {
         if (std::abs(static_cast<double>(x) - median) <= sd) {
             tmp2.push_back(x);
