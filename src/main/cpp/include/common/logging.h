@@ -143,7 +143,7 @@ extern LOG_declV LOGT_expandedV;
 #else
 
 //
-// the "\n" in the below definitions serves 2 purposes:
+// the "\n" in the below definition serves 2 purposes:
 // 1. allowing LOGI() to be expanded properly (the same purpose as "" above)
 // 2. adding the trailing "\n" that is needed on non-Android platforms
 //
