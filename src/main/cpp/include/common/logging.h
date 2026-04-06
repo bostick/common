@@ -162,29 +162,138 @@ extern LOG_declV LOGT_expandedV;
 // https://github.com/llvm/llvm-project/issues/76375
 //
 
+//
+// various defines DISABLE_LOGF, DISABLE_LOGE, etc. may be set to 1 disable LOGF, LOGE, etc. at compile time.
+//
+// all of this crazy macro business is to treat the arguments as used
+//
+// inspired by: https://stackoverflow.com/a/11763277
+//
+
+#define GET_MACRO(_0, _1, _2, _3, _4, _5, _6, _7, _8, NAME, ...) NAME
+
+#define LOG0() \
+    do {} while (false)
+
+#define LOG1(a) \
+    do { (void)a; } while (false)
+
+#define LOG2(a, b) \
+    do { (void)a; (void)b; } while (false)
+
+#define LOG3(a, b, c) \
+    do { (void)a; (void)b; (void)c; } while (false)
+
+#define LOG4(a, b, c, d) \
+    do { (void)a; (void)b; (void)c; (void)d; } while (false)
+
+#define LOG5(a, b, c, d, e) \
+    do { (void)a; (void)b; (void)c; (void)d; (void)e; } while (false)
+
+#define LOG6(a, b, c, d, e, f) \
+    do { (void)a; (void)b; (void)c; (void)d; (void)e; (void)f; } while (false)
+
+#define LOG7(a, b, c, d, e, f, g) \
+    do { (void)a; (void)b; (void)c; (void)d; (void)e; (void)f; (void)g; } while (false)
+
+#define LOG8(a, b, c, d, e, f, g, h) \
+    do { (void)a; (void)b; (void)c; (void)d; (void)e; (void)f; (void)g; (void)h; } while (false)
+
+
+//
+// define LOGF
+//
+#if DISABLE_LOGF
+#define LOGF(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGF(fmt, ...) \
     LOGF_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGF
 
+
+//
+// define LOGE
+//
+#if DISABLE_LOGE
+#define LOGE(...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGE(fmt, ...) \
     LOGE_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGE
 
+
+//
+// define LOGE_andCaptureUnusual
+//
+#if DISABLE_LOGE
+#define LOGE_andCaptureUnusual(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGE_andCaptureUnusual(fmt, ...) \
     LOGE_andCaptureUnusual_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGE
 
+
+//
+// define LOGW
+//
+#if DISABLE_LOGW
+#define LOGW(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGW(fmt, ...) \
     LOGW_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGW
 
+
+//
+// define LOGW_andCaptureUnusual
+//
+#if DISABLE_LOGW
+#define LOGW_andCaptureUnusual(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGW_andCaptureUnusual(fmt, ...) \
     LOGW_andCaptureUnusual_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGW
 
+
+//
+// define LOGI
+//
+#if DISABLE_LOGI
+#define LOGI(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGI(fmt, ...) \
     LOGI_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGI
 
+
+//
+// define LOGD
+//
+#if DISABLE_LOGD
+#define LOGD(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGD(fmt, ...) \
     LOGD_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGD
 
+
+//
+// define LOGT
+//
+#if DISABLE_LOGT
+#define LOGT(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
 #define LOGT(fmt, ...) \
     LOGT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGT
 
 
 void LOGE_chunks(const char *buf, size_t len);
