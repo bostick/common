@@ -342,6 +342,9 @@ public:
 
 #endif // LOCAL_DEBUGGING
 
+#if DISABLE_LOGT
+#define LOG_ENTRY_EXIT do {} while (false)
+#else
 //
 // Place LOG_ENTRY_EXIT at start of function definition and log entry and exit.
 //
@@ -349,10 +352,11 @@ public:
 //
 #define LOG_ENTRY_EXIT \
     COMMON_LOGGING_LOG_ENTRY_EXIT_FOR(TAG, __FUNCTION__, __FILE__, __LINE__)
+#endif // DISABLE_LOGT
 
-#else
+#else // __cplusplus
 
-#define LOG_ENTRY_EXIT
+#define LOG_ENTRY_EXIT do {} while (false)
 
 #endif // __cplusplus
 
