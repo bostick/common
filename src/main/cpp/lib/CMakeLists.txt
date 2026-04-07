@@ -75,6 +75,47 @@ target_link_options(common-lib
         -u Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative
 )
 
+if(DISABLE_LOGT)
+    target_compile_definitions(common-lib
+        PRIVATE
+            DISABLE_LOGT=1
+    )
+endif()
+
+if(DISABLE_LOGD)
+    target_compile_definitions(common-lib
+        PRIVATE
+            DISABLE_LOGD=1
+    )
+endif()
+
+if(DISABLE_LOGI)
+    target_compile_definitions(common-lib
+        PRIVATE
+            DISABLE_LOGI=1
+    )
+endif()
+
+if(DISABLE_LOGW)
+    target_compile_definitions(common-lib
+        PRIVATE
+            DISABLE_LOGW=1
+    )
+endif()
+
+if(DISABLE_LOGE)
+    target_compile_definitions(common-lib
+        PRIVATE
+            DISABLE_LOGE=1
+    )
+endif()
+
+if(DISABLE_LOGF)
+    target_compile_definitions(common-lib
+        PRIVATE
+            DISABLE_LOGF=1
+    )
+endif()
 
 #
 # Set up warnings
