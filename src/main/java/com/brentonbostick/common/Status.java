@@ -43,7 +43,6 @@ public enum Status {
         }
     }
 
-    /** @noinspection unused*/
     public byte toByte() {
         return id;
     }
