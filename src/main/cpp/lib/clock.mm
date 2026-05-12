@@ -23,7 +23,6 @@
 #if IS_PLATFORM_IOS
 #import <Foundation/Foundation.h>
 #elif IS_PLATFORM_MACOS
-#import <mach/mach_time.h> // for mach_absolute_time
 #else
 #error
 #endif // IS_PLATFORM_IOS
