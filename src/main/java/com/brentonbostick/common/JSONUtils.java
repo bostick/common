@@ -20,8 +20,6 @@ package com.brentonbostick.common;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
-import androidx.annotation.Keep;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-@Keep
 public class JSONUtils {
 
     private static final String TAG = "JSONUtils";
