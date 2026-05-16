@@ -20,17 +20,17 @@ package com.brentonbostick.common;
 
 public class Clock {
 
-	/**
+    /**
      * This may TECHNICALLY be the same clock as System.currentTime() on Java, but just use
      * timeSinceEpochMillis() everywhere to be consistent, even on Java.
-	 * <p>
+     * <p>
      * NOT monotonic
-	 *
-	 * @return time since epoch
-	 */
-	public static long timeSinceEpochMillis() {
-		return timeSinceEpochMillisNative();
-	}
+     *
+     * @return time since epoch
+     */
+    public static long timeSinceEpochMillis() {
+        return timeSinceEpochMillisNative();
+    }
 
     /**
      * monotonic
@@ -41,11 +41,12 @@ public class Clock {
         return uptimeMillisNative();
     }
 
-	//
+
+    //
     // JNI methods
     //
 
-	private static native long timeSinceEpochMillisNative();
+    private static native long timeSinceEpochMillisNative();
     private static native long uptimeMillisNative();
 }
 
