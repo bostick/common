@@ -40,6 +40,7 @@
 #define JSON_CATCH_USER(exception) if (false)
 #define JSON_THROW_USER(exception) \
     { ABORT("JSON exception: %s", (exception).what()); }
+#define JSON_ASSERT ASSERT
 
 #include <nlohmann/json.hpp>
 
