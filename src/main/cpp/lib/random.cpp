@@ -21,7 +21,7 @@
 #include <random>
 
 
-static std::mt19937 gen; // NOLINT(bugprone-random-generator-seed)
+static std::mt19937 gen; // NOLINT(bugprone-random-generator-seed, cert-msc51-cpp)
 static std::uniform_int_distribution<int> dis;
 
 
