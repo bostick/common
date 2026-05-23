@@ -50,6 +50,7 @@ jclass Build_class;
 jclass JSONArray_class;
 jclass JSONObject_class;
 jclass Process_class;
+jclass Version_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -62,6 +63,7 @@ jclass Process_class;
 
 #if IS_PLATFORM_ANDROID
 jfieldID Build_MODEL_field;
+jfieldID Version_SDK_INT_field;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -125,6 +127,7 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     SETCLASS(JSONArray_class, "org/json/JSONArray");
     SETCLASS(JSONObject_class, "org/json/JSONObject");
     SETCLASS(Process_class, "android/os/Process");
+    SETCLASS(Version_class, "android/os/Build$VERSION");
 #endif // IS_PLATFORM_ANDROID
 
     //
@@ -141,6 +144,7 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
 
 #if IS_PLATFORM_ANDROID
     ABORT_ON_EXCEPTION_OR_NULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
+    ABORT_ON_EXCEPTION_OR_NULL(Version_SDK_INT_field = env->GetStaticFieldID(Version_class, "SDK_INT", "I"));
 #endif // IS_PLATFORM_ANDROID
 
     //
@@ -211,6 +215,7 @@ void teardownCommonJniCache(JavaVM *jvm) {
     env->DeleteGlobalRef(JSONArray_class);
     env->DeleteGlobalRef(JSONObject_class);
     env->DeleteGlobalRef(Process_class);
+    env->DeleteGlobalRef(Version_class);
 #endif // IS_PLATFORM_ANDROID
 }
 

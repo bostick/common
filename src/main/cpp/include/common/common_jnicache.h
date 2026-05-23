@@ -42,6 +42,7 @@ extern jclass Build_class;
 extern jclass JSONArray_class;
 extern jclass JSONObject_class;
 extern jclass Process_class;
+extern jclass Version_class;
 #endif // IS_PLATFORM_ANDROID
 
 //
@@ -54,6 +55,7 @@ extern jclass Process_class;
 
 #if IS_PLATFORM_ANDROID
 extern jfieldID Build_MODEL_field;
+extern jfieldID Version_SDK_INT_field;
 #endif // IS_PLATFORM_ANDROID
 
 //
