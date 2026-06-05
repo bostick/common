@@ -18,8 +18,14 @@
 
 package com.brentonbostick.common;
 
+import static com.brentonbostick.common.Status.ERR;
+import static com.brentonbostick.common.Status.OK;
 import static java.nio.charset.StandardCharsets.US_ASCII;
+import static java.util.Locale.US;
 
+import android.util.Log;
+
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
 import org.json.JSONException;
@@ -33,13 +39,37 @@ public class JSONUtils {
 
     private static final String TAG = "JSONUtils";
 
-    public static JSONObject readInputStream(@NonNull InputStream is) throws IOException, JSONException {
+    @Nullable
+    public static JSONObject readInputStream(@NonNull InputStream is) {
 
-        byte[] buf = InputStreamUtils.readInputStream(is);
+        String s;
+        try {
 
-        String s = new String(buf, US_ASCII);
+            byte[] buf = InputStreamUtils.readInputStream(is);
 
-        return new JSONObject(s);
+            s = new String(buf, US_ASCII);
+
+        } catch (IOException e) {
+
+            Log.e(TAG, e.getMessage(), e);
+
+            return null;
+        }
+
+        try {
+
+            return new JSONObject(s);
+
+        } catch (JSONException e) {
+
+            String msg = String.format(US,
+                    "parsing JSON object failed. input length: %d input: \n%s", s.length(), s);
+
+            Log.e(TAG, msg);
+            UnusualMessage.captureUnusualMessage(msg);
+
+            return null;
+        }
     }
 
     public static boolean parseable(@NonNull InputStream is) {
@@ -60,13 +90,25 @@ public class JSONUtils {
         }
     }
 
-    public static void writeOutputStream(@NonNull JSONObject j, @NonNull OutputStream os) throws IOException {
+    @NonNull
+    public static Status writeOutputStream(@NonNull JSONObject j, @NonNull OutputStream os) {
 
         String s = j.toString();
 
         byte[] buf = s.getBytes(US_ASCII);
 
-        os.write(buf);
+        try {
+
+            os.write(buf);
+
+            return OK;
+
+        } catch (IOException e) {
+
+            Log.e(TAG, e.getMessage(), e);
+
+            return ERR;
+        }
     }
 }
 
