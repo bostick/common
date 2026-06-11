@@ -19,6 +19,7 @@
 package com.brentonbostick.common;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 
 @Keep
 public enum Status {
@@ -32,6 +33,7 @@ public enum Status {
         this.id = id;
     }
 
+    @NonNull
     public static Status fromByte(byte id) {
         switch (id) {
             case 0:

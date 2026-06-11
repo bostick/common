@@ -18,9 +18,11 @@
 
 package com.brentonbostick.common;
 
+import androidx.annotation.NonNull;
+
 public class UnusualMessage {
 
-    public static void captureUnusualMessage(String msg) {
+    public static void captureUnusualMessage(@NonNull String msg) {
         captureUnusualMessageNative(msg);
     }
 

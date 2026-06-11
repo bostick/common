@@ -20,6 +20,8 @@ package com.brentonbostick.common;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +33,7 @@ public class JSONUtils {
 
     private static final String TAG = "JSONUtils";
 
-    public static JSONObject readInputStream(InputStream is) throws IOException, JSONException {
+    public static JSONObject readInputStream(@NonNull InputStream is) throws IOException, JSONException {
 
         byte[] buf = InputStreamUtils.readInputStream(is);
 
@@ -40,7 +42,7 @@ public class JSONUtils {
         return new JSONObject(s);
     }
 
-    public static void writeOutputStream(JSONObject j, OutputStream os) throws IOException {
+    public static void writeOutputStream(@NonNull JSONObject j, @NonNull OutputStream os) throws IOException {
 
         String s = j.toString();
 

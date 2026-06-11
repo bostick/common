@@ -21,11 +21,13 @@ package com.brentonbostick.common;
 import android.os.RemoteException;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 
 @Keep
 public class ExceptionUtils {
 
-    public static String toNiceString(Throwable t) {
+    @NonNull
+    public static String toNiceString(@NonNull Throwable t) {
 
         String msg = "";
 

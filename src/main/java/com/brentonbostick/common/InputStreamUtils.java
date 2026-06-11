@@ -21,6 +21,8 @@ package com.brentonbostick.common;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.TIRAMISU;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,7 +36,8 @@ public class InputStreamUtils {
     ///
     /// @throws IOException on error
     ///
-    public static byte[] readInputStream(InputStream is) throws IOException {
+    @NonNull
+    public static byte[] readInputStream(@NonNull InputStream is) throws IOException {
 
         //
         // read all bytes from is
