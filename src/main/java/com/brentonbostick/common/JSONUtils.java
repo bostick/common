@@ -42,6 +42,24 @@ public class JSONUtils {
         return new JSONObject(s);
     }
 
+    public static boolean parseable(@NonNull InputStream is) {
+
+        try {
+
+            byte[] buf = InputStreamUtils.readInputStream(is);
+
+            String s = new String(buf, US_ASCII);
+
+            new JSONObject(s);
+
+            return true;
+
+        } catch (JSONException | IOException e) {
+
+            return false;
+        }
+    }
+
     public static void writeOutputStream(@NonNull JSONObject j, @NonNull OutputStream os) throws IOException {
 
         String s = j.toString();
