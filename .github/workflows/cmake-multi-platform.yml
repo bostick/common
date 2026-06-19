@@ -55,6 +55,15 @@ jobs:
     steps:
     - name: Checkout common
       uses: actions/checkout@v7
+      with:
+        path: common
+
+    - name: Checkout googletest
+      uses: actions/checkout@v7
+      with:
+        repository: google/googletest.git
+        ref: v1.17.0
+        path: googletest
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -69,11 +78,12 @@ jobs:
       # CMAKE_EXPORT_COMPILE_COMMANDS for clang-tidy
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DLOCAL_GOOGLETEST_DIR=${{ steps.strings.outputs.workspace-dir }}/googletest
         -DCOMMON_BUILD_TESTS=ON
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-        -S ${{ steps.strings.outputs.workspace-dir }}
+        -S ${{ steps.strings.outputs.workspace-dir }}/common
 
     - name: Configure CMake (non-Windows)
       if: runner.os != 'Windows'
@@ -81,12 +91,13 @@ jobs:
       # CMAKE_EXPORT_COMPILE_COMMANDS for clang-tidy
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DLOCAL_GOOGLETEST_DIR=${{ steps.strings.outputs.workspace-dir }}/googletest
         -DCOMMON_BUILD_TESTS=ON
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-        -S ${{ steps.strings.outputs.workspace-dir }}
+        -S ${{ steps.strings.outputs.workspace-dir }}/common
 
     - name: Build (Windows)
       if: runner.os == 'Windows'
