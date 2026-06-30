@@ -40,13 +40,6 @@ list(APPEND SOURCES_LIB
 
 endif()
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-
-list(APPEND SOURCES_LIB
-    clock.mm
-)
-
-endif()
 
 add_library(common-lib STATIC
     ${SOURCES_LIB}

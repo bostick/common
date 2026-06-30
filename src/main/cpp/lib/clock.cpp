@@ -32,7 +32,7 @@
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 #include <ctime> // for clock_gettime
-#elif IS_PLATFORM_MACOS
+#elif IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 #elif IS_PLATFORM_WINDOWS
 #include <windows.h>
 #include <sysinfoapi.h> // for GetTickCount64
@@ -54,7 +54,7 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 //
-// don't use CLOCK_MONOTONIC_RAW on Android
+// Do not use CLOCK_MONOTONIC_RAW on Android
 // https://github.com/libsdl-org/SDL/commit/62d82ffc15b21fcc432fd9e0499c4585cd8d89c8
 //
 // get clock resolution with:
@@ -102,11 +102,32 @@ int64_t timeSinceEpochMillis(void) {
     return (static_cast<int64_t>(now.tv_sec) * 1000) + (static_cast<int64_t>(now.tv_nsec) / 1000000);
 }
 
-#elif IS_PLATFORM_MACOS
+#elif IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 //
-// see clock.mm
+// Do not use mach_absolute_time on iOS or macOS
 //
+// https://developer.apple.com/documentation/kernel/1462446-mach_absolute_time
+//
+// Important
+// This API has the potential of being misused to access device signals to try to identify the device or user, also known as fingerprinting.
+//
+
+int64_t uptimeMillis(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000 / 1000);
+}
+
+int64_t uptimeMicros(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000);
+}
+
+int64_t timeSinceEpochSeconds(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000 / 1000);
+}
+
+int64_t timeSinceEpochMillis(void) {
+    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000);
+}
 
 #elif IS_PLATFORM_WINDOWS
 
