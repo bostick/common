@@ -41,7 +41,7 @@
 #include <windows.h>
 #include <sysinfoapi.h> // for GetTickCount64
 #else
-#error
+#error Unsupported platform
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 #include <chrono>
@@ -138,7 +138,7 @@ int64_t timeSinceEpochMillis(void) {
 }
 
 #else
-#error
+#error Unsupported platform
 #endif // IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 

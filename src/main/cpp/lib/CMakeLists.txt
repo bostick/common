@@ -125,17 +125,17 @@ endif()
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 target_compile_options(common-lib
     PRIVATE
-        -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion
+        -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion -Wimplicit-fallthrough
 )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
 target_compile_options(common-lib
     PRIVATE
-        -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion
+        -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion -Wimplicit-fallthrough
 )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 target_compile_options(common-lib
     PRIVATE
-        -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion
+        -Wall -Wextra -pedantic -Werror -Wconversion -Wsign-conversion -Wimplicit-fallthrough
 )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 target_compile_options(common-lib

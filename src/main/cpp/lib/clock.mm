@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #elif IS_PLATFORM_MACOS
 #else
-#error
+#error Unsupported platform
 #endif // IS_PLATFORM_IOS
 
 #if IS_PLATFORM_IOS
@@ -62,7 +62,7 @@ int64_t timeSinceEpochMillis(void) {
 }
 
 #else
-#error
+#error Unsupported platform
 #endif // IS_PLATFORM_IOS
 
 
