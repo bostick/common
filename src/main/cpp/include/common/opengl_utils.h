@@ -42,6 +42,16 @@
         } \
     } while (false)
 
+#define RETURN_ERR_ON_GL_ERROR(code) \
+    do { \
+        (code); \
+        const GLenum checkGLErrorLocal = glGetError(); \
+        if (checkGLErrorLocal != GL_NO_ERROR) { \
+            LOGE("GL function \"%s\" generated an error: %s", #code, GLErrorName(checkGLErrorLocal)); \
+            return ERR; \
+        } \
+    } while (false)
+
 
 const char *GLErrorName(GLenum e);
 
