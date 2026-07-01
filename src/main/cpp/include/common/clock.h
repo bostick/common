@@ -22,6 +22,12 @@
 
 #pragma once
 
+#include "common/platform.h"
+
+#if IS_PLATFORM_ANDROID
+#include <jni.h>
+#endif // IS_PLATFORM_ANDROID
+
 #include <stdint.h> // for int64_t NOLINT(*-deprecated-headers)
 #include <time.h> // for time_t NOLINT(*-deprecated-headers)
 
@@ -75,6 +81,23 @@ void formatTime(time_t timeV, char *buf, size_t len);
 #ifdef __cplusplus
 }
 #endif // __cplusplus
+
+
+//
+// JNI functions
+//
+
+#if IS_PLATFORM_ANDROID
+
+extern "C"
+JNIEXPORT jlong JNICALL
+timeSinceEpochMillisNative(JNIEnv *env, jclass clazz);
+
+extern "C"
+JNIEXPORT jlong JNICALL
+uptimeMillisNative(JNIEnv *env, jclass clazz);
+
+#endif // IS_PLATFORM_ANDROID
 
 
 

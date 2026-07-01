@@ -18,6 +18,8 @@
 
 package com.brentonbostick.common;
 
+import dalvik.annotation.optimization.FastNative;
+
 public class Clock {
 
     /**
@@ -46,7 +48,9 @@ public class Clock {
     // JNI methods
     //
 
+    @FastNative // when minimum is API 34, could be @CriticalNative
     private static native long timeSinceEpochMillisNative();
+    @FastNative // when minimum is API 34, could be @CriticalNative
     private static native long uptimeMillisNative();
 }
 

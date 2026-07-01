@@ -26,6 +26,8 @@
 #include "common/logging.h"
 #include "common/platform.h"
 #include "common/status.h"
+#include "common/clock.h"
+#include "common/unusual_message.h"
 
 
 #define TAG "common_jnicache"
@@ -44,6 +46,8 @@ jclass IOException_class;
 jclass Status_class;
 jclass Throwable_class;
 jclass ExceptionUtils_class;
+jclass Clock_class;
+jclass UnusualMessage_class;
 #if IS_PLATFORM_ANDROID
 jclass Activity_class;
 jclass Build_class;
@@ -121,6 +125,8 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     SETCLASS(Status_class, "com/brentonbostick/common/Status");
     SETCLASS(Throwable_class, "java/lang/Throwable");
     SETCLASS(ExceptionUtils_class, "com/brentonbostick/common/ExceptionUtils");
+    SETCLASS(Clock_class, "com/brentonbostick/common/Clock");
+    SETCLASS(UnusualMessage_class, "com/brentonbostick/common/UnusualMessage");
 #if IS_PLATFORM_ANDROID
     SETCLASS(Activity_class, "android/app/Activity");
     SETCLASS(Build_class, "android/os/Build");
@@ -188,6 +194,23 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     INSERTINTOMAP(statusEnumMap, OK, createStatusObject(env, OK));
     INSERTINTOMAP(statusEnumMap, ERR, createStatusObject(env, ERR));
     static_assert(static_cast<int8_t>(STATUS_COUNT) == 2);
+
+    //
+    // RegisterNatives
+    //
+
+    JNINativeMethod Clock_methods[] = {
+            { "timeSinceEpochMillisNative", "()J", reinterpret_cast<void *>(timeSinceEpochMillisNative) },
+            { "uptimeMillisNative", "()J", reinterpret_cast<void *>(uptimeMillisNative) },
+    };
+
+    ABORT_ON_EXCEPTION_OR_NEGATIVE(env->RegisterNatives(Clock_class, Clock_methods, sizeof(Clock_methods)/sizeof(JNINativeMethod)));
+
+    JNINativeMethod UnusualMessage_methods[] = {
+            { "captureUnusualMessageNative", "(Ljava/lang/String;)V", reinterpret_cast<void *>(captureUnusualMessageNative) },
+    };
+
+    ABORT_ON_EXCEPTION_OR_NEGATIVE(env->RegisterNatives(UnusualMessage_class, UnusualMessage_methods, sizeof(UnusualMessage_methods)/sizeof(JNINativeMethod)));
 }
 
 void teardownCommonJniCache(JavaVM *jvm) {
@@ -195,6 +218,9 @@ void teardownCommonJniCache(JavaVM *jvm) {
 
     JNIEnv *env; // NOLINT(*-init-variables)
     GETENV(env, jvm);
+
+    ABORT_ON_EXCEPTION_OR_NEGATIVE(env->UnregisterNatives(Clock_class));
+    ABORT_ON_EXCEPTION_OR_NEGATIVE(env->UnregisterNatives(UnusualMessage_class));
 
     env->DeleteGlobalRef(statusEnumMap[OK]);
     //
@@ -209,6 +235,8 @@ void teardownCommonJniCache(JavaVM *jvm) {
     env->DeleteGlobalRef(Status_class);
     env->DeleteGlobalRef(Throwable_class);
     env->DeleteGlobalRef(ExceptionUtils_class);
+    env->DeleteGlobalRef(Clock_class);
+    env->DeleteGlobalRef(UnusualMessage_class);
 #if IS_PLATFORM_ANDROID
     env->DeleteGlobalRef(Activity_class);
     env->DeleteGlobalRef(Build_class);

@@ -18,6 +18,12 @@
 
 #pragma once
 
+#include "common/platform.h"
+
+#if IS_PLATFORM_ANDROID
+#include <jni.h>
+#endif // IS_PLATFORM_ANDROID
+
 #include <string>
 
 
@@ -31,6 +37,19 @@ void SetUnusualMessageCapturerWhileAborting(unusualMessageCapturer_decl capturer
 void captureUnusualMessage(const std::string &message);
 
 void captureUnusualMessageWhileAborting(const std::string &message);
+
+
+//
+// JNI functions
+//
+
+#if IS_PLATFORM_ANDROID
+
+extern "C"
+JNIEXPORT void JNICALL
+captureUnusualMessageNative(JNIEnv *env, jclass clazz, jstring jmsg);
+
+#endif // IS_PLATFORM_ANDROID
 
 
 

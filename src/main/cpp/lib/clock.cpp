@@ -30,10 +30,6 @@
 #include "common/platform.h"
 #include "common/logging.h"
 
-#if IS_PLATFORM_ANDROID
-#include <jni.h>
-#endif // IS_PLATFORM_ANDROID
-
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 #include <ctime> // for clock_gettime
 #elif IS_PLATFORM_MACOS
@@ -183,9 +179,7 @@ void formatTime(time_t timeV, char *buf, size_t len) {
 
 #if IS_PLATFORM_ANDROID
 
-extern "C"
-JNIEXPORT jlong JNICALL
-Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative(JNIEnv *env, jclass clazz) {
+jlong timeSinceEpochMillisNative(JNIEnv *env, jclass clazz) {
 
     (void)env;
     (void)clazz;
@@ -193,9 +187,7 @@ Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative(JNIEnv *env, jcl
     return timeSinceEpochMillis();
 }
 
-extern "C"
-JNIEXPORT jlong JNICALL
-Java_com_brentonbostick_common_Clock_uptimeMillisNative(JNIEnv *env, jclass clazz) {
+jlong uptimeMillisNative(JNIEnv *env, jclass clazz) {
 
     (void)env;
     (void)clazz;

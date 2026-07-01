@@ -31,6 +31,7 @@ public class UnusualMessage {
     // JNI methods
     //
 
+    // neither @FastNative nor @CriticalNative because this runs arbitrary code
     private static native void captureUnusualMessageNative(String msg);
 }
 

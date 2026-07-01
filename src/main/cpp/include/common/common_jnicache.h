@@ -36,6 +36,8 @@ extern jclass IOException_class;
 extern jclass Status_class;
 extern jclass Throwable_class;
 extern jclass ExceptionUtils_class;
+extern jclass Clock_class;
+extern jclass UnusualMessage_class;
 #if IS_PLATFORM_ANDROID
 extern jclass Activity_class;
 extern jclass Build_class;

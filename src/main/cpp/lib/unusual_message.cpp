@@ -25,10 +25,6 @@
 #endif // IS_PLATFORM_ANDROID
 #include "common/logging.h"
 
-#if IS_PLATFORM_ANDROID
-#include <jni.h>
-#endif // IS_PLATFORM_ANDROID
-
 #include <string>
 
 
@@ -76,9 +72,7 @@ void captureUnusualMessageWhileAborting(const std::string &message) {
 
 #if IS_PLATFORM_ANDROID
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_brentonbostick_common_UnusualMessage_captureUnusualMessageNative(JNIEnv *env, jclass clazz, jstring jmsg) {
+void captureUnusualMessageNative(JNIEnv *env, jclass clazz, jstring jmsg) {
 
     (void)clazz;
 
