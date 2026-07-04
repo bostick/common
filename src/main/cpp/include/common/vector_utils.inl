@@ -16,6 +16,16 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+//
+// do this:
+//
+// #include "common/vector_utils.inl"
+//
+// to include this file
+//
+// no other headers will be included here
+//
+
 template <typename T>
 void push_back_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage)
 

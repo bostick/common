@@ -16,6 +16,16 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+//
+// do this:
+//
+// #include "common/map_utils.inl"
+//
+// to include this file
+//
+// no other headers will be included here
+//
+
 template <typename K, typename V>
 static void insert_unique(std::map<K, V> &m, K k, const V &v) {
 
