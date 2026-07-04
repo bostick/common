@@ -27,6 +27,31 @@
 #include <stdarg.h> // for va_list NOLINT(*-deprecated-headers)
 
 
+#define ABORT_ON_ERR(code) \
+    do { \
+        const Status checkErrLocal = (code); \
+        if (checkErrLocal == ERR) { \
+            ABORT("Code \"%s\" returned ERR", #code); \
+        } \
+    } while (false)
+
+#define ABORT_ON_NULL(code) \
+    do { \
+        const void *checkNullLocal = (code); \
+        if (checkNullLocal == nullptr) { \
+            ABORT("Code \"%s\" returned NULL", #code); \
+        } \
+    } while (false)
+
+#define ABORT_ON_FALSE(code) \
+    do { \
+        const bool checkFalseLocal = (code); \
+        if (checkFalseLocal == false) { \
+            ABORT("Code \"%s\" returned false", #code); \
+        } \
+    } while (false)
+
+
 #if __GNUC__ || __clang__
 
 //

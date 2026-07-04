@@ -25,15 +25,6 @@
 #include <cstdint>
 
 
-#define ABORT_ON_ERR(code) \
-    do { \
-        const Status checkErrLocal = (code); \
-        if (checkErrLocal != OK) { \
-            ABORT("code did not return OK: %s", #code); \
-        } \
-    } while (false)
-
-
 enum class Status : int8_t {
     OK = 0,
     ERR = -1,

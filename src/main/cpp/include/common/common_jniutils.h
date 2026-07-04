@@ -53,13 +53,6 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         } \
     } while (false)
 
-
-#define ABORT_ON_NULL(code) \
-    do { \
-        const void *checkNullLocal = (code); \
-        ASSERT(checkNullLocal != nullptr); \
-    } while (false)
-
 //
 // ExceptionDescribe:
 // Prints an exception and a backtrace of the stack to a system error-reporting channel, such as stderr. This is a convenience routine provided for debugging.
@@ -70,7 +63,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(env != nullptr); \
         (code); \
         if (env->ExceptionCheck() == JNI_TRUE) { \
-            LOGI("Aborting on pending exception:"); \
+            LOGI("Code \"%s\" generated an exception:", #code); \
             env->ExceptionDescribe(); \
             ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
         } \
@@ -81,11 +74,27 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ASSERT(env != nullptr); \
         void *checkExceptionAndNullLocal = (code); \
         if (env->ExceptionCheck() == JNI_TRUE) { \
-            LOGI("Aborting on pending exception:"); \
+            LOGI("Code \"%s\" generated an exception:", #code); \
             env->ExceptionDescribe(); \
             ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
         } \
-        ASSERT(checkExceptionAndNullLocal != nullptr); \
+        if (checkExceptionAndNullLocal == nullptr) { \
+            ABORT("Code \"%s\" returned NULL", #code); \
+        } \
+    } while (false)
+
+#define ABORT_ON_EXCEPTION_OR_NEGATIVE(code) \
+    do { \
+        ASSERT(env != nullptr); \
+        int checkExceptionAndNegativeLocal = (code); \
+        if (env->ExceptionCheck() == JNI_TRUE) { \
+            LOGI("Code \"%s\" generated an exception:", #code); \
+            env->ExceptionDescribe(); \
+            ABORT("Aborting on pending exception. On Android, check \"System.err\" tag in Logcat for description of exception."); \
+        } \
+        if (checkExceptionAndNegativeLocal < 0) { \
+            ABORT("Code \"%s\" returned negative value %d", #code, checkExceptionAndNegativeLocal); \
+        } \
     } while (false)
 
 
