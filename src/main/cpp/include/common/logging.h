@@ -176,28 +176,28 @@ extern LOG_declV LOGT_expandedV;
     do {} while (false)
 
 #define LOG1(a) \
-    do { (void)a; } while (false)
+    do { (void)(a); } while (false)
 
 #define LOG2(a, b) \
-    do { (void)a; (void)b; } while (false)
+    do { (void)(a); (void)(b); } while (false)
 
 #define LOG3(a, b, c) \
-    do { (void)a; (void)b; (void)c; } while (false)
+    do { (void)(a); (void)(b); (void)(c); } while (false)
 
 #define LOG4(a, b, c, d) \
-    do { (void)a; (void)b; (void)c; (void)d; } while (false)
+    do { (void)(a); (void)(b); (void)(c); (void)(d); } while (false)
 
 #define LOG5(a, b, c, d, e) \
-    do { (void)a; (void)b; (void)c; (void)d; (void)e; } while (false)
+    do { (void)(a); (void)(b); (void)(c); (void)(d); (void)(e); } while (false)
 
 #define LOG6(a, b, c, d, e, f) \
-    do { (void)a; (void)b; (void)c; (void)d; (void)e; (void)f; } while (false)
+    do { (void)(a); (void)(b); (void)(c); (void)(d); (void)(e); (void)(f); } while (false)
 
 #define LOG7(a, b, c, d, e, f, g) \
-    do { (void)a; (void)b; (void)c; (void)d; (void)e; (void)f; (void)g; } while (false)
+    do { (void)(a); (void)(b); (void)(c); (void)(d); (void)(e); (void)(f); (void)(g); } while (false)
 
 #define LOG8(a, b, c, d, e, f, g, h) \
-    do { (void)a; (void)b; (void)c; (void)d; (void)e; (void)f; (void)g; (void)h; } while (false)
+    do { (void)(a); (void)(b); (void)(c); (void)(d); (void)(e); (void)(f); (void)(g); (void)(h); } while (false)
 
 
 //
