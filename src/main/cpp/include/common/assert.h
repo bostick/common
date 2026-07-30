@@ -29,13 +29,28 @@
 #endif // NDEBUG
 
 #include "common/abort.h"
+#include "common/platform.h"
+
+#if IS_PLATFORM_ANDROID
+
+//
+// see logging.h for what is happening here
+//
+
+#define COMMON_LOGGING_C ""
+
+#else
+
+#define COMMON_LOGGING_C "\n"
+
+#endif // IS_PLATFORM_ANDROID
 
 
 #define ASSERT(cond) \
     do { \
         bool assertRes = (bool)(cond); \
         if (!assertRes) { \
-            ABORT_expanded(TAG, "assert failed: %s", #cond); \
+            ABORT_expanded(TAG, "assert failed: %s" COMMON_LOGGING_C, #cond); \
         } \
     } while (false)
 
