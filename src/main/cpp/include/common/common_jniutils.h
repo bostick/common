@@ -35,8 +35,8 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETENV(env, jvm) \
     do { \
         jint getEnvRet; \
-        ASSERT(jvm != nullptr); \
-        if (getEnvRet = jvm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6); getEnvRet != JNI_OK) { \
+        ASSERT((jvm) != nullptr); \
+        if (getEnvRet = (jvm)->GetEnv(reinterpret_cast<void **>(&(env)), JNI_VERSION_1_6); getEnvRet != JNI_OK) { \
             ABORT("Error calling GetEnv: %d", getEnvRet); \
         } \
     } while (false)
@@ -47,8 +47,8 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
 #define GETJAVAVM(env, jvm) \
     do { \
         jint getJavaVMRet; \
-        ASSERT(env != nullptr); \
-        if ((getJavaVMRet = env->GetJavaVM(&jvm)) != 0) { \
+        ASSERT((env) != nullptr); \
+        if ((getJavaVMRet = (env)->GetJavaVM(&(jvm))) != 0) { \
             ABORT("Error calling GetJavaVM: %d", getJavaVMRet); \
         } \
     } while (false)
@@ -114,7 +114,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
     do { \
         jclass setClassLocal = env->FindClass(classNameString); \
         ABORT_ON_EXCEPTION_OR_NULL(setClassLocal); \
-        classVar = reinterpret_cast<jclass>(env->NewGlobalRef(setClassLocal)); \
+        (classVar) = reinterpret_cast<jclass>(env->NewGlobalRef(setClassLocal)); \
         ABORT_ON_EXCEPTION_OR_NULL(classVar); \
         env->DeleteLocalRef(setClassLocal); \
     } while (false)
@@ -125,7 +125,7 @@ const jsize JSIZE_MAX = std::numeric_limits<jsize>::max();
         ABORT_ON_EXCEPTION_OR_NULL(insertIntoMapLocal); \
         jobject objectVar = env->NewGlobalRef(insertIntoMapLocal); \
         ABORT_ON_EXCEPTION_OR_NULL(objectVar); \
-        map[e] = objectVar; \
+        (map)[e] = objectVar; \
         env->DeleteLocalRef(insertIntoMapLocal); \
     } while (false)
 
