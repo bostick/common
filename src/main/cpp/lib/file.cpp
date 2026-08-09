@@ -22,8 +22,6 @@
 
 #include "common/file.h"
 
-#undef NDEBUG
-
 #include "common/assert.h"
 #include "common/check.h"
 #include "common/error.h"

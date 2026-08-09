@@ -20,14 +20,13 @@
 #define _CRT_SECURE_NO_WARNINGS // disable warnings about localtime being unsafe on MSVC
 #endif // _MSC_VER
 
-#include "common/clock.h"
+#include "common/platform.h"
 
-#undef NDEBUG
+#include "common/clock.h"
 
 #include "common/abort.h"
 #include "common/assert.h"
 #include "common/error.h"
-#include "common/platform.h"
 #include "common/logging.h"
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX

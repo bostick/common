@@ -22,8 +22,6 @@
 
 #include "common/string_utils.h"
 
-#undef NDEBUG
-
 #include "common/abort.h"
 #include "common/assert.h"
 #include "common/error.h"

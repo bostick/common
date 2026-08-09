@@ -18,8 +18,6 @@
 
 #include "common/Accumulator.h"
 
-#undef NDEBUG
-
 #include "common/assert.h"
 
 #include <algorithm>

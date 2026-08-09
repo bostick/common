@@ -24,10 +24,6 @@
 
 #pragma once
 
-#ifdef NDEBUG
-#error Undefine NDEBUG before including common/assert.h
-#endif // NDEBUG
-
 #include "common/abort.h"
 #include "common/platform.h"
 
