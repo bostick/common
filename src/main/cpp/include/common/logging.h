@@ -163,7 +163,7 @@ extern LOG_declV LOGT_expandedV;
 //
 
 //
-// various defines DISABLE_LOGF, DISABLE_LOGE, etc. may be set to 1 disable LOGF, LOGE, etc. at compile time.
+// various defines DISABLE_LOGF, DISABLE_LOGE, etc. may be set to 1 to disable LOGF, LOGE, etc. at compile time.
 //
 // all of this crazy macro business is to treat the arguments as used
 //
