@@ -296,19 +296,11 @@ LogTracer::LogTracer(const char *tag, const char *function) :
     //
     // passing in tag, so cannot use LOGT macro
     //
-#if IS_PLATFORM_ANDROID
-    LOGT_expanded(tag, "enter %s", function);
-#else
-    LOGT_expanded(tag, "enter %s\n", function);
-#endif // IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "enter %s" COMMON_LOGGING_C, function);
 }
 
 LogTracer::~LogTracer() {
-#if IS_PLATFORM_ANDROID
-    LOGT_expanded(tag, "exit %s", function);
-#else
-    LOGT_expanded(tag, "exit %s\n", function);
-#endif // IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "exit %s" COMMON_LOGGING_C, function);
 }
 
 DebugLogTracer::DebugLogTracer(const char *tag, const char *function, const char *file, int line) :
@@ -319,19 +311,11 @@ DebugLogTracer::DebugLogTracer(const char *tag, const char *function, const char
     //
     // passing in tag, so cannot use LOGT macro
     //
-#if IS_PLATFORM_ANDROID
-    LOGT_expanded(tag, "enter %s %s:%d", function, file, line);
-#else
-    LOGT_expanded(tag, "enter %s %s:%d\n", function, file, line);
-#endif // IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "enter %s %s:%d" COMMON_LOGGING_C, function, file, line);
 }
 
 DebugLogTracer::~DebugLogTracer() {
-#if IS_PLATFORM_ANDROID
-    LOGT_expanded(tag, "exit %s %s:%d", function, file, line);
-#else
-    LOGT_expanded(tag, "exit %s %s:%d\n", function, file, line);
-#endif // IS_PLATFORM_ANDROID
+    LOGT_expanded(tag, "exit %s %s:%d" COMMON_LOGGING_C, function, file, line);
 }
 
 
