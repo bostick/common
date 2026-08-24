@@ -16,34 +16,25 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "common/platform.h"
-
 #include "common/logging.h"
 
 #include "common/abort.h"
-#include "common/assert.h"
-#include "common/unusual_message.h"
 
-#if IS_PLATFORM_ANDROID
-#include <android/log.h>
-#endif // IS_PLATFORM_ANDROID
-
-#include <cstdio> // for fprintf, stderr
-#include <cstdarg> // for va_list, va_start, va_arg, va_end
+#include <string>
 
 
 #define TAG "logging"
 
 
-static void LogFatalV(const char *tag, const char *fmt, va_list args);
-static void LogErrorV(const char *tag, const char *fmt, va_list args);
-static void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
-static void LogWarnV(const char *tag, const char *fmt, va_list args);
-static void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
-static void LogInfoV(const char *tag, const char *fmt, va_list args);
-static void LogDebugV(const char *tag, const char *fmt, va_list args);
-static void LogTraceV(const char *tag, const char *fmt, va_list args);
-static void LogNullV(const char *tag, const char *fmt, va_list args);
+void LogFatalV(const char *tag, const char *fmt, va_list args);
+void LogErrorV(const char *tag, const char *fmt, va_list args);
+void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
+void LogWarnV(const char *tag, const char *fmt, va_list args);
+void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
+void LogInfoV(const char *tag, const char *fmt, va_list args);
+void LogDebugV(const char *tag, const char *fmt, va_list args);
+void LogTraceV(const char *tag, const char *fmt, va_list args);
+void LogNullV(const char *tag, const char *fmt, va_list args);
 
 
 static void LogFatal(const char *tag, const char *fmt, ...) {
@@ -106,169 +97,6 @@ static void LogNull(const char *tag, const char *fmt, ...) {
     (void)tag;
     (void)fmt;
 }
-
-
-//
-// define the various LogXXXV
-//
-
-#if IS_PLATFORM_ANDROID
-
-void LogFatalV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_FATAL, tag, fmt, args);
-}
-
-void LogErrorV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-}
-
-void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
-
-    //
-    // fine if truncated
-    //
-    char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
-
-    captureUnusualMessage(buf);
-}
-
-void LogWarnV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
-}
-
-void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
-
-    //
-    // fine if truncated
-    //
-    char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
-
-    captureUnusualMessage(buf);
-}
-
-void LogInfoV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_INFO, tag, fmt, args);
-}
-
-void LogDebugV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_DEBUG, tag, fmt, args);
-}
-
-void LogTraceV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    __android_log_vprint(ANDROID_LOG_VERBOSE, tag, fmt, args);
-}
-
-void LogNullV(const char *tag, const char *fmt, va_list args) {
-
-    ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
-
-    (void)fmt;
-    (void)args;
-}
-
-#else
-
-void LogFatalV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogErrorV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
-
-    (void)tag;
-
-    std::vfprintf(stderr, fmt, args);
-
-    //
-    // fine if truncated
-    //
-    char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
-
-    captureUnusualMessage(buf);
-}
-
-void LogWarnV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
-
-    (void)tag;
-
-    std::vfprintf(stderr, fmt, args);
-
-    //
-    // fine if truncated
-    //
-    char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
-
-    captureUnusualMessage(buf);
-}
-
-void LogInfoV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogDebugV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogTraceV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
-    std::vfprintf(stderr, fmt, args);
-    std::fflush(stderr);
-}
-
-void LogNullV(const char *tag, const char *fmt, va_list args) { // NOLINT(readability-non-const-parameter)
-    (void)tag;
-    (void)fmt;
-    (void)args;
-}
-
-#endif // IS_PLATFORM_ANDROID
 
 
 //

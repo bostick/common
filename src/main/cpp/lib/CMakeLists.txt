@@ -36,6 +36,19 @@ list(APPEND SOURCES_LIB
     common_jnicache.cpp
     common_jniutils.cpp
     opengl_utils.cpp
+    android-logging.cpp
+)
+
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+
+list(APPEND SOURCES_LIB
+    stderr-logging.cpp
+)
+
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+
+list(APPEND SOURCES_LIB
+    apple-logging.mm
 )
 
 endif()
