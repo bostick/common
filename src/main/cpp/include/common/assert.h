@@ -27,7 +27,7 @@
 #include "common/abort.h"
 #include "common/platform.h"
 
-#if IS_PLATFORM_ANDROID
+#if IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 //
 // see logging.h for what is happening here
@@ -39,7 +39,7 @@
 
 #define COMMON_LOGGING_C "\n"
 
-#endif // IS_PLATFORM_ANDROID
+#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 
 #define ASSERT(cond) \

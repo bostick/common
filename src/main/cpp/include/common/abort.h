@@ -109,7 +109,7 @@ void ABORT_expandedV(const char *tag, const char *fmt, va_list args);
 
 #undef PRINTF_ATTRIBUTE
 
-#if IS_PLATFORM_ANDROID
+#if IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 //
 // see logging.h for what is happening here
@@ -121,7 +121,7 @@ void ABORT_expandedV(const char *tag, const char *fmt, va_list args);
 
 #define COMMON_LOGGING_C "\n"
 
-#endif // IS_PLATFORM_ANDROID
+#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 #define ABORT(fmt, ...) \
     ABORT_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)

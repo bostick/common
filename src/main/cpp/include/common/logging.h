@@ -118,7 +118,7 @@ extern LOG_declV LOGT_expandedV;
 #undef PRINTF_ATTRIBUTE
 
 
-#if IS_PLATFORM_ANDROID
+#if IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 //
 // LOGI() expands into LOGI_expanded(TAG, "")
@@ -138,6 +138,10 @@ extern LOG_declV LOGT_expandedV;
 // LOGI("%s", "foo") expands into LOGI_expanded(TAG, "%s" "" , "foo") -> LOGI_expanded(TAG, "%s", "foo")
 //
 
+//
+// Android uses __android_log_vprint and Apple uses NSLog, and both allow a missing "\n"
+//
+
 #define COMMON_LOGGING_C ""
 
 #else
@@ -145,12 +149,12 @@ extern LOG_declV LOGT_expandedV;
 //
 // the "\n" in the below definition serves 2 purposes:
 // 1. allowing LOGI() to be expanded properly (the same purpose as "" above)
-// 2. adding the trailing "\n" that is needed on non-Android platforms
+// 2. adding the trailing "\n" that is needed on non-Android and non-Apple platforms
 //
 
 #define COMMON_LOGGING_C "\n"
 
-#endif // IS_PLATFORM_ANDROID
+#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
 
 
 //
