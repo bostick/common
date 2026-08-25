@@ -18,6 +18,7 @@
 
 #include "common/assert.h"
 #include "common/unusual_message.h"
+#include "common/logging.h"
 
 #include <android/log.h>
 

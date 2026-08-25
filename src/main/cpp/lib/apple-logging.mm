@@ -17,6 +17,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "common/unusual_message.h"
+#include "common/logging.h"
 
 #import <Foundation/Foundation.h>
 

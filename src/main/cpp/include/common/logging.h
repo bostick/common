@@ -376,6 +376,20 @@ void SetLogLevel(int level);
 #endif // __cplusplus
 
 
+//
+// internal functions that should be implemented for each platform
+//
+void LogFatalV(const char *tag, const char *fmt, va_list args);
+void LogErrorV(const char *tag, const char *fmt, va_list args);
+void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
+void LogWarnV(const char *tag, const char *fmt, va_list args);
+void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
+void LogInfoV(const char *tag, const char *fmt, va_list args);
+void LogDebugV(const char *tag, const char *fmt, va_list args);
+void LogTraceV(const char *tag, const char *fmt, va_list args);
+void LogNullV(const char *tag, const char *fmt, va_list args);
+
+
 
 
 

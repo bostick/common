@@ -26,17 +26,6 @@
 #define TAG "logging"
 
 
-void LogFatalV(const char *tag, const char *fmt, va_list args);
-void LogErrorV(const char *tag, const char *fmt, va_list args);
-void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
-void LogWarnV(const char *tag, const char *fmt, va_list args);
-void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args);
-void LogInfoV(const char *tag, const char *fmt, va_list args);
-void LogDebugV(const char *tag, const char *fmt, va_list args);
-void LogTraceV(const char *tag, const char *fmt, va_list args);
-void LogNullV(const char *tag, const char *fmt, va_list args);
-
-
 static void LogFatal(const char *tag, const char *fmt, ...) {
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);

@@ -17,6 +17,15 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+
+find_library(FOUNDATION_FRAMEWORK Foundation)
+
+endif()
+
+
+
 set(SOURCES_LIB
     abort.cpp
     clock.cpp
@@ -51,6 +60,12 @@ list(APPEND SOURCES_LIB
     apple-logging.mm
 )
 
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+
+list(APPEND SOURCES_LIB
+    stderr-logging.cpp
+)
+
 endif()
 
 
@@ -68,6 +83,13 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
 target_link_libraries(common-lib
     PRIVATE
         log
+)
+
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+
+target_link_libraries(common-lib
+    PRIVATE
+        ${FOUNDATION_FRAMEWORK}
 )
 
 endif()
