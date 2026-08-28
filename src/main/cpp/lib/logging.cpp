@@ -19,14 +19,25 @@
 #include "common/logging.h"
 
 #include "common/abort.h"
+#include "common/status.h"
 
 #include <string>
+#include <cstring>
 
 
 #define TAG "logging"
 
 
+using enum Status;
+
+
+static Status checkFormatString(const char *fmt);
+
+
 static void LogFatal(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogFatalV(tag, fmt, args);
@@ -34,6 +45,9 @@ static void LogFatal(const char *tag, const char *fmt, ...) {
 }
 
 static void LogError(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogErrorV(tag, fmt, args);
@@ -41,6 +55,9 @@ static void LogError(const char *tag, const char *fmt, ...) {
 }
 
 static void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogErrorAndCaptureUnusualV(tag, fmt, args);
@@ -48,6 +65,9 @@ static void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
 }
 
 static void LogWarn(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogWarnV(tag, fmt, args);
@@ -55,6 +75,9 @@ static void LogWarn(const char *tag, const char *fmt, ...) {
 }
 
 static void LogWarnAndCaptureUnusual(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogWarnAndCaptureUnusualV(tag, fmt, args);
@@ -62,6 +85,9 @@ static void LogWarnAndCaptureUnusual(const char *tag, const char *fmt, ...) {
 }
 
 static void LogInfo(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogInfoV(tag, fmt, args);
@@ -69,6 +95,9 @@ static void LogInfo(const char *tag, const char *fmt, ...) {
 }
 
 static void LogDebug(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogDebugV(tag, fmt, args);
@@ -76,6 +105,9 @@ static void LogDebug(const char *tag, const char *fmt, ...) {
 }
 
 static void LogTrace(const char *tag, const char *fmt, ...) {
+
+    ABORT_ON_ERR(checkFormatString(fmt));
+
     va_list args; // NOLINT(*-init-variables)
     va_start(args, fmt);
     LogTraceV(tag, fmt, args);
@@ -220,6 +252,97 @@ void LOGE_chunks(const char *buf, size_t len) {
     }
     LOGE("%s", (buf + (i * 500)));
     LOGE();
+}
+
+
+//
+// check that format string is lowest common denominator between:
+// * printf
+// * NSLog
+//
+// https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFStrings/formatSpecifiers.html#//apple_ref/doc/uid/TP40004265
+//
+Status checkFormatString(const char *fmt) {
+
+    const char *p = fmt;
+
+    p = std::strchr(p, '%');
+
+    while (p != nullptr) {
+        p++;
+        char a = *p;
+        switch (a) {
+            case 's': case 'd': case 'u': case 'f': // %s, %d, %u, %f
+                break;
+            case 'z': {
+                p++;
+                char b = *p;
+                switch (b) {
+                    case 'u': // %zu
+                        break;
+                    default:
+                        // unhandled %z
+                        std::abort();
+                }
+                break;
+            }
+            case 'h': {
+                p++;
+                char b = *p;
+                switch (b) {
+                    case 'u': // %hu
+                        break;
+                    case 'h': {
+                        p++;
+                        char c = *p;
+                        switch (c) {
+                            case 'u': // %hhu
+                                break;
+                            default:
+                                // unhandled %hh
+                                std::abort();
+                        }
+                        break;
+                    }
+                    default:
+                        // unhandled %h
+                        std::abort();
+                }
+                break;
+            }
+            case 'l': {
+                p++;
+                char b = *p;
+                switch (b) {
+                    case 'd': // %ld
+                        break;
+                    case 'l': {
+                        p++;
+                        char c = *p;
+                        switch (c) {
+                            case 'd': // %lld
+                                break;
+                            default:
+                                // unhandled %ll
+                                std::abort();
+                        }
+                        break;
+                    }
+                    default:
+                        // unhandled %l
+                        std::abort();
+                }
+                break;
+            }
+            default:
+                // unhandled %
+                std::abort();
+        }
+
+        p = std::strchr(p, '%');
+    }
+
+    return OK;
 }
 
 
