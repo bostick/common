@@ -137,7 +137,7 @@ int64_t uptimeMillis(void) {
 
 int64_t timeSinceEpochSeconds(void) {
 
-    auto now = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 
     auto epoch = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
 
@@ -146,7 +146,7 @@ int64_t timeSinceEpochSeconds(void) {
 
 int64_t timeSinceEpochMillis(void) {
 
-    auto now = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 
     auto epoch = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch());
 
