@@ -44,6 +44,9 @@ public class InputStreamUtils {
         //
         if (SDK_INT >= TIRAMISU) { // TIRAMISU, API 33, Android 13 and higher
 
+            //
+            // readAllBytes() was added in TIRAMISU, API 33, Android 13
+            //
             return is.readAllBytes();
 
         } else { // S_V2, API 32, Android 12 and lower
