@@ -204,8 +204,14 @@ void teardownCommonJniCache(JavaVM *jvm) {
     JNIEnv *env; // NOLINT(*-init-variables)
     GETENV(env, jvm);
 
-    ABORT_ON_EXCEPTION_OR_NEGATIVE(env->UnregisterNatives(Clock_class));
-    ABORT_ON_EXCEPTION_OR_NEGATIVE(env->UnregisterNatives(UnusualMessage_class));
+    //
+    // used to have:
+    // env->UnregisterNatives(XXX)
+    //
+    // but:
+    // "This function should not be used in normal native code."
+    // https://docs.oracle.com/javase/8/docs/technotes/guides/jni/spec/functions.html#UnregisterNatives
+    //
 
     env->DeleteGlobalRef(statusEnumMap[OK]);
     //
