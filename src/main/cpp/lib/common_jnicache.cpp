@@ -22,7 +22,6 @@
 #include "common/assert.h"
 #include "common/common_jniutils.h"
 #include "common/logging.h"
-#include "common/platform.h"
 #include "common/status.h"
 #include "common/clock.h"
 #include "common/unusual_message.h"
@@ -46,14 +45,12 @@ jclass Throwable_class;
 jclass ExceptionUtils_class;
 jclass Clock_class;
 jclass UnusualMessage_class;
-#if IS_PLATFORM_ANDROID
 jclass Activity_class;
 jclass Build_class;
 jclass JSONArray_class;
 jclass JSONObject_class;
 jclass Process_class;
 jclass Version_class;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Instance fields
@@ -63,10 +60,8 @@ jclass Version_class;
 // Static fields
 //
 
-#if IS_PLATFORM_ANDROID
 jfieldID Build_MODEL_field;
 jfieldID Version_SDK_INT_field;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Instance methods
@@ -76,7 +71,6 @@ jfieldID Version_SDK_INT_field;
 jmethodID File_getAbsolutePath_method;
 //jmethodID Status_toByte_method;
 jmethodID Throwable_getMessage_method;
-#if IS_PLATFORM_ANDROID
 jmethodID Activity_getPackageName_method;
 jmethodID JSONArray_getDouble_method;
 jmethodID JSONArray_getInt_method;
@@ -85,7 +79,6 @@ jmethodID JSONArray_length_method;
 jmethodID JSONObject_getDouble_method;
 jmethodID JSONObject_getJSONArray_method;
 jmethodID JSONObject_has_method;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Static methods
@@ -125,14 +118,12 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     SETCLASS(ExceptionUtils_class, "com/brentonbostick/common/ExceptionUtils");
     SETCLASS(Clock_class, "com/brentonbostick/common/Clock");
     SETCLASS(UnusualMessage_class, "com/brentonbostick/common/UnusualMessage");
-#if IS_PLATFORM_ANDROID
     SETCLASS(Activity_class, "android/app/Activity");
     SETCLASS(Build_class, "android/os/Build");
     SETCLASS(JSONArray_class, "org/json/JSONArray");
     SETCLASS(JSONObject_class, "org/json/JSONObject");
     SETCLASS(Process_class, "android/os/Process");
     SETCLASS(Version_class, "android/os/Build$VERSION");
-#endif // IS_PLATFORM_ANDROID
 
     //
     // Instance fields
@@ -146,10 +137,8 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
 
     LOGD("set static fields");
 
-#if IS_PLATFORM_ANDROID
     ABORT_ON_EXCEPTION_OR_NULL(Build_MODEL_field = env->GetStaticFieldID(Build_class, "MODEL", "Ljava/lang/String;"));
     ABORT_ON_EXCEPTION_OR_NULL(Version_SDK_INT_field = env->GetStaticFieldID(Version_class, "SDK_INT", "I"));
-#endif // IS_PLATFORM_ANDROID
 
     //
     // Instance methods
@@ -161,7 +150,6 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     ABORT_ON_EXCEPTION_OR_NULL(File_getAbsolutePath_method = env->GetMethodID(File_class, "getAbsolutePath", "()Ljava/lang/String;"));
 //    ABORT_ON_EXCEPTION_OR_NULL(Status_toByte_method = env->GetMethodID(Status_class, "toByte", "()B"));
     ABORT_ON_EXCEPTION_OR_NULL(Throwable_getMessage_method = env->GetMethodID(Throwable_class, "getMessage", "()Ljava/lang/String;"));
-#if IS_PLATFORM_ANDROID
     ABORT_ON_EXCEPTION_OR_NULL(Activity_getPackageName_method = env->GetMethodID(Activity_class, "getPackageName", "()Ljava/lang/String;"));
     ABORT_ON_EXCEPTION_OR_NULL(JSONArray_getDouble_method = env->GetMethodID(JSONArray_class, "getDouble", "(I)D"));
     ABORT_ON_EXCEPTION_OR_NULL(JSONArray_getInt_method = env->GetMethodID(JSONArray_class, "getInt", "(I)I"));
@@ -170,7 +158,6 @@ void setupCommonJniCache(JavaVM *jvm) { // NOLINT(*readability-function-size)
     ABORT_ON_EXCEPTION_OR_NULL(JSONObject_getDouble_method = env->GetMethodID(JSONObject_class, "getDouble", "(Ljava/lang/String;)D"));
     ABORT_ON_EXCEPTION_OR_NULL(JSONObject_getJSONArray_method = env->GetMethodID(JSONObject_class, "getJSONArray", "(Ljava/lang/String;)Lorg/json/JSONArray;"));
     ABORT_ON_EXCEPTION_OR_NULL(JSONObject_has_method = env->GetMethodID(JSONObject_class, "has", "(Ljava/lang/String;)Z"));
-#endif // IS_PLATFORM_ANDROID
 
     //
     // Static methods
@@ -235,14 +222,12 @@ void teardownCommonJniCache(JavaVM *jvm) {
     env->DeleteGlobalRef(ExceptionUtils_class);
     env->DeleteGlobalRef(Clock_class);
     env->DeleteGlobalRef(UnusualMessage_class);
-#if IS_PLATFORM_ANDROID
     env->DeleteGlobalRef(Activity_class);
     env->DeleteGlobalRef(Build_class);
     env->DeleteGlobalRef(JSONArray_class);
     env->DeleteGlobalRef(JSONObject_class);
     env->DeleteGlobalRef(Process_class);
     env->DeleteGlobalRef(Version_class);
-#endif // IS_PLATFORM_ANDROID
 }
 
 

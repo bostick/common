@@ -18,7 +18,6 @@
 
 #pragma once
 
-#include "common/platform.h"
 #include "common/status.h"
 
 #include <jni.h>
@@ -38,14 +37,12 @@ extern jclass Throwable_class;
 extern jclass ExceptionUtils_class;
 extern jclass Clock_class;
 extern jclass UnusualMessage_class;
-#if IS_PLATFORM_ANDROID
 extern jclass Activity_class;
 extern jclass Build_class;
 extern jclass JSONArray_class;
 extern jclass JSONObject_class;
 extern jclass Process_class;
 extern jclass Version_class;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Instance fields
@@ -55,10 +52,8 @@ extern jclass Version_class;
 // Static fields
 //
 
-#if IS_PLATFORM_ANDROID
 extern jfieldID Build_MODEL_field;
 extern jfieldID Version_SDK_INT_field;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Instance methods
@@ -68,7 +63,6 @@ extern jfieldID Version_SDK_INT_field;
 extern jmethodID File_getAbsolutePath_method;
 //extern jmethodID Status_toByte_method;
 extern jmethodID Throwable_getMessage_method;
-#if IS_PLATFORM_ANDROID
 extern jmethodID Activity_getPackageName_method;
 extern jmethodID JSONArray_getDouble_method;
 extern jmethodID JSONArray_getInt_method;
@@ -77,7 +71,6 @@ extern jmethodID JSONArray_length_method;
 extern jmethodID JSONObject_has_method;
 extern jmethodID JSONObject_getDouble_method;
 extern jmethodID JSONObject_getJSONArray_method;
-#endif // IS_PLATFORM_ANDROID
 
 //
 // Static methods
