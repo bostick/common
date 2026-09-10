@@ -30,28 +30,29 @@
 
 
 void LogFatalV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 }
 
 void LogErrorV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 }
 
 void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
-
-    (void)tag;
-
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 
     //
@@ -64,20 +65,21 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
 }
 
 void LogWarnV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 }
 
 void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
-    (void)tag;
-
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 
     //
@@ -90,26 +92,29 @@ void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 }
 
 void LogInfoV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 }
 
 void LogDebugV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 }
 
 void LogTraceV(const char *tag, const char *fmt, va_list args) {
-    (void)tag;
     @autoreleasepool {
+        NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
-        NSLogv(fmtStr, args);
+        NSString *combinedStr = [NSString stringWithFormat:@"%@\n%@", tagStr, fmtStr];
+        NSLogv(combinedStr, args);
     }
 }
 
