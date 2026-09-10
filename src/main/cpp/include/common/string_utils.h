@@ -33,6 +33,11 @@
 //
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
 
+//
+// returns the number of characters that would be written, not counting the terminating NUL character.
+//
+size_t SNPRINTF_LEN(const char *format, ...);
+
 
 //
 // functionally the same as std::strncpy but returns ERR if the result string is not NUL-terminated.

@@ -253,6 +253,19 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
 }
 
 
+size_t SNPRINTF_LEN(const char *format, ...) {
+
+    va_list args; // NOLINT(*-init-variables)
+    va_start(args, format);
+    int res = std::vsnprintf(nullptr, 0, format, args);
+    va_end(args);
+
+    ASSERT(res >= 0);
+
+    return static_cast<size_t>(res);
+}
+
+
 Status STRNCPY(char *dest, const char *src, size_t len) {
 
     std::strncpy(dest, src, len);
