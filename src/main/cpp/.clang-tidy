@@ -6,6 +6,7 @@ bugprone-*,
 -bugprone-implicit-widening-of-multiplication-result,
 -bugprone-macro-parentheses,
 -bugprone-throwing-static-initialization,
+-bugprone-signed-bitwise,
 clang-diagnostic-*,
 clang-analyzer-*,
 cppcoreguidelines-*,
@@ -63,6 +64,7 @@ readability-*,
 -readability-else-after-return,
 -readability-redundant-member-init,
 -readability-identifier-length,
+-readability-trivial-switch,
 '
 # do not need ExcludeHeaderFilterRegex here
 
