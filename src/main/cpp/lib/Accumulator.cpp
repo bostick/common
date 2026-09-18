@@ -76,7 +76,7 @@ double Accumulator::computeFilteredMean() const {
         sum += (static_cast<double>(x) - meanTmp) * (static_cast<double>(x) - meanTmp);
     }
 
-    double sd = ::sqrt(sum / static_cast<double>(buf.size() - 1));
+    double sd = std::sqrt(sum / static_cast<double>(buf.size() - 1));
 
     std::sort(tmp.begin(), tmp.end()); // NOLINT(*-use-ranges)
 
