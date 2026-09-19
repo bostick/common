@@ -48,6 +48,10 @@ void LogErrorV(const char *tag, const char *fmt, va_list args) {
 }
 
 void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
+
+    va_list args2;
+    va_copy(args2, args);
+
     @autoreleasepool {
         NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
@@ -59,7 +63,9 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
     // fine if truncated
     //
     char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
+    std::vsnprintf(buf, sizeof(buf), fmt, args2);
+
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }
@@ -75,6 +81,9 @@ void LogWarnV(const char *tag, const char *fmt, va_list args) {
 
 void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
+    va_list args2;
+    va_copy(args2, args);
+
     @autoreleasepool {
         NSString *tagStr = [NSString stringWithUTF8String:tag];
         NSString *fmtStr = [NSString stringWithUTF8String:fmt];
@@ -86,7 +95,9 @@ void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
     // fine if truncated
     //
     char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
+    std::vsnprintf(buf, sizeof(buf), fmt, args2);
+
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }

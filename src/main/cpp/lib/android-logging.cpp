@@ -48,13 +48,18 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
 
     ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
 
+    va_list args2;
+    va_copy(args2, args);
+
     __android_log_vprint(ANDROID_LOG_ERROR, tag, fmt, args);
 
     //
     // fine if truncated
     //
     char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
+    std::vsnprintf(buf, sizeof(buf), fmt, args2);
+
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }
@@ -70,13 +75,18 @@ void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
     ASSERT(std::strlen(tag) <= 23); // Android logging tags can be at most 23 characters
 
+    va_list args2;
+    va_copy(args2, args);
+
     __android_log_vprint(ANDROID_LOG_WARN, tag, fmt, args);
 
     //
     // fine if truncated
     //
     char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
+    std::vsnprintf(buf, sizeof(buf), fmt, args2);
+
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }

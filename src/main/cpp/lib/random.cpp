@@ -18,7 +18,12 @@
 
 #include "common/random.h"
 
+#include "common/assert.h"
+
 #include <random>
+
+
+#define TAG "random"
 
 
 static std::mt19937 gen; // NOLINT(bugprone-random-generator-seed, cert-msc51-cpp)
@@ -30,6 +35,9 @@ int NextRandomInteger() {
 }
 
 int NextRandomIntegerInRangeInclusive(int lo, int hi) {
+
+    ASSERT(lo <= hi);
+
     return lo + (NextRandomInteger() % (hi - lo + 1));
 }
 

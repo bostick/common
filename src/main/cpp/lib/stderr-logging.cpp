@@ -42,6 +42,9 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
 
     (void)tag;
 
+    va_list args2;
+    va_copy(args2, args);
+
     std::vfprintf(stderr, fmt, args);
     std::fflush(stderr);
 
@@ -49,7 +52,9 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
     // fine if truncated
     //
     char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
+    std::vsnprintf(buf, sizeof(buf), fmt, args2);
+
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }
@@ -64,6 +69,9 @@ void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
 
     (void)tag;
 
+    va_list args2;
+    va_copy(args2, args);
+
     std::vfprintf(stderr, fmt, args);
     std::fflush(stderr);
 
@@ -71,7 +79,9 @@ void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
     // fine if truncated
     //
     char buf[1000];
-    std::vsnprintf(buf, sizeof(buf), fmt, args);
+    std::vsnprintf(buf, sizeof(buf), fmt, args2);
+
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }
