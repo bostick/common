@@ -178,6 +178,7 @@ void SetLogLevel(int level) {
         case LOGLEVEL_FATAL:
         case LOGLEVEL_ERROR: {
             LOGW_expanded = LogNull;
+            LOGW_andCaptureUnusual_expanded = LogNull;
             LOGI_expanded = LogNull;
             LOGD_expanded = LogNull;
             LOGT_expanded = LogNull;
@@ -190,6 +191,7 @@ void SetLogLevel(int level) {
         }
         case LOGLEVEL_WARN: {
             LOGW_expanded = LogWarn;
+            LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
             LOGI_expanded = LogNull;
             LOGD_expanded = LogNull;
             LOGT_expanded = LogNull;
@@ -202,6 +204,7 @@ void SetLogLevel(int level) {
         }
         case LOGLEVEL_INFO: {
             LOGW_expanded = LogWarn;
+            LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
             LOGI_expanded = LogInfo;
             LOGD_expanded = LogNull;
             LOGT_expanded = LogNull;
@@ -214,6 +217,7 @@ void SetLogLevel(int level) {
         }
         case LOGLEVEL_DEBUG: {
             LOGW_expanded = LogWarn;
+            LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
             LOGI_expanded = LogInfo;
             LOGD_expanded = LogDebug;
             LOGT_expanded = LogNull;
@@ -226,6 +230,7 @@ void SetLogLevel(int level) {
         }
         case LOGLEVEL_TRACE: {
             LOGW_expanded = LogWarn;
+            LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
             LOGI_expanded = LogInfo;
             LOGD_expanded = LogDebug;
             LOGT_expanded = LogTrace;
