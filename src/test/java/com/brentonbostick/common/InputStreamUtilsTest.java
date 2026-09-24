@@ -53,6 +53,29 @@ public class InputStreamUtilsTest {
             assertThat(true).isFalse();
         }
     }
+
+    @Test
+    public void test5K() {
+
+        byte[] bytes = new byte[5000];
+        for (int i = 0; i < 5000; i++) {
+            bytes[i] = (byte) i;
+        }
+
+        InputStream is = new ByteArrayInputStream(bytes);
+
+        try {
+
+            InputStreamUtils.readInputStream(is);
+
+            assertThat(true).isFalse();
+
+        } catch (IOException e) {
+            //
+            // expected
+            //
+        }
+    }
 }
 
 

@@ -71,8 +71,8 @@ public class InputStreamUtils {
 
                 offset += read;
 
-                if (offset > len) {
-                    throw new IOException("offset > len");
+                if (len <= offset) {
+                    throw new IOException("stream had at least 5000 bytes");
                 }
             }
 
