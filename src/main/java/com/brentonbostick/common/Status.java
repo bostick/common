@@ -41,7 +41,7 @@ public enum Status {
             case -1:
                 return ERR;
             default:
-                throw new RuntimeException("unhandled value: " + id);
+                throw new IllegalArgumentException("unhandled value: " + id);
         }
     }
 
