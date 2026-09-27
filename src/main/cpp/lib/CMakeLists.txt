@@ -190,7 +190,7 @@ set_target_properties(common-lib
 
 
 if(SANITIZE)
-    if(${SANITIZE} STREQUAL "ubsan")
+    if("${SANITIZE}" STREQUAL "ubsan")
         target_compile_options(common-lib
             PRIVATE
                 -fsanitize=undefined -fno-sanitize-recover=undefined
@@ -199,7 +199,7 @@ if(SANITIZE)
             PRIVATE
                 -fsanitize=undefined -fno-sanitize-recover=undefined
         )
-    elseif(${SANITIZE} STREQUAL "asan")
+    elseif("${SANITIZE}" STREQUAL "asan")
         target_compile_options(common-lib
             PRIVATE
                 -fsanitize=address -fno-omit-frame-pointer
