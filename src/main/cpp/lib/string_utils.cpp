@@ -253,6 +253,30 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
 }
 
 
+std::string SNPRINTF(const char *format, ...) {
+
+    va_list args; // NOLINT(*-init-variables)
+    va_start(args, format);
+    va_list args2;
+    va_copy(args2, args);
+    int res = std::vsnprintf(nullptr, 0, format, args);
+    va_end(args);
+
+    ASSERT(res >= 0);
+
+    auto len = static_cast<size_t>(res);
+
+    std::vector<char> buf(len + 1);
+
+    int res2 = std::vsnprintf(buf.data(), buf.size(), format, args2);
+    va_end(args2);
+
+    ASSERT(res == res2);
+
+    return buf.data();
+}
+
+
 size_t SNPRINTF_LEN(const char *format, ...) {
 
     va_list args; // NOLINT(*-init-variables)

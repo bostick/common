@@ -33,6 +33,8 @@
 //
 size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
 
+std::string SNPRINTF(const char *format, ...);
+
 //
 // returns the number of characters that would be written, not counting the terminating NUL character.
 //
