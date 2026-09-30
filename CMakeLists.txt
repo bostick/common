@@ -19,8 +19,14 @@
 cmake_minimum_required(VERSION 3.22.1)
 
 project(common
-    LANGUAGES CXX
+    LANGUAGES
+        CXX
 )
+
+if(APPLE)
+    enable_language(OBJCXX)
+endif()
+
 
 
 set(COMMON_BUILD_TESTS OFF CACHE BOOL "Build tests")
