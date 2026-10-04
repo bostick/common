@@ -95,13 +95,6 @@ target_link_libraries(common-lib
 endif()
 
 
-# 
-# 
-# 
-target_link_options(common-lib
-    PRIVATE
-        -u Java_com_brentonbostick_common_Clock_timeSinceEpochMillisNative
-)
 
 if(DISABLE_LOGT)
     target_compile_definitions(common-lib
