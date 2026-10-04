@@ -118,7 +118,7 @@ extern LOG_declV LOGT_expandedV;
 #undef PRINTF_ATTRIBUTE
 
 
-#if IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
+#if IS_PLATFORM_ANDROID || IS_PLATFORM_IOS
 
 //
 // LOGI() expands into LOGI_expanded(TAG, "")
@@ -139,7 +139,7 @@ extern LOG_declV LOGT_expandedV;
 //
 
 //
-// Android uses __android_log_vprint and Apple uses NSLog, and both allow a missing "\n"
+// Android uses __android_log_vprint and iOS uses NSLog, and both allow a missing "\n"
 //
 
 #define COMMON_LOGGING_C ""
@@ -154,7 +154,7 @@ extern LOG_declV LOGT_expandedV;
 
 #define COMMON_LOGGING_C "\n"
 
-#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_IOS || IS_PLATFORM_MACOS
+#endif // IS_PLATFORM_ANDROID || IS_PLATFORM_IOS
 
 
 //

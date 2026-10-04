@@ -18,7 +18,7 @@
 
 
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
 
 find_library(FOUNDATION_FRAMEWORK Foundation)
 
@@ -48,19 +48,19 @@ list(APPEND SOURCES_LIB
     android-logging.cpp
 )
 
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
 
 list(APPEND SOURCES_LIB
-    stderr-logging.cpp
+    ios-logging.mm
 )
 
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+else()
 
-list(APPEND SOURCES_LIB
-    apple-logging.mm
-)
-
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+#
+# everything besides Android and iOS use stderr
+#
+# e.g., macOS uses stderr
+#
 
 list(APPEND SOURCES_LIB
     stderr-logging.cpp
@@ -85,7 +85,7 @@ target_link_libraries(common-lib
         log
 )
 
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
 
 target_link_libraries(common-lib
     PRIVATE

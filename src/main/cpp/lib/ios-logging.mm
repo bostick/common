@@ -26,7 +26,7 @@
 #include <cstdio>
 
 
-#define TAG "apple-logging"
+#define TAG "ios-logging"
 
 
 void LogFatalV(const char *tag, const char *fmt, va_list args) {
