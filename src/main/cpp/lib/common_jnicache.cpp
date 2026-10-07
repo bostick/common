@@ -214,9 +214,6 @@ void teardownCommonJniCache(JavaVM *jvm) {
     //
 
     env->DeleteGlobalRef(statusEnumMap[OK]);
-    //
-    // incorrect warning "Index may have a value of '-1' which is out of bounds"
-    //
     env->DeleteGlobalRef(statusEnumMap[ERR]);
     statusEnumMap.clear();
 
