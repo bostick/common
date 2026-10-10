@@ -283,7 +283,7 @@ Status checkFormatString(const char *fmt) {
         p++;
         char a = *p;
         switch (a) {
-            case 's': case 'd': case 'u': case 'f': // %s, %d, %u, %f
+            case 's': case 'd': case 'u': case 'f': case 'p': // %s, %d, %u, %f, %p
                 break;
             case 'z': {
                 p++;
