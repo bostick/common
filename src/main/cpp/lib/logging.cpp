@@ -31,7 +31,11 @@
 using enum Status;
 
 
-static Status checkFormatString(const char *fmt);
+namespace {
+
+Status checkFormatString(const char *fmt);
+
+}
 
 
 static void LogFatal(const char *tag, const char *fmt, ...) {
@@ -260,6 +264,8 @@ void LOGE_chunks(const char *buf, size_t len) {
 }
 
 
+namespace {
+
 //
 // check that format string is lowest common denominator between:
 // * printf
@@ -349,6 +355,8 @@ Status checkFormatString(const char *fmt) {
 
     return OK;
 }
+
+} // namespace
 
 
 

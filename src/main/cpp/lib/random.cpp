@@ -26,8 +26,12 @@
 #define TAG "random"
 
 
-static std::mt19937 gen; // NOLINT(bugprone-random-generator-seed, cert-msc51-cpp)
-static std::uniform_int_distribution<int> dis;
+namespace {
+
+std::mt19937 gen; // NOLINT(bugprone-random-generator-seed, cert-msc51-cpp)
+std::uniform_int_distribution<int> dis;
+
+} // namespace
 
 
 int NextRandomInteger() {

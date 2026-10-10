@@ -31,8 +31,12 @@
 #define TAG "unusual_message"
 
 
-static unusualMessageCapturer_decl unusualMessageCapturer = nullptr;
-static unusualMessageCapturer_decl unusualMessageCapturerWhileAborting = nullptr;
+namespace {
+
+unusualMessageCapturer_decl unusualMessageCapturer = nullptr;
+unusualMessageCapturer_decl unusualMessageCapturerWhileAborting = nullptr;
+
+} // namespace
 
 
 void SetUnusualMessageCapturer(unusualMessageCapturer_decl capturer) {
