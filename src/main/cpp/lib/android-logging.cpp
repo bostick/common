@@ -52,7 +52,7 @@ void LogErrorAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) 
     char buf[1000];
     std::vsnprintf(buf, sizeof(buf), fmt, args2);
 
-    va_end(args2); // incorrect warning: va_end() is called on an uninitialized va_list
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }
@@ -75,7 +75,7 @@ void LogWarnAndCaptureUnusualV(const char *tag, const char *fmt, va_list args) {
     char buf[1000];
     std::vsnprintf(buf, sizeof(buf), fmt, args2);
 
-    va_end(args2); // incorrect warning: va_end() is called on an uninitialized va_list
+    va_end(args2);
 
     captureUnusualMessage(buf);
 }
