@@ -36,7 +36,6 @@ set(SOURCES_LIB
     random.cpp
     string_utils.cpp
     unusual_message.cpp
-    Accumulator.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
