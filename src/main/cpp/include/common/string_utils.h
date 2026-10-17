@@ -26,19 +26,38 @@
 #include <cstdint> // for int64_t
 
 
+#if __GNUC__ || __clang__
+
+//
+// declare that SNPRINTF et al take printf-style arguments
+//
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-format-function-attribute
+//
+
+#define PRINTF_ATTRIBUTE1 __attribute__ ((format (printf, 1, 2)))
+#define PRINTF_ATTRIBUTE3 __attribute__ ((format (printf, 3, 4)))
+
+#else
+
+#define PRINTF_ATTRIBUTE1
+#define PRINTF_ATTRIBUTE3
+
+#endif // __GNUC__ || __clang__
+
+
 //
 // functionally the same as std::snprintf but also asserts that the result is non-negative and less than size
 //
 // returns the number of characters written, not counting the terminating NUL character.
 //
-size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
+PRINTF_ATTRIBUTE3 size_t SNPRINTF(char *dest, size_t size, const char *format, ...);
 
-std::string SNPRINTF(const char *format, ...);
+PRINTF_ATTRIBUTE1 std::string SNPRINTF(const char *format, ...);
 
 //
 // returns the number of characters that would be written, not counting the terminating NUL character.
 //
-size_t SNPRINTF_LEN(const char *format, ...);
+PRINTF_ATTRIBUTE1 size_t SNPRINTF_LEN(const char *format, ...);
 
 
 //
@@ -75,6 +94,10 @@ std::string escape(const std::string &s);
 // returns OK if parsed entire string as a uint16_t
 //
 [[nodiscard]] Status parseUInt16(const std::string &str, uint16_t *out);
+
+
+#undef PRINTF_ATTRIBUTE1
+#undef PRINTF_ATTRIBUTE3
 
 
 
