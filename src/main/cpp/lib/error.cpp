@@ -118,6 +118,12 @@ const char *ErrorName(int e) {
         case ETIMEDOUT: return "ETIMEDOUT";
         case ETXTBSY: return "ETXTBSY";
         case EXDEV: return "EXDEV";
+        //
+        // NOT defined by C++11, so test with #ifdef
+        //
+#ifdef EHOSTDOWN
+        case EHOSTDOWN: return "EHOSTDOWN";
+#endif // EHOSTDOWN
         default: {
             LOGE("ErrorName: unhandled error: %d", e);
             return "EUNHANDLED";
