@@ -148,7 +148,7 @@ deleteFile(const char *path) {
         LOGE("cannot delete file: does not exist. %s", path);
         return OK;
     }
-    
+
     std::error_code ec;
 
     if (!std::filesystem::remove(path, ec)) {
@@ -165,7 +165,7 @@ deleteFileIfPresent(const char *path) {
     if (!fileExists(path)) {
         return OK;
     }
-    
+
     std::error_code ec;
 
     if (!std::filesystem::remove(path, ec)) {
@@ -184,7 +184,7 @@ deleteEmptyDirectory(const char *path) {
         LOGE("cannot delete directory: does not exist. %s", path);
         return OK;
     }
-    
+
     std::error_code ec;
 
     if (!std::filesystem::remove(path, ec)) {
@@ -201,7 +201,7 @@ deleteEmptyDirectoryIfPresent(const char *path) {
     if (!directoryExists(path)) {
         return OK;
     }
-    
+
     std::error_code ec;
 
     if (!std::filesystem::remove(path, ec)) {

@@ -99,7 +99,7 @@ Status parseInt(const std::string &str, int *out) {
 Status parseInt64(const std::string &str, int64_t *out) {
 
     static_assert(sizeof(int64_t) == sizeof(long long)); // NOLINT(google-runtime-int)
-    
+
     ASSERT(!str.empty());
 
     try {
