@@ -247,9 +247,12 @@ size_t SNPRINTF(char *dest, size_t size, const char *format, ...) {
     va_end(args);
 
     ASSERT(res >= 0);
-    ASSERT(res < static_cast<int>(size)); // incorrect warning: comparison between 'signed' and 'unsigned' integers
 
-    return static_cast<size_t>(res);
+    auto len = static_cast<size_t>(res);
+
+    ASSERT(len < size);
+
+    return len;
 }
 
 
@@ -286,7 +289,9 @@ size_t SNPRINTF_LEN(const char *format, ...) {
 
     ASSERT(res >= 0);
 
-    return static_cast<size_t>(res);
+    auto len = static_cast<size_t>(res);
+
+    return len;
 }
 
 
