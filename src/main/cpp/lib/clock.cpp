@@ -60,8 +60,13 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 // timespec res;
 // if (::clock_getres(CLOCK_MONOTONIC, &res) == -1) {
 //
+// I believe that R, API 30, Android 11 and higher is the earliest Android version that guarantees to use
+// Linux kernel version 4.12 or higher, which is when this fix was made
+//
+// When minimum version is R, API 30, Android 11, then we can use CLOCK_MONOTONIC_RAW
+//
 
-int64_t uptimeMillis(void) {
+int64_t uptimeMillis() {
 
     timespec now; // NOLINT(*-pro-type-member-init)
     if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
@@ -71,7 +76,7 @@ int64_t uptimeMillis(void) {
     return (static_cast<int64_t>(now.tv_sec) * 1000) + (static_cast<int64_t>(now.tv_nsec) / 1000000);
 }
 
-int64_t uptimeMicros(void) {
+int64_t uptimeMicros() {
 
     timespec now; // NOLINT(*-pro-type-member-init)
     if (::clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
@@ -81,7 +86,7 @@ int64_t uptimeMicros(void) {
     return (static_cast<int64_t>(now.tv_sec) * 1000000) + (static_cast<int64_t>(now.tv_nsec) / 1000);
 }
 
-int64_t timeSinceEpochSeconds(void) {
+int64_t timeSinceEpochSeconds() {
 
     timespec now; // NOLINT(*-pro-type-member-init)
     if (::clock_gettime(CLOCK_REALTIME, &now) == -1) {
@@ -91,7 +96,7 @@ int64_t timeSinceEpochSeconds(void) {
     return static_cast<int64_t>(now.tv_sec);
 }
 
-int64_t timeSinceEpochMillis(void) {
+int64_t timeSinceEpochMillis() {
 
     timespec now; // NOLINT(*-pro-type-member-init)
     if (::clock_gettime(CLOCK_REALTIME, &now) == -1) {
@@ -112,30 +117,30 @@ int64_t timeSinceEpochMillis(void) {
 // This API has the potential of being misused to access device signals to try to identify the device or user, also known as fingerprinting.
 //
 
-int64_t uptimeMillis(void) {
+int64_t uptimeMillis() {
     return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000 / 1000);
 }
 
-int64_t uptimeMicros(void) {
+int64_t uptimeMicros() {
     return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000);
 }
 
-int64_t timeSinceEpochSeconds(void) {
+int64_t timeSinceEpochSeconds() {
     return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000 / 1000);
 }
 
-int64_t timeSinceEpochMillis(void) {
+int64_t timeSinceEpochMillis() {
     return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000);
 }
 
 #elif IS_PLATFORM_WINDOWS
 
-int64_t uptimeMillis(void) {
+int64_t uptimeMillis() {
 
     return GetTickCount64();
 }
 
-int64_t timeSinceEpochSeconds(void) {
+int64_t timeSinceEpochSeconds() {
 
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 
@@ -144,7 +149,7 @@ int64_t timeSinceEpochSeconds(void) {
     return epoch.count();
 }
 
-int64_t timeSinceEpochMillis(void) {
+int64_t timeSinceEpochMillis() {
 
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 
@@ -161,7 +166,7 @@ int64_t timeSinceEpochMillis(void) {
 //
 // compute the current time and store in nowStrBuf
 //
-void GrabNow(void) {
+void GrabNow() {
 
     time_t timer; // NOLINT(*-init-variables)
     if (std::time(&timer) == -1) {
