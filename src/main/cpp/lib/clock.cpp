@@ -118,19 +118,43 @@ int64_t timeSinceEpochMillis() {
 //
 
 int64_t uptimeMillis() {
-    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000 / 1000);
+
+    uint64_t ns;
+    if (ns = ::clock_gettime_nsec_np(CLOCK_UPTIME_RAW); ns == 0) {
+        ABORT("clock_gettime_nsec_np: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return static_cast<int64_t>(ns) / 1000 / 1000;
 }
 
 int64_t uptimeMicros() {
-    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1000);
+
+    uint64_t ns;
+    if (ns = ::clock_gettime_nsec_np(CLOCK_UPTIME_RAW); ns == 0) {
+        ABORT("clock_gettime_nsec_np: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return static_cast<int64_t>(ns) / 1000;
 }
 
 int64_t timeSinceEpochSeconds() {
-    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000 / 1000);
+
+    uint64_t ns;
+    if (ns = ::clock_gettime_nsec_np(CLOCK_REALTIME); ns == 0) {
+        ABORT("clock_gettime_nsec_np: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return static_cast<int64_t>(ns) / 1000 / 1000 / 1000;
 }
 
 int64_t timeSinceEpochMillis() {
-    return static_cast<int64_t>(::clock_gettime_nsec_np(CLOCK_REALTIME) / 1000 / 1000);
+
+    uint64_t ns;
+    if (ns = ::clock_gettime_nsec_np(CLOCK_REALTIME); ns == 0) {
+        ABORT("clock_gettime_nsec_np: %s (%s)", std::strerror(errno), ErrorName(errno));
+    }
+
+    return static_cast<int64_t>(ns) / 1000 / 1000;
 }
 
 #elif IS_PLATFORM_WINDOWS
