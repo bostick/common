@@ -43,6 +43,7 @@ set(CPP_TEST_SOURCES
     TestClock.cpp
     TestMathUtils.cpp
     TestStringUtils.cpp
+    TestLogging.cpp
 )
 
 add_executable(common-test-exe

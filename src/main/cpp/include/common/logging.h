@@ -57,9 +57,11 @@
 
 // var arg
 typedef void (*LOG_decl)(const char *tag, const char *fmt, ...); // NOLINT(*-use-using)
+typedef void (*LOG_limited_decl)(const char *func, int line, const char *tag, const char *fmt, ...); // NOLINT(*-use-using)
 
 // va_list
 typedef void (*LOG_declV)(const char *tag, const char *fmt, va_list args); // NOLINT(*-use-using)
+typedef void (*LOG_limited_declV)(const char *func, int line, const char *tag, const char *fmt, va_list args); // NOLINT(*-use-using)
 
 
 #if __GNUC__ || __clang__
@@ -71,10 +73,12 @@ typedef void (*LOG_declV)(const char *tag, const char *fmt, va_list args); // NO
 //
 
 #define PRINTF_ATTRIBUTE __attribute__ ((format (printf, 2, 3)))
+#define PRINTF_LIMITED_ATTRIBUTE __attribute__ ((format (printf, 4, 5)))
 
 #else
 
 #define PRINTF_ATTRIBUTE
+#define PRINTF_LIMITED_ATTRIBUTE
 
 #endif // __GNUC__ || __clang__
 
@@ -88,8 +92,10 @@ extern "C" {
 extern PRINTF_ATTRIBUTE LOG_decl LOGF_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGE_andCaptureUnusual_expanded;
+extern PRINTF_LIMITED_ATTRIBUTE LOG_limited_decl LOGE_limited_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGW_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGW_andCaptureUnusual_expanded;
+extern PRINTF_LIMITED_ATTRIBUTE LOG_limited_decl LOGW_limited_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGI_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGD_expanded;
 extern PRINTF_ATTRIBUTE LOG_decl LOGT_expanded;
@@ -116,6 +122,7 @@ extern LOG_declV LOGT_expandedV;
 
 
 #undef PRINTF_ATTRIBUTE
+#undef PRINTF_LIMITED_ATTRIBUTE
 
 
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_IOS
@@ -241,6 +248,18 @@ extern LOG_declV LOGT_expandedV;
 
 
 //
+// define LOGE_limited
+//
+#if DISABLE_LOGE
+#define LOGE_limited(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
+#define LOGE_limited(fmt, ...) \
+    LOGE_limited_expanded(__func__, __LINE__, TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGE
+
+
+//
 // define LOGW
 //
 #if DISABLE_LOGW
@@ -261,6 +280,18 @@ extern LOG_declV LOGT_expandedV;
 #else
 #define LOGW_andCaptureUnusual(fmt, ...) \
     LOGW_andCaptureUnusual_expanded(TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
+#endif // DISABLE_LOGW
+
+
+//
+// define LOGW_limited
+//
+#if DISABLE_LOGW
+#define LOGW_limited(fmt, ...) \
+    GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, LOG8, LOG7, LOG6, LOG5, LOG4, LOG3, LOG2, LOG1, LOG0)(__VA_ARGS__)
+#else
+#define LOGW_limited(fmt, ...) \
+    LOGW_limited_expanded(__func__, __LINE__, TAG, fmt COMMON_LOGGING_C __VA_OPT__(,) __VA_ARGS__)
 #endif // DISABLE_LOGW
 
 

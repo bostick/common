@@ -22,7 +22,8 @@
 #include "common/status.h"
 
 #include <string>
-#include <cstring>
+#include <map>
+#include <mutex>
 
 
 #define TAG "logging"
@@ -32,6 +33,12 @@ using enum Status;
 
 
 namespace {
+
+const size_t LIMITED_MAX = 10;
+
+std::mutex limitedMtx;
+
+std::map<std::pair<const char *, int>, size_t> limitedCounter;
 
 }
 
@@ -60,6 +67,30 @@ static void LogErrorAndCaptureUnusual(const char *tag, const char *fmt, ...) {
     va_end(args);
 }
 
+static void LogErrorLimited(const char *func, int line, const char *tag, const char *fmt, ...) {
+
+    std::scoped_lock lock(limitedMtx);
+
+    size_t count = limitedCounter[{func, line}];
+
+    if (LIMITED_MAX <= count) {
+        return;
+    }
+
+    count++;
+
+    limitedCounter[{func, line}] = count;
+
+    va_list args; // NOLINT(*-init-variables)
+    va_start(args, fmt);
+    LogErrorV(tag, fmt, args);
+    va_end(args);
+
+    if (count == LIMITED_MAX) {
+        LOGE("Reached limit for previous message; No more instances will be logged");
+    }
+}
+
 static void LogWarn(const char *tag, const char *fmt, ...) {
 
     va_list args; // NOLINT(*-init-variables)
@@ -74,6 +105,30 @@ static void LogWarnAndCaptureUnusual(const char *tag, const char *fmt, ...) {
     va_start(args, fmt);
     LogWarnAndCaptureUnusualV(tag, fmt, args);
     va_end(args);
+}
+
+static void LogWarnLimited(const char *func, int line, const char *tag, const char *fmt, ...) {
+
+    std::scoped_lock lock(limitedMtx);
+
+    size_t count = limitedCounter[{func, line}];
+
+    if (LIMITED_MAX <= count) {
+        return;
+    }
+
+    count++;
+
+    limitedCounter[{func, line}] = count;
+
+    va_list args; // NOLINT(*-init-variables)
+    va_start(args, fmt);
+    LogWarnV(tag, fmt, args);
+    va_end(args);
+
+    if (count == LIMITED_MAX) {
+        LOGW("Reached limit for previous message; No more instances will be logged");
+    }
 }
 
 static void LogInfo(const char *tag, const char *fmt, ...) {
@@ -105,14 +160,24 @@ static void LogNull(const char *tag, const char *fmt, ...) {
     (void)fmt;
 }
 
+static void LogLimitedNull(const char *func, int line, const char *tag, const char *fmt, ...) {
+    (void)func;
+    (void)line;
+    (void)tag;
+    (void)fmt;
+}
+
 
 //
 // default log level is TRACE
+//
 LOG_decl LOGF_expanded = LogFatal;
 LOG_decl LOGE_expanded = LogError;
 LOG_decl LOGE_andCaptureUnusual_expanded = LogErrorAndCaptureUnusual;
+LOG_limited_decl LOGE_limited_expanded = LogErrorLimited;
 LOG_decl LOGW_expanded = LogWarn;
 LOG_decl LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
+LOG_limited_decl LOGW_limited_expanded = LogWarnLimited;
 LOG_decl LOGI_expanded = LogInfo;
 LOG_decl LOGD_expanded = LogDebug;
 LOG_decl LOGT_expanded = LogTrace;
@@ -165,6 +230,7 @@ void SetLogLevel(int level) {
         case LOGLEVEL_ERROR: {
             LOGW_expanded = LogNull;
             LOGW_andCaptureUnusual_expanded = LogNull;
+            LOGW_limited_expanded = LogLimitedNull;
             LOGI_expanded = LogNull;
             LOGD_expanded = LogNull;
             LOGT_expanded = LogNull;
@@ -178,6 +244,7 @@ void SetLogLevel(int level) {
         case LOGLEVEL_WARN: {
             LOGW_expanded = LogWarn;
             LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
+            LOGW_limited_expanded = LogWarnLimited;
             LOGI_expanded = LogNull;
             LOGD_expanded = LogNull;
             LOGT_expanded = LogNull;
@@ -191,6 +258,7 @@ void SetLogLevel(int level) {
         case LOGLEVEL_INFO: {
             LOGW_expanded = LogWarn;
             LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
+            LOGW_limited_expanded = LogWarnLimited;
             LOGI_expanded = LogInfo;
             LOGD_expanded = LogNull;
             LOGT_expanded = LogNull;
@@ -204,6 +272,7 @@ void SetLogLevel(int level) {
         case LOGLEVEL_DEBUG: {
             LOGW_expanded = LogWarn;
             LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
+            LOGW_limited_expanded = LogWarnLimited;
             LOGI_expanded = LogInfo;
             LOGD_expanded = LogDebug;
             LOGT_expanded = LogNull;
@@ -217,6 +286,7 @@ void SetLogLevel(int level) {
         case LOGLEVEL_TRACE: {
             LOGW_expanded = LogWarn;
             LOGW_andCaptureUnusual_expanded = LogWarnAndCaptureUnusual;
+            LOGW_limited_expanded = LogWarnLimited;
             LOGI_expanded = LogInfo;
             LOGD_expanded = LogDebug;
             LOGT_expanded = LogTrace;
