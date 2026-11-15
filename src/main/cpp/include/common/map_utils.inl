@@ -26,8 +26,10 @@
 // no other headers will be included here
 //
 
-template <typename K, typename V>
-static void insert_unique(std::map<K, V> &m, K k, const V &v) {
+namespace {
+
+template<typename K, typename V>
+void insert_unique(std::map<K, V> &m, K k, const V &v) {
 
     const auto [it, success] = m.insert({k, v});
 
@@ -35,8 +37,8 @@ static void insert_unique(std::map<K, V> &m, K k, const V &v) {
 }
 
 
-template <typename K, typename V>
-static V erase_unique(std::map<K, V> &m, const K &k) {
+template<typename K, typename V>
+V erase_unique(std::map<K, V> &m, const K &k) {
 
     auto it = m.find(k);
 
@@ -48,6 +50,8 @@ static V erase_unique(std::map<K, V> &m, const K &k) {
 
     return v;
 }
+
+} // namespace
 
 
 

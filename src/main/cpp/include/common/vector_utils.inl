@@ -26,8 +26,10 @@
 // no other headers will be included here
 //
 
-template <typename T>
-void push_back_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage)
+namespace {
+
+template<typename T>
+void push_back_unique(std::vector<T> &v, T e) {
 
     auto it = std::find(v.begin(), v.end(), e);
 
@@ -37,8 +39,8 @@ void push_back_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage
 }
 
 
-template <typename T>
-void erase_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage)
+template<typename T>
+void erase_unique(std::vector<T> &v, T e) {
 
     auto it = std::find(v.begin(), v.end(), e);
 
@@ -46,6 +48,8 @@ void erase_unique(std::vector<T> &v, T e) { // NOLINT(*-use-internal-linkage)
 
     v.erase(it);
 }
+
+} // namespace
 
 
 
