@@ -53,17 +53,30 @@ char nowStrBuf[FORMATTIME_LEN + 1];
 #if IS_PLATFORM_ANDROID || IS_PLATFORM_LINUX
 
 //
+// use CLOCK_MONOTONIC
+//
+// CLOCK_MONOTONIC is the identifier for the system-wide monotonic clock
+//
+// CLOCK_MONOTONIC is the preferred clock for calculating the time difference between events.
+// https://docs.redhat.com/en/documentation/red_hat_enterprise_linux_for_real_time/7/html/reference_guide/sect-posix_clocks
+//
+// It is understood that CLOCK_MONOTONIC:
+// * is affected by the incremental adjustments performed by adjtime(3) and NTP
+// * does not count time that the system is suspended
+// https://man7.org/linux/man-pages/man3/clock_gettime.3.html
+//
 // Do not use CLOCK_MONOTONIC_RAW on Android
 // https://github.com/libsdl-org/SDL/commit/62d82ffc15b21fcc432fd9e0499c4585cd8d89c8
-//
-// get clock resolution with:
-// timespec res;
-// if (::clock_getres(CLOCK_MONOTONIC, &res) == -1) {
 //
 // I believe that R, API 30, Android 11 and higher is the earliest Android version that guarantees to use
 // Linux kernel version 4.12 or higher, which is when this fix was made
 //
 // When minimum version is R, API 30, Android 11, then we can use CLOCK_MONOTONIC_RAW
+//
+//
+// get clock resolution with:
+// timespec res;
+// if (::clock_getres(CLOCK_MONOTONIC, &res) == -1) {
 //
 
 int64_t uptimeMillis() {
