@@ -28,16 +28,12 @@
 //
 // open file and read contents into out buffer
 //
-Status
-openFile(const char *path,
-         std::vector<uint8_t> &out);
+[[nodiscard]] Status openFile(const char *path, std::vector<uint8_t> &out);
 
 //
 // save buf to file
 //
-Status
-saveFile(const char *path,
-         const std::vector<uint8_t> &buf);
+[[nodiscard]] Status saveFile(const char *path, const std::vector<uint8_t> &buf);
 
 //
 // if file exists, then return true
@@ -47,8 +43,7 @@ bool fileExists(const char *path);
 //
 //
 //
-Status
-createDirectory(const char *path);
+[[nodiscard]] Status createDirectory(const char *path);
 
 //
 //
@@ -58,26 +53,22 @@ bool directoryExists(const char *path);
 //
 //
 //
-Status
-deleteFile(const char *path);
+[[nodiscard]] Status deleteFile(const char *path);
 
 //
 //
 //
-Status
-deleteFileIfPresent(const char *path);
+[[nodiscard]] Status deleteFileIfPresent(const char *path);
 
 //
 //
 //
-Status
-deleteEmptyDirectory(const char *path);
+[[nodiscard]] Status deleteEmptyDirectory(const char *path);
 
 //
 //
 //
-Status
-deleteEmptyDirectoryIfPresent(const char *path);
+[[nodiscard]] Status deleteEmptyDirectoryIfPresent(const char *path);
 
 
 class ScopedFile {
